@@ -134,12 +134,24 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Ad Placement Areas (placeholder) */}
+        {/* Ad Placement Areas */}
         <section className="py-8">
           <div className="container mx-auto px-4">
-            <div className="bg-gray-200 rounded-lg p-8 text-center">
-              <p className="text-gray-600">Advertisement Placement Area</p>
-              <p className="text-sm text-gray-500 mt-2">Google Ads will be integrated here</p>
+            {/* Desktop Banner Ad */}
+            <div className="hidden lg:flex justify-center mb-4">
+              <BannerAd />
+            </div>
+
+            {/* Mobile Banner Ad */}
+            <div className="lg:hidden mb-4">
+              <MobileBannerAd />
+            </div>
+
+            {/* Additional Square Ads */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+              <SquareAd />
+              <SquareAd />
+              <SquareAd className="hidden lg:block" />
             </div>
           </div>
         </section>
