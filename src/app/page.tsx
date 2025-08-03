@@ -1,6 +1,7 @@
 import Layout from '@/components/layout/Layout'
 import ArticleCard from '@/components/ui/ArticleCard'
 import CategoryCard from '@/components/ui/CategoryCard'
+import { BannerAd, MobileBannerAd, SquareAd } from '@/components/ads/GoogleAds'
 import { getFeaturedArticles, getTrendingArticles, getLatestArticles, categories } from '@/lib/data'
 import { TrendingUpIcon, FireIcon, ClockIcon } from 'lucide-react'
 
