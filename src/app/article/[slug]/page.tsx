@@ -246,11 +246,8 @@ export default function ArticlePage({ params }: ArticlePageProps) {
               {/* Sidebar */}
               <div className="lg:col-span-1">
                 {/* Ad Space */}
-                <div className="bg-gray-100 p-6 rounded-lg mb-8 text-center">
-                  <p className="text-gray-600 text-sm">Advertisement</p>
-                  <div className="h-64 bg-gray-200 rounded mt-2 flex items-center justify-center">
-                    <span className="text-gray-500">Google Ads</span>
-                  </div>
+                <div className="mb-8">
+                  <SidebarAd />
                 </div>
 
                 {/* Related Articles */}
