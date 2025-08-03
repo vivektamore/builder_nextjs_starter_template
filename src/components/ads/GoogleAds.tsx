@@ -10,35 +10,46 @@ interface GoogleAdsProps {
   adClient?: string
 }
 
-const GoogleAds = ({ 
-  adSlot, 
-  adFormat = 'auto', 
+const GoogleAds = ({
+  adSlot,
+  adFormat = 'auto',
   adStyle = { display: 'block' },
   className = '',
   adClient = 'ca-pub-XXXXXXXXXXXXXXXXX' // Replace with your actual AdSense client ID
 }: GoogleAdsProps) => {
-  
+
   useEffect(() => {
+    // Only load AdSense in production environment
+    if (process.env.NODE_ENV !== 'production') {
+      return
+    }
+
     // Load Google AdSense script if not already loaded
     if (typeof window !== 'undefined' && !window.adsbygoogle) {
       const script = document.createElement('script')
       script.async = true
       script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
       script.crossOrigin = 'anonymous'
-      document.head.appendChild(script)
-    }
-
-    // Push ads to AdSense
-    try {
-      if (typeof window !== 'undefined' && window.adsbygoogle) {
-        (window.adsbygoogle = window.adsbygoogle || []).push({})
+      script.onload = () => {
+        // Initialize ads after script loads
+        try {
+          (window.adsbygoogle = window.adsbygoogle || []).push({})
+        } catch (error) {
+          console.error('AdSense error:', error)
+        }
       }
-    } catch (error) {
-      console.error('AdSense error:', error)
+      document.head.appendChild(script)
+    } else if (typeof window !== 'undefined' && window.adsbygoogle) {
+      // Script already loaded, push ads
+      try {
+        (window.adsbygoogle = window.adsbygoogle || []).push({})
+      } catch (error) {
+        console.error('AdSense error:', error)
+      }
     }
   }, [])
 
-  // Development/Demo placeholder
+  // Development/Demo placeholder - always show in development
   if (process.env.NODE_ENV === 'development') {
     return (
       <div className={`bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg p-6 text-center ${className}`}>
@@ -54,6 +65,7 @@ const GoogleAds = ({
     )
   }
 
+  // Production AdSense component
   return (
     <div className={className}>
       <ins
