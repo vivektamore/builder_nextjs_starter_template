@@ -635,12 +635,3 @@ const ContentEditor = () => {
 }
 
 export default ContentEditor
-
-export const metadata = {
-  title: 'Content Editor - Search Engine Journal Admin',
-  description: 'Create and manage articles',
-  robots: {
-    index: false,
-    follow: false,
-  }
-}
