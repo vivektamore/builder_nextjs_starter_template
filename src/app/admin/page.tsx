@@ -33,6 +33,49 @@ const AdminDashboard = () => {
   const [password, setPassword] = useState('')
   const [activeTab, setActiveTab] = useState('overview')
 
+  // Sample web stories data
+  const webStories: WebStory[] = [
+    {
+      id: '1',
+      icon: 'SEO',
+      iconBg: 'bg-blue-600',
+      label: 'SEO',
+      title: 'Technical SEO in 60s',
+      subtitle: 'Core Web Vitals Guide',
+      status: 'published',
+      slides: 5,
+      views: '12.5K',
+      duration: '60s',
+      dateCreated: '1/18/2024'
+    },
+    {
+      id: '2',
+      icon: 'KW',
+      iconBg: 'bg-green-600',
+      label: 'KW',
+      title: 'Keyword Research Secrets',
+      subtitle: 'Find Gold Keywords',
+      status: 'draft',
+      slides: 7,
+      views: '-',
+      duration: '2:30',
+      dateCreated: '1/12/2024'
+    },
+    {
+      id: '3',
+      icon: 'LS',
+      iconBg: 'bg-orange-600',
+      label: 'LS',
+      title: 'Local SEO Quick Tips',
+      subtitle: 'Dominate Local Search',
+      status: 'published',
+      slides: 6,
+      views: '8.2K',
+      duration: '45s',
+      dateCreated: '1/10/2024'
+    }
+  ]
+
   // Sample admin data
   const adminArticles: Article[] = [
     {
