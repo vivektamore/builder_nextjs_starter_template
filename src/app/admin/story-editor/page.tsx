@@ -1162,8 +1162,8 @@ const StoryEditor = () => {
                   <div className="flex justify-between items-center">
                     <input
                       type="number"
-                      value={currentSlide.duration}
-                      onChange={(e) => updateSlide('duration', parseInt(e.target.value))}
+                      value={currentSlide.duration || 3000}
+                      onChange={(e) => updateSlide('duration', e.target.value)}
                       className="w-24 px-2 py-1 border border-gray-300 rounded text-sm"
                       min="1000"
                       max="15000"
