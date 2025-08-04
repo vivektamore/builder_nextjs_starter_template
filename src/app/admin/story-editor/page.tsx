@@ -1101,23 +1101,73 @@ const StoryEditor = () => {
                 </select>
               </div>
 
+              {/* Slide Controls */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-3">
+                  Slide Controls
+                </label>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-700">Mute Audio</span>
+                    <input
+                      type="checkbox"
+                      checked={currentSlide.muteAudio}
+                      onChange={(e) => updateSlide('muteAudio', e.target.checked)}
+                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-700">Push Notification</span>
+                    <input
+                      type="checkbox"
+                      checked={currentSlide.pushNotification}
+                      onChange={(e) => updateSlide('pushNotification', e.target.checked)}
+                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-700">Auto Play</span>
+                    <input
+                      type="checkbox"
+                      checked={currentSlide.autoPlay}
+                      onChange={(e) => updateSlide('autoPlay', e.target.checked)}
+                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    />
+                  </div>
+                </div>
+              </div>
+
               {/* Slide Duration */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   <ClockIcon className="h-4 w-4 inline mr-1" />
-                  Slide Duration (ms)
+                  Duration (milliseconds)
                 </label>
-                <input
-                  type="number"
-                  value={currentSlide.duration}
-                  onChange={(e) => updateSlide('duration', parseInt(e.target.value))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                  min="1000"
-                  step="500"
-                />
-                <p className="text-xs text-gray-500 mt-1">
-                  {currentSlide.duration / 1000}s ({currentSlide.duration}ms)
-                </p>
+                <div className="space-y-2">
+                  <input
+                    type="range"
+                    min="1000"
+                    max="15000"
+                    step="500"
+                    value={currentSlide.duration}
+                    onChange={(e) => updateSlide('duration', parseInt(e.target.value))}
+                    className="w-full"
+                  />
+                  <div className="flex justify-between items-center">
+                    <input
+                      type="number"
+                      value={currentSlide.duration}
+                      onChange={(e) => updateSlide('duration', parseInt(e.target.value))}
+                      className="w-24 px-2 py-1 border border-gray-300 rounded text-sm"
+                      min="1000"
+                      max="15000"
+                      step="500"
+                    />
+                    <span className="text-sm text-gray-500">
+                      {currentSlide.duration / 1000}s
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
