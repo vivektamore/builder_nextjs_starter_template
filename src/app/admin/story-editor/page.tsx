@@ -1170,7 +1170,7 @@ const StoryEditor = () => {
                       step="500"
                     />
                     <span className="text-sm text-gray-500">
-                      {currentSlide.duration / 1000}s
+                      {(currentSlide.duration || 3000) / 1000}s
                     </span>
                   </div>
                 </div>
