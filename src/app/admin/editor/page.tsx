@@ -59,7 +59,12 @@ const ContentEditor = () => {
     seoTitle: '',
     metaDescription: '',
     urlSlug: '',
-    ampStoryUrl: ''
+    ampStoryUrl: '',
+    excerpt: '',
+    visibility: 'public',
+    password: '',
+    allowComments: true,
+    featured: false
   })
 
   const [isPreviewMode, setIsPreviewMode] = useState(false)
