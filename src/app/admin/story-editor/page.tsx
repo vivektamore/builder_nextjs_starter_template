@@ -744,11 +744,11 @@ const StoryEditor = () => {
                   }}
                 >
                   <div className="text-center px-6">
-                    <h1 
+                    <h1
                       className="mb-4"
                       style={{
                         fontFamily: currentSlide.fontFamily,
-                        fontSize: `${currentSlide.fontSize}px`,
+                        fontSize: `${currentSlide.fontSize || 24}px`,
                         fontWeight: currentSlide.fontWeight
                       }}
                     >
