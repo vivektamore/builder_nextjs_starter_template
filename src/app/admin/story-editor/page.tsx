@@ -976,10 +976,53 @@ const StoryEditor = () => {
                 </div>
               )}
 
+              {/* Text Position & Alignment */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Text Position
+                </label>
+                <div className="grid grid-cols-3 gap-2">
+                  {textPositions.map((position) => (
+                    <button
+                      key={position.value}
+                      onClick={() => updateSlide('textPosition', position.value)}
+                      className={`px-3 py-2 text-sm border rounded-md ${
+                        currentSlide.textPosition === position.value
+                          ? 'bg-blue-50 border-blue-300 text-blue-700'
+                          : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                      }`}
+                    >
+                      {position.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Text Alignment
+                </label>
+                <div className="grid grid-cols-3 gap-2">
+                  {textAlignments.map((align) => (
+                    <button
+                      key={align.value}
+                      onClick={() => updateSlide('textAlign', align.value)}
+                      className={`px-3 py-2 text-sm border rounded-md ${
+                        currentSlide.textAlign === align.value
+                          ? 'bg-blue-50 border-blue-300 text-blue-700'
+                          : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                      }`}
+                    >
+                      {align.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               {/* Typography & Animation */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Typography & Animation
+                  Typography
                 </label>
                 <div className="space-y-3">
                   <select
@@ -993,38 +1036,69 @@ const StoryEditor = () => {
                       </option>
                     ))}
                   </select>
-                  
+
                   <div className="grid grid-cols-2 gap-3">
-                    <input
-                      type="number"
-                      placeholder="Size"
-                      value={currentSlide.fontSize}
-                      onChange={(e) => updateSlide('fontSize', parseInt(e.target.value))}
-                      className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                    />
-                    <select
-                      value={currentSlide.fontWeight}
-                      onChange={(e) => updateSlide('fontWeight', e.target.value)}
-                      className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                    >
-                      <option value="normal">Normal</option>
-                      <option value="bold">Bold</option>
-                      <option value="600">Semibold</option>
-                    </select>
+                    <div>
+                      <label className="block text-xs text-gray-600 mb-1">Size</label>
+                      <input
+                        type="number"
+                        value={currentSlide.fontSize}
+                        onChange={(e) => updateSlide('fontSize', parseInt(e.target.value))}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                        min="12"
+                        max="72"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-gray-600 mb-1">Weight</label>
+                      <select
+                        value={currentSlide.fontWeight}
+                        onChange={(e) => updateSlide('fontWeight', e.target.value)}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                      >
+                        <option value="normal">Normal</option>
+                        <option value="600">Semibold</option>
+                        <option value="bold">Bold</option>
+                      </select>
+                    </div>
                   </div>
-                  
-                  <select
-                    value={currentSlide.animation}
-                    onChange={(e) => updateSlide('animation', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                  >
-                    {animations.map((anim) => (
-                      <option key={anim.value} value={anim.value}>
-                        {anim.label}
-                      </option>
-                    ))}
-                  </select>
+
+                  <div>
+                    <label className="block text-xs text-gray-600 mb-1">Text Color</label>
+                    <div className="flex items-center space-x-2">
+                      <input
+                        type="color"
+                        value={currentSlide.textColor}
+                        onChange={(e) => updateSlide('textColor', e.target.value)}
+                        className="w-8 h-8 border border-gray-300 rounded cursor-pointer"
+                      />
+                      <input
+                        type="text"
+                        value={currentSlide.textColor}
+                        onChange={(e) => updateSlide('textColor', e.target.value)}
+                        className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                      />
+                    </div>
+                  </div>
                 </div>
+              </div>
+
+              {/* Animation */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Animation
+                </label>
+                <select
+                  value={currentSlide.animation}
+                  onChange={(e) => updateSlide('animation', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                >
+                  {animations.map((anim) => (
+                    <option key={anim.value} value={anim.value}>
+                      {anim.label}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               {/* Slide Duration */}
