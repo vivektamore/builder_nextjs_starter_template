@@ -318,48 +318,84 @@ const ContentEditor = () => {
                     {/* Rich Text Editor Toolbar */}
                     {!isPreviewMode && (
                       <div className="border border-gray-300 rounded-t-md bg-gray-50 px-3 py-2">
-                        <div className="flex items-center space-x-1">
-                          <button
-                            onClick={() => insertFormatting('bold')}
-                            className="p-1.5 rounded hover:bg-gray-200"
-                            title="Bold"
-                          >
-                            <BoldIcon className="h-4 w-4" />
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-2">
+                            {/* Insert Format Dropdown */}
+                            <div className="relative">
+                              <select
+                                value={selectedFormat}
+                                onChange={(e) => {
+                                  setSelectedFormat(e.target.value)
+                                  insertFormatting(e.target.value)
+                                }}
+                                className="px-3 py-1.5 text-sm border border-gray-300 rounded bg-white hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                              >
+                                <option value="paragraph">Insert Format</option>
+                                <option value="heading1">Heading 1</option>
+                                <option value="heading2">Heading 2</option>
+                                <option value="heading3">Heading 3</option>
+                                <option value="heading4">Heading 4</option>
+                                <option value="paragraph">Paragraph</option>
+                                <option value="blockquote">Quote</option>
+                                <option value="code">Code</option>
+                                <option value="list">Bullet List</option>
+                                <option value="numberedlist">Numbered List</option>
+                              </select>
+                            </div>
+
+                            <div className="border-l border-gray-300 mx-2 h-6"></div>
+
+                            {/* Formatting Buttons */}
+                            <button
+                              onClick={() => insertFormatting('bold')}
+                              className="p-1.5 rounded hover:bg-gray-200 font-bold"
+                              title="Bold"
+                            >
+                              <BoldIcon className="h-4 w-4" />
+                            </button>
+                            <button
+                              onClick={() => insertFormatting('italic')}
+                              className="p-1.5 rounded hover:bg-gray-200"
+                              title="Italic"
+                            >
+                              <ItalicIcon className="h-4 w-4" />
+                            </button>
+                            <button
+                              onClick={() => insertFormatting('link')}
+                              className="p-1.5 rounded hover:bg-gray-200"
+                              title="Link"
+                            >
+                              <LinkIcon className="h-4 w-4" />
+                            </button>
+                            <button
+                              className="p-1.5 rounded hover:bg-gray-200"
+                              title="Image"
+                              onClick={() => insertFormatting('image')}
+                            >
+                              <ImageIcon className="h-4 w-4" />
+                            </button>
+                          </div>
+
+                          <div className="flex items-center space-x-2">
+                            <button
+                              onClick={() => setIsPreviewMode(true)}
+                              className="flex items-center space-x-1 px-3 py-1.5 text-sm text-gray-600 hover:text-gray-800"
+                            >
+                              <EyeIcon className="h-4 w-4" />
+                              <span>Preview</span>
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Format Tabs */}
+                        <div className="flex items-center space-x-4 mt-2 pt-2 border-t border-gray-200">
+                          <button className="flex items-center space-x-1 px-2 py-1 text-sm text-gray-700 bg-gray-100 rounded">
+                            <FileTextIcon className="h-3 w-3" />
+                            <span>Markdown</span>
                           </button>
-                          <button
-                            onClick={() => insertFormatting('italic')}
-                            className="p-1.5 rounded hover:bg-gray-200"
-                            title="Italic"
-                          >
-                            <ItalicIcon className="h-4 w-4" />
-                          </button>
-                          <button
-                            onClick={() => insertFormatting('link')}
-                            className="p-1.5 rounded hover:bg-gray-200"
-                            title="Link"
-                          >
-                            <LinkIcon className="h-4 w-4" />
-                          </button>
-                          <button
-                            onClick={() => insertFormatting('heading')}
-                            className="p-1.5 rounded hover:bg-gray-200"
-                            title="Heading"
-                          >
-                            <span className="font-bold text-sm">H</span>
-                          </button>
-                          <button
-                            onClick={() => insertFormatting('list')}
-                            className="p-1.5 rounded hover:bg-gray-200"
-                            title="List"
-                          >
-                            <ListIcon className="h-4 w-4" />
-                          </button>
-                          <button className="p-1.5 rounded hover:bg-gray-200" title="Image">
-                            <ImageIcon className="h-4 w-4" />
-                          </button>
-                          <div className="border-l border-gray-300 mx-2 h-6"></div>
-                          <button className="p-1.5 rounded hover:bg-gray-200" title="HTML">
-                            <span className="text-xs font-mono">&lt;/&gt;</span>
+                          <button className="flex items-center space-x-1 px-2 py-1 text-sm text-gray-500 hover:text-gray-700">
+                            <span className="text-xs">&lt;/&gt;</span>
+                            <span>HTML</span>
                           </button>
                         </div>
                       </div>
