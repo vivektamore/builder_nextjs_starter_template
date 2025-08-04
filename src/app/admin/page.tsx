@@ -23,30 +23,30 @@ const AdminDashboard = () => {
   const adminArticles: Article[] = [
     {
       id: '1',
-      title: 'Google Core Web Vitals Update: What You Need to Know for 2024',
+      title: 'The Complete Guide to Technical SEO for 2024',
       status: 'published',
       author: 'Sarah Johnson',
       publishDate: 'Dec 15, 2024',
-      views: 15200,
-      category: 'SEO'
+      views: 2300,
+      category: 'Technical SEO'
     },
     {
       id: '2',
-      title: 'Content Marketing ROI: How to Measure Success in 2024',
+      title: 'Local SEO for Small Businesses',
       status: 'published',
       author: 'Mike Chen',
       publishDate: 'Dec 14, 2024',
-      views: 8700,
-      category: 'Content Marketing'
+      views: 1850,
+      category: 'Local SEO'
     },
     {
       id: '3',
-      title: 'Upcoming Social Media Trends for 2025',
-      status: 'draft',
+      title: 'The Complete Guide to Technical SEO for 2024',
+      status: 'published',
       author: 'Lisa Rodriguez',
-      publishDate: '',
-      views: 0,
-      category: 'Social Media'
+      publishDate: 'Dec 13, 2024',
+      views: 2300,
+      category: 'Technical SEO'
     }
   ]
 
@@ -124,22 +124,20 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="px-6 py-4">
+      <header className="bg-white border-b">
+        <div className="px-8 py-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="bg-blue-600 text-white px-3 py-1 rounded font-bold text-xl">
-                SEJ
-              </div>
-              <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">Dashboard Overview</h1>
+              <p className="text-gray-600 mt-1">Manage your SEO blog content and track performance metrics.</p>
             </div>
             <div className="flex items-center space-x-4">
               <span className="text-gray-700">Welcome, Admin</span>
               <button
                 onClick={() => setIsLoggedIn(false)}
-                className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
+                className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
               >
                 Logout
               </button>
@@ -148,287 +146,307 @@ const AdminDashboard = () => {
         </div>
       </header>
 
-      <div className="flex">
-        {/* Sidebar */}
-        <aside className="w-64 bg-white shadow-sm min-h-screen">
-          <nav className="p-6">
-            <ul className="space-y-2">
-              <li>
-                <button
-                  onClick={() => setActiveTab('overview')}
-                  className={`w-full text-left px-4 py-2 rounded flex items-center space-x-3 ${
-                    activeTab === 'overview' ? 'bg-blue-100 text-blue-700' : 'text-gray-700 hover:bg-gray-100'
-                  }`}
-                >
-                  <BarChart3Icon className="h-5 w-5" />
-                  <span>Overview</span>
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => setActiveTab('articles')}
-                  className={`w-full text-left px-4 py-2 rounded flex items-center space-x-3 ${
-                    activeTab === 'articles' ? 'bg-blue-100 text-blue-700' : 'text-gray-700 hover:bg-gray-100'
-                  }`}
-                >
-                  <FileTextIcon className="h-5 w-5" />
-                  <span>Articles</span>
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => setActiveTab('webstories')}
-                  className={`w-full text-left px-4 py-2 rounded flex items-center space-x-3 ${
-                    activeTab === 'webstories' ? 'bg-blue-100 text-blue-700' : 'text-gray-700 hover:bg-gray-100'
-                  }`}
-                >
-                  <ImageIcon className="h-5 w-5" />
-                  <span>Web Stories</span>
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => setActiveTab('analytics')}
-                  className={`w-full text-left px-4 py-2 rounded flex items-center space-x-3 ${
-                    activeTab === 'analytics' ? 'bg-blue-100 text-blue-700' : 'text-gray-700 hover:bg-gray-100'
-                  }`}
-                >
-                  <UsersIcon className="h-5 w-5" />
-                  <span>Analytics</span>
-                </button>
-              </li>
-            </ul>
+      {/* Navigation Tabs */}
+      <div className="bg-white border-b">
+        <div className="px-8">
+          <nav className="flex space-x-8">
+            <button
+              onClick={() => setActiveTab('overview')}
+              className={`flex items-center space-x-2 py-4 px-2 border-b-2 font-medium text-sm ${
+                activeTab === 'overview' 
+                  ? 'border-blue-600 text-blue-600' 
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <BarChart3Icon className="h-4 w-4" />
+              <span>Overview</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('articles')}
+              className={`flex items-center space-x-2 py-4 px-2 border-b-2 font-medium text-sm ${
+                activeTab === 'articles' 
+                  ? 'border-blue-600 text-blue-600' 
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <FileTextIcon className="h-4 w-4" />
+              <span>Articles</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('stories')}
+              className={`flex items-center space-x-2 py-4 px-2 border-b-2 font-medium text-sm ${
+                activeTab === 'stories' 
+                  ? 'border-blue-600 text-blue-600' 
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <ImageIcon className="h-4 w-4" />
+              <span>Stories</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('ebooks')}
+              className={`flex items-center space-x-2 py-4 px-2 border-b-2 font-medium text-sm ${
+                activeTab === 'ebooks' 
+                  ? 'border-blue-600 text-blue-600' 
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <BookOpenIcon className="h-4 w-4" />
+              <span>eBooks</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('testimonials')}
+              className={`flex items-center space-x-2 py-4 px-2 border-b-2 font-medium text-sm ${
+                activeTab === 'testimonials' 
+                  ? 'border-blue-600 text-blue-600' 
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <MessageSquareIcon className="h-4 w-4" />
+              <span>Testimonials</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('sponsored')}
+              className={`flex items-center space-x-2 py-4 px-2 border-b-2 font-medium text-sm ${
+                activeTab === 'sponsored' 
+                  ? 'border-blue-600 text-blue-600' 
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <DollarSignIcon className="h-4 w-4" />
+              <span>Sponsored</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('users')}
+              className={`flex items-center space-x-2 py-4 px-2 border-b-2 font-medium text-sm ${
+                activeTab === 'users' 
+                  ? 'border-blue-600 text-blue-600' 
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <UsersIcon className="h-4 w-4" />
+              <span>Users</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('analytics')}
+              className={`flex items-center space-x-2 py-4 px-2 border-b-2 font-medium text-sm ${
+                activeTab === 'analytics' 
+                  ? 'border-blue-600 text-blue-600' 
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <BarChart3Icon className="h-4 w-4" />
+              <span>Analytics</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('settings')}
+              className={`flex items-center space-x-2 py-4 px-2 border-b-2 font-medium text-sm ${
+                activeTab === 'settings' 
+                  ? 'border-blue-600 text-blue-600' 
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <SettingsIcon className="h-4 w-4" />
+              <span>Settings</span>
+            </button>
           </nav>
-        </aside>
+        </div>
+      </div>
 
-        {/* Main Content */}
-        <main className="flex-1 p-8">
-          {/* Overview Tab */}
-          {activeTab === 'overview' && (
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-8">Dashboard Overview</h2>
-              
-              {/* Stats Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                <div className="bg-white p-6 rounded-lg shadow-sm">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-gray-600">Total Articles</p>
-                      <p className="text-3xl font-bold text-gray-900">234</p>
-                    </div>
-                    <FileTextIcon className="h-8 w-8 text-blue-600" />
+      {/* Main Content */}
+      <main className="p-8">
+        {/* Overview Tab */}
+        {activeTab === 'overview' && (
+          <div>
+            {/* Stats Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+              <div className="bg-white p-6 rounded-lg border border-gray-200">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center">
+                    <FileTextIcon className="h-5 w-5 text-gray-400 mr-2" />
+                    <span className="text-sm font-medium text-gray-600">Total Articles</span>
                   </div>
                 </div>
-                
-                <div className="bg-white p-6 rounded-lg shadow-sm">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-gray-600">Monthly Views</p>
-                      <p className="text-3xl font-bold text-gray-900">1.2M</p>
-                    </div>
-                    <EyeIcon className="h-8 w-8 text-green-600" />
-                  </div>
-                </div>
-                
-                <div className="bg-white p-6 rounded-lg shadow-sm">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-gray-600">Web Stories</p>
-                      <p className="text-3xl font-bold text-gray-900">47</p>
-                    </div>
-                    <ImageIcon className="h-8 w-8 text-purple-600" />
-                  </div>
-                </div>
-                
-                <div className="bg-white p-6 rounded-lg shadow-sm">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-gray-600">Subscribers</p>
-                      <p className="text-3xl font-bold text-gray-900">152K</p>
-                    </div>
-                    <UsersIcon className="h-8 w-8 text-red-600" />
-                  </div>
+                <div className="text-3xl font-bold text-gray-900 mb-1">24</div>
+                <div className="flex items-center text-sm">
+                  <TrendingUpIcon className="h-4 w-4 text-green-500 mr-1" />
+                  <span className="text-green-600">+5 from last month</span>
                 </div>
               </div>
+              
+              <div className="bg-white p-6 rounded-lg border border-gray-200">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center">
+                    <EyeIcon className="h-5 w-5 text-gray-400 mr-2" />
+                    <span className="text-sm font-medium text-gray-600">Monthly Views</span>
+                  </div>
+                </div>
+                <div className="text-3xl font-bold text-gray-900 mb-1">45.2K</div>
+                <div className="flex items-center text-sm">
+                  <TrendingUpIcon className="h-4 w-4 text-green-500 mr-1" />
+                  <span className="text-green-600">+12% from last month</span>
+                </div>
+              </div>
+              
+              <div className="bg-white p-6 rounded-lg border border-gray-200">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center">
+                    <UsersIcon className="h-5 w-5 text-gray-400 mr-2" />
+                    <span className="text-sm font-medium text-gray-600">Active Users</span>
+                  </div>
+                </div>
+                <div className="text-3xl font-bold text-gray-900 mb-1">1,234</div>
+                <div className="flex items-center text-sm">
+                  <TrendingUpIcon className="h-4 w-4 text-green-500 mr-1" />
+                  <span className="text-green-600">+3% from last month</span>
+                </div>
+              </div>
+              
+              <div className="bg-white p-6 rounded-lg border border-gray-200">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center">
+                    <BarChart3Icon className="h-5 w-5 text-gray-400 mr-2" />
+                    <span className="text-sm font-medium text-gray-600">Engagement Rate</span>
+                  </div>
+                </div>
+                <div className="text-3xl font-bold text-gray-900 mb-1">8.4%</div>
+                <div className="flex items-center text-sm">
+                  <TrendingDownIcon className="h-4 w-4 text-red-500 mr-1" />
+                  <span className="text-red-600">-2% from last month</span>
+                </div>
+              </div>
+            </div>
 
-              {/* Recent Activity */}
-              <div className="bg-white rounded-lg shadow-sm p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Recent Activity</h3>
+            {/* Recent Articles and Top Performance */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Recent Articles */}
+              <div className="bg-white rounded-lg border border-gray-200 p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Recent Articles</h3>
+                <p className="text-sm text-gray-600 mb-6">Latest articles and their performance</p>
+                
                 <div className="space-y-4">
-                  <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded">
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <div>
-                      <p className="text-gray-900">New article published: "Google Core Web Vitals Update"</p>
-                      <p className="text-sm text-gray-600">2 hours ago</p>
+                  <div className="flex items-center justify-between p-4 border border-gray-100 rounded-lg">
+                    <div className="flex-1">
+                      <h4 className="font-medium text-gray-900 mb-1">The Complete Guide to Technical SEO for 2024</h4>
+                      <div className="flex items-center space-x-4 text-sm text-gray-500">
+                        <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-medium">Published</span>
+                        <span>2.3K views</span>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                    <div>
-                      <p className="text-gray-900">Web story uploaded: "SEO Trends 2024"</p>
-                      <p className="text-sm text-gray-600">5 hours ago</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded">
-                    <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
-                    <div>
-                      <p className="text-gray-900">Article scheduled for publication</p>
-                      <p className="text-sm text-gray-600">1 day ago</p>
-                    </div>
+                    <EditIcon className="h-4 w-4 text-gray-400" />
                   </div>
                 </div>
               </div>
-            </div>
-          )}
 
-          {/* Articles Tab */}
-          {activeTab === 'articles' && (
-            <div>
-              <div className="flex items-center justify-between mb-8">
-                <h2 className="text-3xl font-bold text-gray-900">Manage Articles</h2>
-                <a 
-                  href="/admin/editor" 
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center space-x-2"
-                >
-                  <PlusIcon className="h-5 w-5" />
-                  <span>New Article</span>
-                </a>
-              </div>
-
-              <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-                <table className="w-full">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">Title</th>
-                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">Status</th>
-                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">Author</th>
-                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">Views</th>
-                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200">
-                    {adminArticles.map((article) => (
-                      <tr key={article.id}>
-                        <td className="px-6 py-4">
-                          <div>
-                            <p className="font-medium text-gray-900">{article.title}</p>
-                            <p className="text-sm text-gray-600">{article.category}</p>
-                          </div>
-                        </td>
-                        <td className="px-6 py-4">
-                          <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                            article.status === 'published' ? 'bg-green-100 text-green-800' :
-                            article.status === 'draft' ? 'bg-yellow-100 text-yellow-800' :
-                            'bg-blue-100 text-blue-800'
-                          }`}>
-                            {article.status}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4 text-gray-900">{article.author}</td>
-                        <td className="px-6 py-4 text-gray-900">{article.views.toLocaleString()}</td>
-                        <td className="px-6 py-4">
-                          <div className="flex space-x-2">
-                            <button className="text-blue-600 hover:text-blue-700">
-                              <EyeIcon className="h-4 w-4" />
-                            </button>
-                            <button className="text-green-600 hover:text-green-700">
-                              <EditIcon className="h-4 w-4" />
-                            </button>
-                            <button className="text-red-600 hover:text-red-700">
-                              <TrashIcon className="h-4 w-4" />
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
-
-          {/* Web Stories Tab */}
-          {activeTab === 'webstories' && (
-            <div>
-              <div className="flex items-center justify-between mb-8">
-                <h2 className="text-3xl font-bold text-gray-900">Web Stories</h2>
-                <button className="bg-purple-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-purple-700 transition-colors flex items-center space-x-2">
-                  <PlusIcon className="h-5 w-5" />
-                  <span>Add Story</span>
-                </button>
-              </div>
-
-              <div className="bg-white rounded-lg shadow-sm p-6">
-                <p className="text-gray-600 mb-4">Upload AMP Web Stories or embed existing ones</p>
+              {/* Top Performance */}
+              <div className="bg-white rounded-lg border border-gray-200 p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Top Performance</h3>
+                <p className="text-sm text-gray-600 mb-6">Most viewed articles this month</p>
                 
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
-                  <ImageIcon className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-600 mb-4">Drag and drop AMP files or paste embed codes</p>
-                  <button className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition-colors">
-                    Select Files
-                  </button>
+                <div className="space-y-4">
+                  <div className="flex items-start space-x-3">
+                    <div className="w-6 h-6 bg-gray-900 text-white rounded-full flex items-center justify-center text-xs font-medium">
+                      1
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-medium text-gray-900 mb-1">Local SEO for Small Businesses</h4>
+                      <p className="text-sm text-gray-500">1.8K views</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start space-x-3">
+                    <div className="w-6 h-6 bg-gray-900 text-white rounded-full flex items-center justify-center text-xs font-medium">
+                      2
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-medium text-gray-900 mb-1">The Complete Guide to Technical SEO for 2024</h4>
+                      <p className="text-sm text-gray-500">Technical SEO • 2.3K views</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          )}
+          </div>
+        )}
 
-          {/* Analytics Tab */}
-          {activeTab === 'analytics' && (
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-8">Analytics Dashboard</h2>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">Top Performing Articles</h3>
-                  <div className="space-y-4">
-                    {adminArticles.filter(a => a.status === 'published').map((article) => (
-                      <div key={article.id} className="flex items-center justify-between p-4 bg-gray-50 rounded">
+        {/* Articles Tab */}
+        {activeTab === 'articles' && (
+          <div>
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-2xl font-bold text-gray-900">Articles</h2>
+              <a 
+                href="/admin/editor" 
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center space-x-2"
+              >
+                <PlusIcon className="h-5 w-5" />
+                <span>New Article</span>
+              </a>
+            </div>
+
+            <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+              <table className="w-full">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">Title</th>
+                    <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">Status</th>
+                    <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">Author</th>
+                    <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">Views</th>
+                    <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {adminArticles.map((article) => (
+                    <tr key={article.id}>
+                      <td className="px-6 py-4">
                         <div>
                           <p className="font-medium text-gray-900">{article.title}</p>
                           <p className="text-sm text-gray-600">{article.category}</p>
                         </div>
-                        <div className="text-right">
-                          <p className="font-semibold text-gray-900">{article.views.toLocaleString()}</p>
-                          <p className="text-sm text-gray-600">views</p>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                          article.status === 'published' ? 'bg-green-100 text-green-800' :
+                          article.status === 'draft' ? 'bg-yellow-100 text-yellow-800' :
+                          'bg-blue-100 text-blue-800'
+                        }`}>
+                          {article.status}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 text-gray-900">{article.author}</td>
+                      <td className="px-6 py-4 text-gray-900">{article.views.toLocaleString()}</td>
+                      <td className="px-6 py-4">
+                        <div className="flex space-x-2">
+                          <button className="text-blue-600 hover:text-blue-700">
+                            <EyeIcon className="h-4 w-4" />
+                          </button>
+                          <button className="text-green-600 hover:text-green-700">
+                            <EditIcon className="h-4 w-4" />
+                          </button>
+                          <button className="text-red-600 hover:text-red-700">
+                            <TrashIcon className="h-4 w-4" />
+                          </button>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">Traffic Sources</h3>
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-700">Organic Search</span>
-                      <span className="font-semibold">67%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div className="bg-blue-600 h-2 rounded-full" style={{ width: '67%' }}></div>
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-700">Direct</span>
-                      <span className="font-semibold">18%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div className="bg-green-600 h-2 rounded-full" style={{ width: '18%' }}></div>
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-700">Social Media</span>
-                      <span className="font-semibold">15%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div className="bg-purple-600 h-2 rounded-full" style={{ width: '15%' }}></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-          )}
-        </main>
-      </div>
+          </div>
+        )}
+
+        {/* Other tabs with placeholder content */}
+        {(activeTab !== 'overview' && activeTab !== 'articles') && (
+          <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} Section
+            </h2>
+            <p className="text-gray-600">
+              This section is under development. Content will be available soon.
+            </p>
+          </div>
+        )}
+      </main>
     </div>
   )
 }
