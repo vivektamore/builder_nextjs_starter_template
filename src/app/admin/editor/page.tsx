@@ -166,7 +166,7 @@ const ContentEditor = () => {
       const start = textarea.selectionStart
       const end = textarea.selectionEnd
       const selectedText = textarea.value.substring(start, end)
-      
+
       let formatText = ''
       switch (format) {
         case 'bold':
@@ -178,16 +178,45 @@ const ContentEditor = () => {
         case 'link':
           formatText = `[${selectedText || 'link text'}](url)`
           break
-        case 'heading':
-          formatText = `## ${selectedText || 'Heading'}`
+        case 'heading1':
+          formatText = `# ${selectedText || 'Heading 1'}`
+          break
+        case 'heading2':
+          formatText = `## ${selectedText || 'Heading 2'}`
+          break
+        case 'heading3':
+          formatText = `### ${selectedText || 'Heading 3'}`
+          break
+        case 'heading4':
+          formatText = `#### ${selectedText || 'Heading 4'}`
+          break
+        case 'paragraph':
+          formatText = selectedText || 'Paragraph text'
+          break
+        case 'blockquote':
+          formatText = `> ${selectedText || 'Quote text'}`
+          break
+        case 'code':
+          formatText = `\`${selectedText || 'code'}\``
           break
         case 'list':
           formatText = `- ${selectedText || 'List item'}`
           break
+        case 'numberedlist':
+          formatText = `1. ${selectedText || 'Numbered item'}`
+          break
+        case 'image':
+          formatText = `![${selectedText || 'alt text'}](image-url)`
+          break
+        default:
+          formatText = selectedText
       }
-      
+
       const newContent = textarea.value.substring(0, start) + formatText + textarea.value.substring(end)
       handleInputChange('content', newContent)
+
+      // Reset dropdown to default
+      setSelectedFormat('paragraph')
     }
   }
 
