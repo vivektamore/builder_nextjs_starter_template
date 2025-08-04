@@ -904,21 +904,12 @@ const StoryEditor = () => {
                 />
               </div>
 
-              {/* CTA Button */}
-              <div>
-                <div className="flex items-center justify-between mb-3">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Call to Action Button
+              {/* CTA Button - Show for CTA type or optional for others */}
+              {currentSlide.type === 'cta' ? (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-3">
+                    Call to Action Button (Required)
                   </label>
-                  <input
-                    type="checkbox"
-                    checked={currentSlide.showCta}
-                    onChange={(e) => updateSlide('showCta', e.target.checked)}
-                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                  />
-                </div>
-                
-                {currentSlide.showCta && (
                   <div className="space-y-3">
                     <input
                       type="text"
@@ -926,6 +917,7 @@ const StoryEditor = () => {
                       value={currentSlide.ctaLabel || ''}
                       onChange={(e) => updateSlide('ctaLabel', e.target.value)}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                      required
                     />
                     <input
                       type="url"
@@ -933,10 +925,56 @@ const StoryEditor = () => {
                       value={currentSlide.ctaUrl || ''}
                       onChange={(e) => updateSlide('ctaUrl', e.target.value)}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                      required
+                    />
+                    <div className="flex items-center">
+                      <input
+                        type="checkbox"
+                        id="cta-new-tab"
+                        checked={currentSlide.ctaOpenNewTab}
+                        onChange={(e) => updateSlide('ctaOpenNewTab', e.target.checked)}
+                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                      />
+                      <label htmlFor="cta-new-tab" className="ml-2 block text-sm text-gray-700">
+                        Open in new tab
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              ) : currentSlide.type !== 'cover' && currentSlide.type !== 'text' && (
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Optional CTA Button
+                    </label>
+                    <input
+                      type="checkbox"
+                      checked={currentSlide.showCta}
+                      onChange={(e) => updateSlide('showCta', e.target.checked)}
+                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     />
                   </div>
-                )}
-              </div>
+
+                  {currentSlide.showCta && (
+                    <div className="space-y-3">
+                      <input
+                        type="text"
+                        placeholder="Button Label"
+                        value={currentSlide.ctaLabel || ''}
+                        onChange={(e) => updateSlide('ctaLabel', e.target.value)}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                      />
+                      <input
+                        type="url"
+                        placeholder="Button URL"
+                        value={currentSlide.ctaUrl || ''}
+                        onChange={(e) => updateSlide('ctaUrl', e.target.value)}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                      />
+                    </div>
+                  )}
+                </div>
+              )}
 
               {/* Typography & Animation */}
               <div>
