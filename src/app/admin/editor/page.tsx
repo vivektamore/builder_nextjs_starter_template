@@ -37,6 +37,11 @@ interface ArticleData {
   metaDescription: string
   urlSlug: string
   ampStoryUrl: string
+  excerpt: string
+  visibility: 'public' | 'private' | 'password'
+  password: string
+  allowComments: boolean
+  featured: boolean
 }
 
 const ContentEditor = () => {
