@@ -25,19 +25,28 @@ import {
 
 interface Slide {
   id: string
+  type: 'cover' | 'text' | 'media' | 'cta'
   title: string
+  subtitle?: string
   description: string
   backgroundColor: string
   backgroundImage?: string
   backgroundVideo?: string
   ctaLabel?: string
   ctaUrl?: string
+  ctaOpenNewTab: boolean
   showCta: boolean
+  textPosition: 'top' | 'center' | 'bottom'
+  textAlign: 'left' | 'center' | 'right'
+  textColor: string
   fontFamily: string
   fontSize: number
   fontWeight: string
   animation: string
   duration: number
+  muteAudio: boolean
+  pushNotification: boolean
+  autoPlay: boolean
 }
 
 interface StoryData {
