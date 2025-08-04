@@ -49,13 +49,27 @@ interface Slide {
   autoPlay: boolean
 }
 
+interface AmpAutoAds {
+  enabled: boolean
+  adAttributes: {
+    type: string
+    dataAdClient: string
+    dataAdSlot: string
+  }
+  networkType: string
+}
+
 interface StoryData {
   title: string
   description: string
   category: string
   author: string
+  poster: string
+  publisherName: string
+  publisherLogoSrc: string
   enableAutoAds: boolean
   rawAmpPublication: boolean
+  ampAutoAds: AmpAutoAds
   slides: Slide[]
 }
 
