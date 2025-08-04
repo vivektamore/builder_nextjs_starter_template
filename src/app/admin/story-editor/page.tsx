@@ -129,18 +129,43 @@ const StoryEditor = () => {
     '#ef4444', '#8b5cf6', '#06b6d4', '#84cc16'
   ]
 
+  const slideTypes = [
+    { value: 'cover', label: 'Cover', description: 'Large headline, subtitle, full-screen media' },
+    { value: 'text', label: 'Text', description: 'Centered or vertical text content' },
+    { value: 'media', label: 'Media', description: 'Media-dominant with text overlay' },
+    { value: 'cta', label: 'CTA', description: 'Call-to-action with button' }
+  ]
+
   const animations = [
-    { value: 'fade', label: 'Fade' },
-    { value: 'slide-in', label: 'Slide In' },
-    { value: 'zoom', label: 'Zoom' },
-    { value: 'bounce', label: 'Bounce' }
+    { value: 'fade-in', label: 'Fade In' },
+    { value: 'fly-in-left', label: 'Fly In Left' },
+    { value: 'fly-in-right', label: 'Fly In Right' },
+    { value: 'fly-in-top', label: 'Fly In Top' },
+    { value: 'fly-in-bottom', label: 'Fly In Bottom' },
+    { value: 'rotate-in-left', label: 'Rotate In Left' },
+    { value: 'rotate-in-right', label: 'Rotate In Right' },
+    { value: 'zoom-in', label: 'Zoom In' },
+    { value: 'zoom-out', label: 'Zoom Out' }
   ]
 
   const fontFamilies = [
-    { value: 'Inter', label: 'Inter' },
     { value: 'Roboto', label: 'Roboto' },
+    { value: 'Oswald', label: 'Oswald' },
     { value: 'Poppins', label: 'Poppins' },
-    { value: 'Oswald', label: 'Oswald' }
+    { value: 'Playfair Display', label: 'Playfair Display' },
+    { value: 'Montserrat', label: 'Montserrat' }
+  ]
+
+  const textPositions = [
+    { value: 'top', label: 'Top' },
+    { value: 'center', label: 'Center' },
+    { value: 'bottom', label: 'Bottom' }
+  ]
+
+  const textAlignments = [
+    { value: 'left', label: 'Left' },
+    { value: 'center', label: 'Center' },
+    { value: 'right', label: 'Right' }
   ]
 
   const currentSlide = storyData.slides[currentSlideIndex] || storyData.slides[0]
