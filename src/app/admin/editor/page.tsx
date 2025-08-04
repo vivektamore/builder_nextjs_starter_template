@@ -532,23 +532,23 @@ const ContentEditor = () => {
           <div className="lg:col-span-1 space-y-6">
             
             {/* Article Settings */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+            <div className="bg-white rounded-lg border border-gray-200">
               <div className="p-6">
                 <div className="flex items-center mb-4">
                   <SettingsIcon className="h-5 w-5 text-gray-400 mr-2" />
-                  <h3 className="text-lg font-semibold text-gray-900">Settings</h3>
+                  <h3 className="text-lg font-medium text-gray-900">Article Settings</h3>
                 </div>
-                
+
                 <div className="space-y-4">
                   {/* Status */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
                       Status
                     </label>
                     <select
                       value={articleData.status}
                       onChange={(e) => handleInputChange('status', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                     >
                       <option value="draft">Draft</option>
                       <option value="published">Published</option>
@@ -558,15 +558,15 @@ const ContentEditor = () => {
 
                   {/* Category */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
                       Category
                     </label>
                     <select
                       value={articleData.category}
                       onChange={(e) => handleInputChange('category', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                     >
-                      <option value="">Select Category</option>
+                      <option value="">Select category</option>
                       <option value="SEO">SEO</option>
                       <option value="Content Marketing">Content Marketing</option>
                       <option value="Paid Media">Paid Media</option>
@@ -578,7 +578,7 @@ const ContentEditor = () => {
 
                   {/* Read Time */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
                       Estimated Read Time (minutes)
                     </label>
                     <input
@@ -586,42 +586,81 @@ const ContentEditor = () => {
                       value={articleData.readTime || Math.max(1, Math.ceil(wordCount / 200))}
                       onChange={(e) => handleInputChange('readTime', parseInt(e.target.value))}
                       min="1"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                     />
                   </div>
 
                   {/* Publish Date */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      <CalendarIcon className="h-4 w-4 inline mr-1" />
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
                       Publish Date
                     </label>
                     <input
                       type="date"
                       value={articleData.publishDate}
                       onChange={(e) => handleInputChange('publishDate', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                     />
                   </div>
 
-                  {/* Author */}
+                  {/* Visibility */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      <UserIcon className="h-4 w-4 inline mr-1" />
-                      Author
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Visibility
                     </label>
                     <select
-                      value={articleData.author}
-                      onChange={(e) => handleInputChange('author', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      value={articleData.visibility}
+                      onChange={(e) => handleInputChange('visibility', e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                     >
-                      <option value="">Select Author</option>
-                      <option value="Sarah Johnson">Sarah Johnson</option>
-                      <option value="Mike Chen">Mike Chen</option>
-                      <option value="Lisa Rodriguez">Lisa Rodriguez</option>
-                      <option value="David Park">David Park</option>
-                      <option value="Emma Wilson">Emma Wilson</option>
+                      <option value="public">Public</option>
+                      <option value="private">Private</option>
+                      <option value="password">Password Protected</option>
                     </select>
+                  </div>
+
+                  {/* Password (if visibility is password) */}
+                  {articleData.visibility === 'password' && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Password
+                      </label>
+                      <input
+                        type="password"
+                        value={articleData.password}
+                        onChange={(e) => handleInputChange('password', e.target.value)}
+                        placeholder="Enter password"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                      />
+                    </div>
+                  )}
+
+                  {/* Featured Article */}
+                  <div className="flex items-center">
+                    <input
+                      type="checkbox"
+                      id="featured"
+                      checked={articleData.featured}
+                      onChange={(e) => handleInputChange('featured', e.target.checked)}
+                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    />
+                    <label htmlFor="featured" className="ml-2 block text-sm text-gray-700">
+                      Featured article
+                    </label>
+                  </div>
+
+                  {/* Allow Comments */}
+                  <div className="flex items-center">
+                    <input
+                      type="checkbox"
+                      id="comments"
+                      checked={articleData.allowComments}
+                      onChange={(e) => handleInputChange('allowComments', e.target.checked)}
+                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    />
+                    <label htmlFor="comments" className="ml-2 block text-sm text-gray-700">
+                      Allow comments
+                    </label>
                   </div>
                 </div>
               </div>
