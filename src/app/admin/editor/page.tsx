@@ -482,10 +482,13 @@ const ContentEditor = () => {
 
                     {/* Content Editor */}
                     {isPreviewMode ? (
-                      <div className="border border-gray-300 rounded-md p-4 min-h-96 prose max-w-none bg-white">
-                        <div dangerouslySetInnerHTML={{
-                          __html: articleData.content.replace(/\n/g, '<br>')
-                        }} />
+                      <div className="border border-gray-300 rounded-md p-6 min-h-96 bg-white">
+                        <div
+                          className="prose prose-lg max-w-none"
+                          dangerouslySetInnerHTML={{
+                            __html: convertMarkdownToHtml(articleData.content || 'Start writing your content to see the preview...')
+                          }}
+                        />
                       </div>
                     ) : (
                       <div className="relative">
