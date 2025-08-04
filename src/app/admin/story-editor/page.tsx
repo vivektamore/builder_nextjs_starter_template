@@ -377,15 +377,24 @@ const StoryEditor = () => {
             </div>
             
             <div className="flex items-center space-x-3">
-              <button className="flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+              <button
+                onClick={() => setIsPlaying(!isPlaying)}
+                className="flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+              >
                 <EyeIcon className="h-4 w-4" />
                 <span>Preview</span>
               </button>
-              <button className="flex items-center space-x-2 px-4 py-2 text-sm text-blue-700 bg-blue-50 border border-blue-200 rounded-md hover:bg-blue-100">
+              <button
+                onClick={previewAmp}
+                className="flex items-center space-x-2 px-4 py-2 text-sm text-blue-700 bg-blue-50 border border-blue-200 rounded-md hover:bg-blue-100"
+              >
                 <ExternalLinkIcon className="h-4 w-4" />
                 <span>View AMP</span>
               </button>
-              <button className="flex items-center space-x-2 px-4 py-2 text-sm text-white bg-green-600 rounded-md hover:bg-green-700">
+              <button
+                onClick={publishToAmp}
+                className="flex items-center space-x-2 px-4 py-2 text-sm text-white bg-green-600 rounded-md hover:bg-green-700"
+              >
                 <CheckCircleIcon className="h-4 w-4" />
                 <span>Publish to AMP</span>
               </button>
