@@ -209,6 +209,8 @@ const ContentEditor = () => {
       const selectedText = textarea.value.substring(start, end)
 
       let formatText = ''
+      let needsNewLine = false
+
       switch (format) {
         case 'bold':
           formatText = `**${selectedText || 'bold text'}**`
@@ -221,40 +223,71 @@ const ContentEditor = () => {
           break
         case 'heading1':
           formatText = `# ${selectedText || 'Heading 1'}`
+          needsNewLine = true
           break
         case 'heading2':
           formatText = `## ${selectedText || 'Heading 2'}`
+          needsNewLine = true
           break
         case 'heading3':
           formatText = `### ${selectedText || 'Heading 3'}`
+          needsNewLine = true
           break
         case 'heading4':
           formatText = `#### ${selectedText || 'Heading 4'}`
+          needsNewLine = true
           break
         case 'paragraph':
           formatText = selectedText || 'Paragraph text'
           break
         case 'blockquote':
           formatText = `> ${selectedText || 'Quote text'}`
+          needsNewLine = true
           break
         case 'code':
           formatText = `\`${selectedText || 'code'}\``
           break
         case 'list':
           formatText = `- ${selectedText || 'List item'}`
+          needsNewLine = true
           break
         case 'numberedlist':
           formatText = `1. ${selectedText || 'Numbered item'}`
+          needsNewLine = true
           break
         case 'image':
           formatText = `![${selectedText || 'alt text'}](image-url)`
+          needsNewLine = true
           break
         default:
           formatText = selectedText
       }
 
+      // Add new lines for block elements if needed
+      if (needsNewLine) {
+        const beforeText = textarea.value.substring(0, start)
+        const afterText = textarea.value.substring(end)
+
+        // Add newline before if not at start of line
+        if (beforeText && !beforeText.endsWith('\n')) {
+          formatText = '\n' + formatText
+        }
+
+        // Add newline after if there's more content
+        if (afterText && !afterText.startsWith('\n')) {
+          formatText = formatText + '\n'
+        }
+      }
+
       const newContent = textarea.value.substring(0, start) + formatText + textarea.value.substring(end)
       handleInputChange('content', newContent)
+
+      // Set cursor position after the inserted text
+      setTimeout(() => {
+        const newPosition = start + formatText.length
+        textarea.setSelectionRange(newPosition, newPosition)
+        textarea.focus()
+      }, 0)
 
       // Reset dropdown to default
       setSelectedFormat('paragraph')
