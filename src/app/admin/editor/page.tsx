@@ -401,21 +401,40 @@ const ContentEditor = () => {
                       </div>
                     )}
 
+                    {/* Quick Tips */}
+                    {!isPreviewMode && (
+                      <div className="bg-blue-50 border border-blue-200 rounded-md p-3 text-sm">
+                        <div className="text-blue-800">
+                          <strong>Quick tips:</strong> Select text and use format dropdown • Use **bold**, *italic*, [link text](url) • Type markdown syntax directly
+                        </div>
+                      </div>
+                    )}
+
                     {/* Content Editor */}
                     {isPreviewMode ? (
-                      <div className="border border-gray-300 rounded-b-md p-4 min-h-96 prose max-w-none bg-white">
+                      <div className="border border-gray-300 rounded-md p-4 min-h-96 prose max-w-none bg-white">
                         <div dangerouslySetInnerHTML={{
                           __html: articleData.content.replace(/\n/g, '<br>')
                         }} />
                       </div>
                     ) : (
-                      <textarea
-                        name="content"
-                        placeholder="Start writing your article..."
-                        value={articleData.content}
-                        onChange={(e) => handleInputChange('content', e.target.value)}
-                        className="w-full min-h-96 px-4 py-3 border border-gray-300 rounded-b-md focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                      />
+                      <div className="relative">
+                        <textarea
+                          name="content"
+                          placeholder="Start writing your article... Use the format dropdown to add headings, lists, images, and more!"
+                          value={articleData.content}
+                          onChange={(e) => handleInputChange('content', e.target.value)}
+                          className="w-full min-h-96 px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none text-gray-900 placeholder-gray-500 text-base leading-relaxed"
+                          style={{
+                            fontSize: '16px',
+                            lineHeight: '1.6',
+                            color: '#1f2937'
+                          }}
+                        />
+                        <div className="absolute bottom-4 right-4 text-xs text-gray-400">
+                          Markdown supported
+                        </div>
+                      </div>
                     )}
 
                     {/* Word Count */}
