@@ -492,8 +492,144 @@ const AdminDashboard = () => {
           </div>
         )}
 
+        {/* Stories Tab - Web Stories Management */}
+        {activeTab === 'stories' && (
+          <div>
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900">Web Stories Management</h2>
+                <p className="text-gray-600 mt-1">Create and manage visual web stories for social media and engagement</p>
+              </div>
+              <a
+                href="/admin/story-editor"
+                className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center space-x-2 shadow-lg"
+              >
+                <PlusIcon className="h-5 w-5" />
+                <span>Create Story</span>
+              </a>
+            </div>
+
+            {/* Web Stories Table */}
+            <div className="bg-white rounded-lg border border-gray-200 overflow-hidden mb-8">
+              <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
+                <div className="grid grid-cols-8 gap-4 text-sm font-medium text-gray-700">
+                  <div>Story</div>
+                  <div>Status</div>
+                  <div>Slides</div>
+                  <div>Views</div>
+                  <div>Duration</div>
+                  <div>Created</div>
+                  <div>Actions</div>
+                  <div></div>
+                </div>
+              </div>
+
+              <div className="divide-y divide-gray-200">
+                {webStories.map((story) => (
+                  <div key={story.id} className="px-6 py-4 hover:bg-gray-50">
+                    <div className="grid grid-cols-8 gap-4 items-center">
+                      {/* Story Info */}
+                      <div className="flex items-center space-x-3">
+                        <div className={`w-8 h-8 ${story.iconBg} rounded text-white text-xs font-bold flex items-center justify-center`}>
+                          {story.icon}
+                        </div>
+                        <div>
+                          <p className="font-medium text-gray-900">{story.title}</p>
+                          <p className="text-sm text-gray-600">{story.subtitle}</p>
+                        </div>
+                      </div>
+
+                      {/* Status */}
+                      <div>
+                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                          story.status === 'published' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                        }`}>
+                          {story.status === 'published' ? 'Published' : 'Draft'}
+                        </span>
+                      </div>
+
+                      {/* Slides */}
+                      <div className="text-sm text-gray-900">
+                        {story.slides} slides
+                      </div>
+
+                      {/* Views */}
+                      <div className="text-sm text-gray-900">
+                        {story.views === '-' ? (
+                          <span className="text-gray-400">-</span>
+                        ) : (
+                          <div className="flex items-center">
+                            <EyeIcon className="h-4 w-4 text-gray-400 mr-1" />
+                            {story.views}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Duration */}
+                      <div className="text-sm text-gray-900">
+                        {story.duration}
+                      </div>
+
+                      {/* Created */}
+                      <div className="text-sm text-gray-600">
+                        {story.dateCreated}
+                      </div>
+
+                      {/* Actions */}
+                      <div className="flex items-center space-x-2">
+                        <button className="text-blue-600 hover:text-blue-700">
+                          <EditIcon className="h-4 w-4" />
+                        </button>
+                        <button className="text-gray-400 hover:text-gray-600">
+                          <div className="flex space-x-0.5">
+                            <div className="w-1 h-1 bg-current rounded-full"></div>
+                            <div className="w-1 h-1 bg-current rounded-full"></div>
+                            <div className="w-1 h-1 bg-current rounded-full"></div>
+                          </div>
+                        </button>
+                      </div>
+
+                      <div></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Stats Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-white rounded-lg border border-gray-200 p-6">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="text-sm font-medium text-gray-600">Total Stories</div>
+                  <ImageIcon className="h-5 w-5 text-gray-400" />
+                </div>
+                <div className="text-3xl font-bold text-gray-900 mb-1">3</div>
+                <div className="text-sm text-gray-500">Published 1 draft</div>
+              </div>
+
+              <div className="bg-white rounded-lg border border-gray-200 p-6">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="text-sm font-medium text-gray-600">Total Views</div>
+                  <EyeIcon className="h-5 w-5 text-gray-400" />
+                </div>
+                <div className="text-3xl font-bold text-gray-900 mb-1">20.7K</div>
+                <div className="text-sm text-gray-500">Across all stories</div>
+              </div>
+
+              <div className="bg-white rounded-lg border border-gray-200 p-6">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="text-sm font-medium text-gray-600">Avg. Duration</div>
+                  <BarChart3Icon className="h-5 w-5 text-gray-400" />
+                </div>
+                <div className="text-3xl font-bold text-gray-900 mb-1">1:11</div>
+                <div className="text-sm text-gray-500">Story completion time</div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Other tabs with placeholder content */}
-        {(activeTab !== 'overview' && activeTab !== 'articles') && (
+        {(activeTab !== 'overview' && activeTab !== 'articles' && activeTab !== 'stories') && (
           <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} Section
