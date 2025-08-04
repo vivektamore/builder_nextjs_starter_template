@@ -801,9 +801,31 @@ const StoryEditor = () => {
         {/* Right Panel - Slide Editor */}
         <div className="w-96 bg-white border-l border-gray-200 overflow-y-auto">
           <div className="p-6">
-            <h2 className="text-lg font-medium text-gray-900 mb-6">Edit Slide {currentSlideIndex + 1}</h2>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-lg font-medium text-gray-900">Edit Slide {currentSlideIndex + 1}</h2>
+              <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full uppercase">
+                {currentSlide.type}
+              </span>
+            </div>
 
             <div className="space-y-6">
+              {/* Slide Type */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Slide Type
+                </label>
+                <select
+                  value={currentSlide.type}
+                  onChange={(e) => updateSlide('type', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                >
+                  {slideTypes.map((type) => (
+                    <option key={type.value} value={type.value}>
+                      {type.label} - {type.description}
+                    </option>
+                  ))}
+                </select>
+              </div>
               {/* Background */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-3">Background</label>
