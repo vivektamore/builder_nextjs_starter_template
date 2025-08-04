@@ -396,28 +396,42 @@ const ContentEditor = () => {
             </div>
 
             {/* Featured Image */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+            <div className="bg-white rounded-lg border border-gray-200">
               <div className="p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Featured Image</h3>
-                
+                <div className="flex items-center mb-4">
+                  <ImageIcon className="h-5 w-5 text-gray-400 mr-2" />
+                  <h3 className="text-lg font-medium text-gray-900">Featured Image</h3>
+                </div>
+
                 {articleData.featuredImage ? (
-                  <div className="relative">
-                    <img
-                      src={articleData.featuredImage}
-                      alt="Featured"
-                      className="w-full h-64 object-cover rounded-lg"
-                    />
+                  <div className="space-y-3">
+                    <div className="relative">
+                      <img
+                        src={articleData.featuredImage}
+                        alt="Featured"
+                        className="w-full h-48 object-cover rounded-lg border border-gray-200"
+                      />
+                      <button
+                        onClick={() => handleInputChange('featuredImage', null)}
+                        className="absolute top-2 right-2 p-1 bg-red-600 text-white rounded-full hover:bg-red-700"
+                      >
+                        <XIcon className="h-3 w-3" />
+                      </button>
+                    </div>
+                    <p className="text-sm text-gray-500">Uploaded image above</p>
                     <button
                       onClick={() => handleInputChange('featuredImage', null)}
-                      className="absolute top-2 right-2 p-2 bg-red-600 text-white rounded-full hover:bg-red-700"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm text-gray-700 hover:bg-gray-50"
                     >
-                      <XIcon className="h-4 w-4" />
+                      Choose image
                     </button>
                   </div>
                 ) : (
-                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
-                    <UploadIcon className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                    <p className="text-gray-600 mb-4">Upload featured image</p>
+                  <div className="text-center py-8">
+                    <div className="w-16 h-16 mx-auto mb-4 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center">
+                      <ImageIcon className="h-8 w-8 text-gray-400" />
+                    </div>
+                    <p className="text-sm text-gray-500 mb-4">Uploaded image</p>
                     <input
                       type="file"
                       accept="image/*"
@@ -427,9 +441,9 @@ const ContentEditor = () => {
                     />
                     <label
                       htmlFor="featured-image"
-                      className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 cursor-pointer"
+                      className="w-full inline-block px-3 py-2 border border-gray-300 rounded-md text-sm text-gray-700 hover:bg-gray-50 cursor-pointer"
                     >
-                      Choose Image
+                      Choose image
                     </label>
                   </div>
                 )}
