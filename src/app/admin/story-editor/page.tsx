@@ -1155,8 +1155,8 @@ const StoryEditor = () => {
                     min="1000"
                     max="15000"
                     step="500"
-                    value={currentSlide.duration}
-                    onChange={(e) => updateSlide('duration', parseInt(e.target.value))}
+                    value={currentSlide.duration || 3000}
+                    onChange={(e) => updateSlide('duration', e.target.value)}
                     className="w-full"
                   />
                   <div className="flex justify-between items-center">
