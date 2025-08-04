@@ -598,38 +598,74 @@ const StoryEditor = () => {
           {/* Slides List */}
           <div className="border-t border-gray-200 p-4">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-medium text-gray-900">Slides</h3>
-              <button
-                onClick={addSlide}
-                className="text-blue-600 hover:text-blue-700"
-              >
-                <PlusIcon className="h-4 w-4" />
-              </button>
+              <h3 className="text-sm font-medium text-gray-900">Slides ({storyData.slides.length})</h3>
+              <div className="relative">
+                <button
+                  onClick={() => setShowSlideTypeMenu(!showSlideTypeMenu)}
+                  className="flex items-center space-x-1 text-blue-600 hover:text-blue-700"
+                >
+                  <PlusIcon className="h-4 w-4" />
+                  <span className="text-xs">Add</span>
+                </button>
+
+                {showSlideTypeMenu && (
+                  <div className="absolute right-0 top-8 w-56 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+                    <div className="p-2">
+                      {slideTypes.map((type) => (
+                        <button
+                          key={type.value}
+                          onClick={() => {
+                            addSlide(type.value as any)
+                            setShowSlideTypeMenu(false)
+                          }}
+                          className="w-full text-left p-3 rounded-md hover:bg-gray-50 border-b border-gray-100 last:border-b-0"
+                        >
+                          <div className="font-medium text-sm text-gray-900">{type.label}</div>
+                          <div className="text-xs text-gray-500 mt-1">{type.description}</div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
-            
+
             <div className="space-y-2">
               {storyData.slides.map((slide, index) => (
                 <div
                   key={slide.id}
                   onClick={() => setCurrentSlideIndex(index)}
-                  className={`flex items-center space-x-3 p-3 rounded-lg cursor-pointer ${
-                    index === currentSlideIndex ? 'bg-blue-50 border-2 border-blue-200' : 'bg-gray-50 hover:bg-gray-100'
+                  className={`flex items-center space-x-3 p-3 rounded-lg cursor-pointer transition-colors ${
+                    index === currentSlideIndex ? 'bg-blue-50 border-2 border-blue-200' : 'bg-gray-50 hover:bg-gray-100 border-2 border-transparent'
                   }`}
                 >
-                  <div 
-                    className="w-8 h-8 rounded border-2 border-gray-200"
-                    style={{ backgroundColor: slide.backgroundColor }}
-                  ></div>
+                  <div className="flex flex-col items-center">
+                    <div
+                      className="w-8 h-12 rounded border border-gray-300 relative overflow-hidden"
+                      style={{ backgroundColor: slide.backgroundColor }}
+                    >
+                      {slide.backgroundImage && (
+                        <img
+                          src={slide.backgroundImage}
+                          alt=""
+                          className="w-full h-full object-cover"
+                        />
+                      )}
+                    </div>
+                    <span className="text-xs text-gray-500 mt-1 uppercase">
+                      {slide.type}
+                    </span>
+                  </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-gray-900 truncate">
-                      Slide {index + 1}
+                      {slide.title}
                     </p>
                     <p className="text-xs text-gray-500 truncate">
-                      {slide.title}
+                      {slide.duration / 1000}s • {slide.type}
                     </p>
                   </div>
                   <div className="flex items-center space-x-1">
-                    <button className="text-gray-400 hover:text-gray-600">
+                    <button className="text-gray-400 hover:text-gray-600 p-1">
                       <MoveIcon className="h-3 w-3" />
                     </button>
                     {storyData.slides.length > 1 && (
@@ -638,7 +674,7 @@ const StoryEditor = () => {
                           e.stopPropagation()
                           removeSlide(index)
                         }}
-                        className="text-red-400 hover:text-red-600"
+                        className="text-red-400 hover:text-red-600 p-1"
                       >
                         <TrashIcon className="h-3 w-3" />
                       </button>
