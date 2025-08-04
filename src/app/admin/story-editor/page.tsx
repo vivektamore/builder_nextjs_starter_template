@@ -668,7 +668,7 @@ const StoryEditor = () => {
                       {slide.title}
                     </p>
                     <p className="text-xs text-gray-500 truncate">
-                      {slide.duration / 1000}s • {slide.type}
+                      {(slide.duration || 3000) / 1000}s • {slide.type}
                     </p>
                   </div>
                   <div className="flex items-center space-x-1">
