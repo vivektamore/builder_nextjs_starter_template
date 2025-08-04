@@ -259,101 +259,136 @@ const ContentEditor = () => {
           
           {/* Main Content Area */}
           <div className="lg:col-span-3 space-y-6">
-            
+
             {/* Article Content Section */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+            <div className="bg-white rounded-lg border border-gray-200">
               <div className="p-6">
-                <div className="space-y-6">
-                  {/* Title */}
+                <div className="flex items-center mb-4">
+                  <FileTextIcon className="h-5 w-5 text-gray-400 mr-2" />
+                  <h3 className="text-lg font-medium text-gray-900">Article Content</h3>
+                  <span className="text-sm text-gray-500 ml-2">Create your article with markdown support</span>
+                </div>
+
+                <div className="space-y-4">
+                  {/* Article Title */}
                   <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Article Title
+                    </label>
                     <input
                       type="text"
-                      placeholder="Article Title"
+                      placeholder="Enter article title"
                       value={articleData.title}
                       onChange={(e) => handleInputChange('title', e.target.value)}
-                      className="w-full text-3xl font-bold placeholder-gray-400 border-none outline-none resize-none"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg font-medium"
                     />
                   </div>
 
                   {/* Subtitle */}
                   <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Subtitle
+                    </label>
                     <input
                       type="text"
-                      placeholder="Subtitle (optional)"
+                      placeholder="Enter subtitle (optional)"
                       value={articleData.subtitle}
                       onChange={(e) => handleInputChange('subtitle', e.target.value)}
-                      className="w-full text-xl text-gray-600 placeholder-gray-400 border-none outline-none"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
 
-                  {/* Rich Text Editor Toolbar */}
-                  <div className="border-t border-b border-gray-200 py-3">
-                    <div className="flex items-center space-x-2">
-                      <button
-                        onClick={() => insertFormatting('bold')}
-                        className="p-2 rounded hover:bg-gray-100"
-                        title="Bold"
-                      >
-                        <BoldIcon className="h-4 w-4" />
-                      </button>
-                      <button
-                        onClick={() => insertFormatting('italic')}
-                        className="p-2 rounded hover:bg-gray-100"
-                        title="Italic"
-                      >
-                        <ItalicIcon className="h-4 w-4" />
-                      </button>
-                      <button
-                        onClick={() => insertFormatting('link')}
-                        className="p-2 rounded hover:bg-gray-100"
-                        title="Link"
-                      >
-                        <LinkIcon className="h-4 w-4" />
-                      </button>
-                      <button
-                        onClick={() => insertFormatting('heading')}
-                        className="p-2 rounded hover:bg-gray-100"
-                        title="Heading"
-                      >
-                        <span className="font-bold text-sm">H</span>
-                      </button>
-                      <button
-                        onClick={() => insertFormatting('list')}
-                        className="p-2 rounded hover:bg-gray-100"
-                        title="List"
-                      >
-                        <ListIcon className="h-4 w-4" />
-                      </button>
-                      <button className="p-2 rounded hover:bg-gray-100" title="Image">
-                        <ImageIcon className="h-4 w-4" />
-                      </button>
+                  {/* Article Content */}
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <label className="block text-sm font-medium text-gray-700">
+                        Article Content
+                      </label>
+                      <div className="flex items-center space-x-2">
+                        <button
+                          onClick={() => setIsPreviewMode(!isPreviewMode)}
+                          className="text-sm text-blue-600 hover:text-blue-700"
+                        >
+                          {isPreviewMode ? 'Edit' : 'Preview'}
+                        </button>
+                      </div>
                     </div>
-                  </div>
 
-                  {/* Content Editor */}
-                  {isPreviewMode ? (
-                    <div className="min-h-96 prose max-w-none">
-                      <div dangerouslySetInnerHTML={{ 
-                        __html: articleData.content.replace(/\n/g, '<br>') 
-                      }} />
-                    </div>
-                  ) : (
-                    <textarea
-                      name="content"
-                      placeholder="Start writing your article..."
-                      value={articleData.content}
-                      onChange={(e) => handleInputChange('content', e.target.value)}
-                      className="w-full min-h-96 placeholder-gray-400 border-none outline-none resize-none text-lg leading-relaxed"
-                    />
-                  )}
+                    {/* Rich Text Editor Toolbar */}
+                    {!isPreviewMode && (
+                      <div className="border border-gray-300 rounded-t-md bg-gray-50 px-3 py-2">
+                        <div className="flex items-center space-x-1">
+                          <button
+                            onClick={() => insertFormatting('bold')}
+                            className="p-1.5 rounded hover:bg-gray-200"
+                            title="Bold"
+                          >
+                            <BoldIcon className="h-4 w-4" />
+                          </button>
+                          <button
+                            onClick={() => insertFormatting('italic')}
+                            className="p-1.5 rounded hover:bg-gray-200"
+                            title="Italic"
+                          >
+                            <ItalicIcon className="h-4 w-4" />
+                          </button>
+                          <button
+                            onClick={() => insertFormatting('link')}
+                            className="p-1.5 rounded hover:bg-gray-200"
+                            title="Link"
+                          >
+                            <LinkIcon className="h-4 w-4" />
+                          </button>
+                          <button
+                            onClick={() => insertFormatting('heading')}
+                            className="p-1.5 rounded hover:bg-gray-200"
+                            title="Heading"
+                          >
+                            <span className="font-bold text-sm">H</span>
+                          </button>
+                          <button
+                            onClick={() => insertFormatting('list')}
+                            className="p-1.5 rounded hover:bg-gray-200"
+                            title="List"
+                          >
+                            <ListIcon className="h-4 w-4" />
+                          </button>
+                          <button className="p-1.5 rounded hover:bg-gray-200" title="Image">
+                            <ImageIcon className="h-4 w-4" />
+                          </button>
+                          <div className="border-l border-gray-300 mx-2 h-6"></div>
+                          <button className="p-1.5 rounded hover:bg-gray-200" title="HTML">
+                            <span className="text-xs font-mono">&lt;/&gt;</span>
+                          </button>
+                        </div>
+                      </div>
+                    )}
 
-                  {/* Word Count */}
-                  <div className="flex items-center justify-between text-sm text-gray-500 pt-4 border-t border-gray-200">
-                    <div>
-                      {wordCount} words, {charCount} characters
-                    </div>
-                    <div>
-                      Estimated read time: {Math.max(1, Math.ceil(wordCount / 200))} min
+                    {/* Content Editor */}
+                    {isPreviewMode ? (
+                      <div className="border border-gray-300 rounded-b-md p-4 min-h-96 prose max-w-none bg-white">
+                        <div dangerouslySetInnerHTML={{
+                          __html: articleData.content.replace(/\n/g, '<br>')
+                        }} />
+                      </div>
+                    ) : (
+                      <textarea
+                        name="content"
+                        placeholder="Start writing your article..."
+                        value={articleData.content}
+                        onChange={(e) => handleInputChange('content', e.target.value)}
+                        className="w-full min-h-96 px-4 py-3 border border-gray-300 rounded-b-md focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                      />
+                    )}
+
+                    {/* Word Count */}
+                    <div className="flex items-center justify-between text-sm text-gray-500 mt-2">
+                      <div>
+                        {wordCount} words • {charCount} characters
+                      </div>
+                      <div>
+                        Estimated reading time: {Math.max(1, Math.ceil(wordCount / 200))} minutes
+                      </div>
                     </div>
                   </div>
                 </div>
