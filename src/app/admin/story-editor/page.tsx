@@ -1048,8 +1048,8 @@ const StoryEditor = () => {
                       <label className="block text-xs text-gray-600 mb-1">Size</label>
                       <input
                         type="number"
-                        value={currentSlide.fontSize}
-                        onChange={(e) => updateSlide('fontSize', parseInt(e.target.value))}
+                        value={currentSlide.fontSize || 24}
+                        onChange={(e) => updateSlide('fontSize', e.target.value)}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                         min="12"
                         max="72"
