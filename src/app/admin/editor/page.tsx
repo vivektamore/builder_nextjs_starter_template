@@ -667,13 +667,13 @@ const ContentEditor = () => {
             </div>
 
             {/* Tags */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+            <div className="bg-white rounded-lg border border-gray-200">
               <div className="p-6">
                 <div className="flex items-center mb-4">
                   <TagIcon className="h-5 w-5 text-gray-400 mr-2" />
-                  <h3 className="text-lg font-semibold text-gray-900">Tags</h3>
+                  <h3 className="text-lg font-medium text-gray-900">Tags</h3>
                 </div>
-                
+
                 <div className="space-y-3">
                   <div className="flex">
                     <input
@@ -682,32 +682,69 @@ const ContentEditor = () => {
                       onChange={(e) => setNewTag(e.target.value)}
                       onKeyPress={(e) => e.key === 'Enter' && handleAddTag()}
                       placeholder="Add tag"
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-l-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-l-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                     />
                     <button
                       onClick={handleAddTag}
-                      className="px-3 py-2 bg-blue-600 text-white rounded-r-md hover:bg-blue-700"
+                      className="px-4 py-2 bg-gray-900 text-white rounded-r-md hover:bg-gray-800 text-sm font-medium"
                     >
-                      <PlusIcon className="h-4 w-4" />
+                      Add
                     </button>
                   </div>
-                  
+
                   <div className="flex flex-wrap gap-2">
                     {articleData.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
+                        className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700 border"
                       >
                         {tag}
                         <button
                           onClick={() => handleRemoveTag(tag)}
-                          className="ml-1 hover:text-blue-600"
+                          className="ml-2 hover:text-red-600"
                         >
                           <XIcon className="h-3 w-3" />
                         </button>
                       </span>
                     ))}
                   </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Author */}
+            <div className="bg-white rounded-lg border border-gray-200">
+              <div className="p-6">
+                <div className="flex items-center mb-4">
+                  <UserIcon className="h-5 w-5 text-gray-400 mr-2" />
+                  <h3 className="text-lg font-medium text-gray-900">Author</h3>
+                </div>
+
+                <div className="space-y-3">
+                  <select
+                    value={articleData.author}
+                    onChange={(e) => handleInputChange('author', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                  >
+                    <option value="">Select Author</option>
+                    <option value="Alex Chen">Alex Chen</option>
+                    <option value="Sarah Johnson">Sarah Johnson</option>
+                    <option value="Mike Rodriguez">Mike Rodriguez</option>
+                    <option value="Lisa Park">Lisa Park</option>
+                    <option value="David Wilson">David Wilson</option>
+                  </select>
+
+                  {articleData.author && (
+                    <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-md">
+                      <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-medium">
+                        {articleData.author.charAt(0)}
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">{articleData.author}</p>
+                        <p className="text-sm text-gray-500">Content creator specialist</p>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
