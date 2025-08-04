@@ -76,6 +76,47 @@ const ContentEditor = () => {
   const [ampUrlValid, setAmpUrlValid] = useState<boolean | null>(null)
   const [selectedFormat, setSelectedFormat] = useState('paragraph')
 
+  // Convert markdown to HTML for preview
+  const convertMarkdownToHtml = (markdown: string) => {
+    let html = markdown
+
+    // Convert headings
+    html = html.replace(/^# (.*$)/gm, '<h1 class="text-3xl font-bold text-gray-900 mb-4 mt-6">$1</h1>')
+    html = html.replace(/^## (.*$)/gm, '<h2 class="text-2xl font-bold text-gray-900 mb-3 mt-5">$1</h2>')
+    html = html.replace(/^### (.*$)/gm, '<h3 class="text-xl font-bold text-gray-900 mb-3 mt-4">$1</h3>')
+    html = html.replace(/^#### (.*$)/gm, '<h4 class="text-lg font-bold text-gray-900 mb-2 mt-3">$1</h4>')
+
+    // Convert bold text
+    html = html.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold">$1</strong>')
+
+    // Convert italic text
+    html = html.replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
+
+    // Convert links
+    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-600 hover:underline">$1</a>')
+
+    // Convert blockquotes
+    html = html.replace(/^> (.*$)/gm, '<blockquote class="border-l-4 border-blue-500 pl-4 py-2 my-4 bg-gray-50 italic">$1</blockquote>')
+
+    // Convert code
+    html = html.replace(/`([^`]+)`/g, '<code class="bg-gray-100 px-2 py-1 rounded text-sm font-mono">$1</code>')
+
+    // Convert bullet lists
+    html = html.replace(/^- (.*$)/gm, '<li class="ml-4 mb-1">• $1</li>')
+
+    // Convert numbered lists
+    html = html.replace(/^\d+\. (.*$)/gm, '<li class="ml-4 mb-1 list-decimal">$1</li>')
+
+    // Convert line breaks
+    html = html.replace(/\n/g, '<br>')
+
+    // Wrap list items in ul/ol tags (simplified)
+    html = html.replace(/(<li class="ml-4 mb-1">• .*?<\/li>)/g, '<ul class="mb-4">$1</ul>')
+    html = html.replace(/(<li class="ml-4 mb-1 list-decimal">.*?<\/li>)/g, '<ol class="mb-4 list-decimal ml-6">$1</ol>')
+
+    return html
+  }
+
   // Calculate word and character count
   useEffect(() => {
     const words = articleData.content.trim().split(/\s+/).filter(word => word.length > 0).length
