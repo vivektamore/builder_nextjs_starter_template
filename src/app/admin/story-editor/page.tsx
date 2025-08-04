@@ -482,16 +482,6 @@ const StoryEditor = () => {
               <div className="pt-4 border-t border-gray-200">
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-gray-700">Enable AMP Auto Ads</span>
-                    <input
-                      type="checkbox"
-                      checked={storyData.enableAutoAds}
-                      onChange={(e) => setStoryData({ ...storyData, enableAutoAds: e.target.checked })}
-                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                    />
-                  </div>
-
-                  <div className="flex items-center justify-between">
                     <span className="text-sm font-medium text-gray-700">Raw AMP Publication</span>
                     <input
                       type="checkbox"
@@ -519,6 +509,88 @@ const StoryEditor = () => {
                     </div>
                   </div>
                 </div>
+              </div>
+
+              {/* AMP Auto Ads */}
+              <div className="pt-4 border-t border-gray-200">
+                <div className="flex items-center justify-between mb-4">
+                  <h4 className="text-sm font-medium text-gray-900">AMP Auto Ads</h4>
+                  <input
+                    type="checkbox"
+                    checked={storyData.ampAutoAds.enabled}
+                    onChange={(e) => setStoryData({
+                      ...storyData,
+                      ampAutoAds: { ...storyData.ampAutoAds, enabled: e.target.checked }
+                    })}
+                    disabled={storyData.slides.length < 8}
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded disabled:opacity-50"
+                  />
+                </div>
+
+                {storyData.slides.length < 8 && (
+                  <p className="text-xs text-yellow-600 mb-3">
+                    Auto ads require 8 or more slides. Current: {storyData.slides.length}
+                  </p>
+                )}
+
+                {storyData.ampAutoAds.enabled && (
+                  <div className="space-y-3">
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-1">
+                        Network Type
+                      </label>
+                      <select
+                        value={storyData.ampAutoAds.networkType}
+                        onChange={(e) => setStoryData({
+                          ...storyData,
+                          ampAutoAds: { ...storyData.ampAutoAds, networkType: e.target.value }
+                        })}
+                        className="w-full px-2 py-1 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-blue-500"
+                      >
+                        <option value="adsense">AdSense</option>
+                        <option value="doubleclick">DoubleClick</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-1">
+                        Ad Client ID
+                      </label>
+                      <input
+                        type="text"
+                        value={storyData.ampAutoAds.adAttributes.dataAdClient}
+                        onChange={(e) => setStoryData({
+                          ...storyData,
+                          ampAutoAds: {
+                            ...storyData.ampAutoAds,
+                            adAttributes: { ...storyData.ampAutoAds.adAttributes, dataAdClient: e.target.value }
+                          }
+                        })}
+                        placeholder="ca-pub-XXXXXXX"
+                        className="w-full px-2 py-1 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-blue-500"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-1">
+                        Ad Slot ID
+                      </label>
+                      <input
+                        type="text"
+                        value={storyData.ampAutoAds.adAttributes.dataAdSlot}
+                        onChange={(e) => setStoryData({
+                          ...storyData,
+                          ampAutoAds: {
+                            ...storyData.ampAutoAds,
+                            adAttributes: { ...storyData.ampAutoAds.adAttributes, dataAdSlot: e.target.value }
+                          }
+                        })}
+                        placeholder="1234567890"
+                        className="w-full px-2 py-1 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-blue-500"
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
