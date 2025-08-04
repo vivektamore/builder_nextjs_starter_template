@@ -867,7 +867,7 @@ const StoryEditor = () => {
               {/* Content */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Story Slide Title
+                  {currentSlide.type === 'cover' ? 'Headline' : 'Title'}
                 </label>
                 <input
                   type="text"
@@ -877,14 +877,29 @@ const StoryEditor = () => {
                 />
               </div>
 
+              {/* Subtitle (Cover and CTA only) */}
+              {(currentSlide.type === 'cover' || currentSlide.type === 'cta') && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Subtitle
+                  </label>
+                  <input
+                    type="text"
+                    value={currentSlide.subtitle || ''}
+                    onChange={(e) => updateSlide('subtitle', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                  />
+                </div>
+              )}
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Description
+                  {currentSlide.type === 'text' ? 'Content' : 'Description'}
                 </label>
                 <textarea
                   value={currentSlide.description}
                   onChange={(e) => updateSlide('description', e.target.value)}
-                  rows={3}
+                  rows={currentSlide.type === 'text' ? 5 : 3}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                 />
               </div>
