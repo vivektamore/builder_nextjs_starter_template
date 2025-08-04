@@ -451,49 +451,59 @@ const ContentEditor = () => {
             </div>
 
             {/* SEO & Meta Data */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+            <div className="bg-white rounded-lg border border-gray-200">
               <div className="p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">SEO & Meta Data</h3>
+                <div className="flex items-center mb-4">
+                  <FileTextIcon className="h-5 w-5 text-gray-400 mr-2" />
+                  <h3 className="text-lg font-medium text-gray-900">SEO & Meta Data</h3>
+                </div>
+                <p className="text-sm text-gray-500 mb-4">Optimize search and social engines</p>
+
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      SEO Title ({articleData.seoTitle.length}/60)
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      SEO Title
                     </label>
                     <input
                       type="text"
                       value={articleData.seoTitle}
                       onChange={(e) => handleInputChange('seoTitle', e.target.value)}
                       maxLength={60}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="SEO-optimized title (60 characters)"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                     />
+                    <div className="text-xs text-gray-500 mt-1">{articleData.seoTitle.length}/60 characters</div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Meta Description ({articleData.metaDescription.length}/160)
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Meta Description
                     </label>
                     <textarea
                       value={articleData.metaDescription}
                       onChange={(e) => handleInputChange('metaDescription', e.target.value)}
                       maxLength={160}
                       rows={3}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="Search engine description (150-160 characters)"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                     />
+                    <div className="text-xs text-gray-500 mt-1">{articleData.metaDescription.length}/160 characters</div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
                       URL Slug
                     </label>
                     <div className="flex">
                       <span className="inline-flex items-center px-3 py-2 border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm rounded-l-md">
-                        /article/
+                        article.site.com/
                       </span>
                       <input
                         type="text"
                         value={articleData.urlSlug}
                         onChange={(e) => handleInputChange('urlSlug', e.target.value)}
-                        className="flex-1 px-3 py-2 border border-gray-300 rounded-r-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="article-url-slug"
+                        className="flex-1 px-3 py-2 border border-gray-300 rounded-r-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                       />
                     </div>
                   </div>
