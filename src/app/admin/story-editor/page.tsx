@@ -83,22 +83,43 @@ const StoryEditor = () => {
     description: 'A compelling story about...',
     category: 'SEO',
     author: 'Alex Chen',
-    enableAutoAds: true,
+    poster: '',
+    publisherName: 'Search Engine Journal',
+    publisherLogoSrc: '',
+    enableAutoAds: false,
     rawAmpPublication: true,
+    ampAutoAds: {
+      enabled: false,
+      adAttributes: {
+        type: 'adsense',
+        dataAdClient: 'ca-pub-XXXXXXX',
+        dataAdSlot: '1234567890'
+      },
+      networkType: 'adsense'
+    },
     slides: [
       {
         id: '1',
+        type: 'cover',
         title: 'Your Story Title',
-        description: 'Engaging description',
+        subtitle: 'Engaging subtitle',
+        description: 'Start your story here...',
         backgroundColor: '#6366f1',
-        showCta: true,
+        showCta: false,
         ctaLabel: 'Get Started',
         ctaUrl: '#',
+        ctaOpenNewTab: true,
+        textPosition: 'center',
+        textAlign: 'center',
+        textColor: '#ffffff',
         fontFamily: 'Inter',
         fontSize: 24,
         fontWeight: 'bold',
         animation: 'fade',
-        duration: 3000
+        duration: 3000,
+        muteAudio: false,
+        pushNotification: false,
+        autoPlay: true
       }
     ]
   })
