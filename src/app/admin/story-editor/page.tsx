@@ -172,7 +172,13 @@ const StoryEditor = () => {
   const currentSlide = storyData.slides[currentSlideIndex] || storyData.slides[0]
 
   const updateSlide = (field: string, value: any) => {
-    const updatedSlides = storyData.slides.map((slide, index) => 
+    // Handle numeric fields to prevent NaN
+    if (field === 'fontSize' || field === 'duration') {
+      const numValue = typeof value === 'string' ? parseInt(value) : value
+      value = isNaN(numValue) ? (field === 'fontSize' ? 24 : 3000) : numValue
+    }
+
+    const updatedSlides = storyData.slides.map((slide, index) =>
       index === currentSlideIndex ? { ...slide, [field]: value } : slide
     )
     setStoryData({ ...storyData, slides: updatedSlides })
