@@ -77,6 +77,7 @@ const StoryEditor = () => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
   const [previewMode, setPreviewMode] = useState('mobile') // mobile or desktop
+  const [showSlideTypeMenu, setShowSlideTypeMenu] = useState(false)
   
   const [storyData, setStoryData] = useState<StoryData>({
     title: 'Your Story Title',
