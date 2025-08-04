@@ -13,6 +13,20 @@ interface Article {
   category: string
 }
 
+interface WebStory {
+  id: string
+  icon: string
+  iconBg: string
+  label: string
+  title: string
+  subtitle: string
+  status: 'published' | 'draft'
+  slides: number
+  views: string
+  duration: string
+  dateCreated: string
+}
+
 const AdminDashboard = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [username, setUsername] = useState('')
