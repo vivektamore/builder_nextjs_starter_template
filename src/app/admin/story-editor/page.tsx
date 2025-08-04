@@ -265,6 +265,98 @@ const StoryEditor = () => {
     }
   }
 
+  const generateAmpHtml = () => {
+    const ampHtml = `<!doctype html>
+<html ⚡>
+<head>
+  <meta charset="utf-8">
+  <title>${storyData.title}</title>
+  <link rel="canonical" href="self.html">
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+  <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+  <script async src="https://cdn.ampproject.org/v0.js"></script>
+  <script async custom-element="amp-story" src="https://cdn.ampproject.org/v0/amp-story-1.0.js"></script>
+  ${storyData.ampAutoAds.enabled ? '<script async custom-element="amp-story-auto-ads" src="https://cdn.ampproject.org/v0/amp-story-auto-ads-0.1.js"></script>' : ''}
+</head>
+<body>
+  <amp-story standalone
+    title="${storyData.title}"
+    publisher="${storyData.publisherName}"
+    publisher-logo-src="${storyData.publisherLogoSrc || 'https://example.com/logo.png'}"
+    poster-portrait-src="${storyData.poster || 'https://example.com/poster.png'}">
+
+    ${storyData.ampAutoAds.enabled && storyData.slides.length >= 8 ? `
+    <amp-story-auto-ads>
+      <script type="application/json">
+      {
+        "ad-attributes": {
+          "type": "${storyData.ampAutoAds.adAttributes.type}",
+          "data-ad-client": "${storyData.ampAutoAds.adAttributes.dataAdClient}",
+          "data-ad-slot": "${storyData.ampAutoAds.adAttributes.dataAdSlot}"
+        }
+      }
+      </script>
+    </amp-story-auto-ads>` : ''}
+
+    ${storyData.slides.map((slide, index) => `
+    <amp-story-page id="slide-${index}">
+      <amp-story-grid-layer template="fill">
+        ${slide.backgroundImage ?
+          `<amp-img src="${slide.backgroundImage}" width="720" height="1280" layout="responsive"></amp-img>` :
+          `<div style="background-color: ${slide.backgroundColor}; width: 100%; height: 100%;"></div>`
+        }
+      </amp-story-grid-layer>
+
+      <amp-story-grid-layer template="vertical" style="align-content: ${slide.textPosition};">
+        <div style="text-align: ${slide.textAlign}; color: ${slide.textColor}; font-family: ${slide.fontFamily};">
+          ${slide.type === 'cover' && slide.subtitle ? `<h2 style="font-size: ${slide.fontSize - 8}px; font-weight: normal; margin: 0;">${slide.subtitle}</h2>` : ''}
+          <h1 style="font-size: ${slide.fontSize}px; font-weight: ${slide.fontWeight}; margin: 0;">${slide.title}</h1>
+          ${slide.description ? `<p style="font-size: ${slide.fontSize - 6}px; margin: 16px 0;">${slide.description}</p>` : ''}
+        </div>
+      </amp-story-grid-layer>
+
+      ${slide.showCta && slide.ctaLabel ? `
+      <amp-story-cta-layer>
+        <a href="${slide.ctaUrl}" ${slide.ctaOpenNewTab ? 'target="_blank"' : ''}
+           style="background: #ffffff; color: #000; padding: 12px 24px; border-radius: 25px; text-decoration: none; font-weight: bold;">
+          ${slide.ctaLabel}
+        </a>
+      </amp-story-cta-layer>` : ''}
+    </amp-story-page>`).join('')}
+  </amp-story>
+</body>
+</html>`
+    return ampHtml
+  }
+
+  const validateAmp = async () => {
+    // In a real implementation, you would call the AMP validator API
+    // For now, we'll just simulate validation
+    return storyData.rawAmpPublication && storyData.slides.length > 0
+  }
+
+  const publishToAmp = () => {
+    const ampHtml = generateAmpHtml()
+    const blob = new Blob([ampHtml], { type: 'text/html' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `${storyData.title.replace(/\s+/g, '-').toLowerCase()}.html`
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    URL.revokeObjectURL(url)
+  }
+
+  const previewAmp = () => {
+    const ampHtml = generateAmpHtml()
+    const newWindow = window.open()
+    if (newWindow) {
+      newWindow.document.write(ampHtml)
+      newWindow.document.close()
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Top Header */}
