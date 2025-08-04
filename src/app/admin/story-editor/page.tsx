@@ -177,24 +177,72 @@ const StoryEditor = () => {
     setStoryData({ ...storyData, slides: updatedSlides })
   }
 
-  const addSlide = () => {
-    const newSlide: Slide = {
+  const createSlideTemplate = (type: 'cover' | 'text' | 'media' | 'cta'): Slide => {
+    const baseSlide = {
       id: `slide-${Date.now()}`,
-      title: 'New Slide',
-      description: 'Slide description',
+      type,
       backgroundColor: '#6366f1',
-      showCta: false,
-      ctaLabel: '',
-      ctaUrl: '',
-      fontFamily: 'Inter',
+      textPosition: 'center' as const,
+      textAlign: 'center' as const,
+      textColor: '#ffffff',
+      fontFamily: 'Roboto',
       fontSize: 24,
       fontWeight: 'bold',
-      animation: 'fade',
-      duration: 3000
+      animation: 'fade-in',
+      duration: 4000,
+      muteAudio: false,
+      pushNotification: false,
+      autoPlay: true,
+      ctaOpenNewTab: true
     }
-    setStoryData({ 
-      ...storyData, 
-      slides: [...storyData.slides, newSlide] 
+
+    switch (type) {
+      case 'cover':
+        return {
+          ...baseSlide,
+          title: 'Cover Title',
+          subtitle: 'Engaging subtitle',
+          description: 'Cover description',
+          showCta: false,
+          fontSize: 32
+        }
+      case 'text':
+        return {
+          ...baseSlide,
+          title: 'Text Slide',
+          description: 'Add your main text content here...',
+          showCta: false,
+          fontSize: 20
+        }
+      case 'media':
+        return {
+          ...baseSlide,
+          title: 'Media Title',
+          description: 'Media description',
+          showCta: false,
+          textPosition: 'bottom',
+          fontSize: 18
+        }
+      case 'cta':
+        return {
+          ...baseSlide,
+          title: 'Call to Action',
+          description: 'Compelling CTA description',
+          showCta: true,
+          ctaLabel: 'Take Action',
+          ctaUrl: 'https://example.com',
+          fontSize: 20
+        }
+      default:
+        return { ...baseSlide, title: 'New Slide', description: 'Slide description', showCta: false }
+    }
+  }
+
+  const addSlide = (type: 'cover' | 'text' | 'media' | 'cta' = 'text') => {
+    const newSlide = createSlideTemplate(type)
+    setStoryData({
+      ...storyData,
+      slides: [...storyData.slides, newSlide]
     })
     setCurrentSlideIndex(storyData.slides.length)
   }
