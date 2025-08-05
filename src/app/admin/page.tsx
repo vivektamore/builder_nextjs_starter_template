@@ -113,6 +113,100 @@ const AdminDashboard = () => {
     }
   ]
 
+  // Sample ebook data
+  const sampleEbooks: Ebook[] = [
+    {
+      id: '1',
+      title: 'The Complete SEO Guide 2024',
+      subtitle: 'Master SEO from beginner to advanced',
+      author: 'Alex Chen',
+      authorBio: 'SEO Expert with 10+ years of experience',
+      category: 'SEO Fundamentals',
+      description: 'A comprehensive guide covering all aspects of SEO including technical optimization, content strategy, and link building.',
+      tags: ['SEO', 'Digital Marketing', 'Technical SEO'],
+      pages: 250,
+      publishDate: '1/15/2024',
+      status: 'published',
+      downloads: '12.5K',
+      rating: 4.9,
+      featured: true,
+      thumbnail: 'https://cdn.builder.io/api/v1/image/assets%2F5da5723087014f18a754f9207f7a5c9c%2Fa3cc58c1140342b8beed150e84750f87?format=webp&width=800'
+    },
+    {
+      id: '2',
+      title: 'Local SEO Mastery',
+      subtitle: 'Dominate local search results',
+      author: 'Sarah Rodriguez',
+      authorBio: 'Local SEO specialist and consultant',
+      category: 'Local SEO',
+      description: 'Learn how to optimize your business for local search and attract more customers from your area.',
+      tags: ['Local SEO', 'Google My Business', 'Local Marketing'],
+      pages: 180,
+      publishDate: '1/10/2024',
+      status: 'published',
+      downloads: '8.7K',
+      rating: 4.8,
+      featured: false,
+      thumbnail: 'https://cdn.builder.io/api/v1/image/assets%2F5da5723087014f18a754f9207f7a5c9c%2Fddea1a1d892844f48dc773c293f72ce0?format=webp&width=800'
+    },
+    {
+      id: '3',
+      title: 'Content SEO Blueprint',
+      subtitle: 'Create content that ranks',
+      author: 'David Kim',
+      authorBio: 'Content strategist and SEO consultant',
+      category: 'Content Marketing',
+      description: 'Discover the secrets to creating SEO-optimized content that drives traffic and converts visitors.',
+      tags: ['Content Marketing', 'SEO Writing', 'Keyword Research'],
+      pages: 200,
+      publishDate: '1/3/2024',
+      status: 'published',
+      downloads: '15.2K',
+      rating: 4.7,
+      featured: true,
+      thumbnail: 'https://cdn.builder.io/api/v1/image/assets%2F5da5723087014f18a754f9207f7a5c9c%2F3f60455e8cbd4d92b866b72755f365c0?format=webp&width=800'
+    },
+    {
+      id: '4',
+      title: 'Technical SEO Handbook',
+      subtitle: 'Advanced technical optimization',
+      author: 'Emily Zhang',
+      authorBio: 'Technical SEO expert and web developer',
+      category: 'Technical SEO',
+      description: 'Master technical SEO concepts including site speed, crawlability, and structured data.',
+      tags: ['Technical SEO', 'Core Web Vitals', 'Site Speed'],
+      pages: 300,
+      publishDate: '12/20/2023',
+      status: 'published',
+      downloads: '9.8K',
+      rating: 4.9,
+      featured: false,
+      thumbnail: 'https://cdn.builder.io/api/v1/image/assets%2F5da5723087014f18a754f9207f7a5c9c%2F08de6c12b1124418966bd4c1da669674?format=webp&width=800'
+    },
+    {
+      id: '5',
+      title: 'E-commerce SEO Guide',
+      subtitle: 'Optimize your online store',
+      author: 'Marcus Johnson',
+      authorBio: 'E-commerce SEO specialist',
+      category: 'E-commerce SEO',
+      description: 'Complete guide to optimizing e-commerce websites for search engines and increasing online sales.',
+      tags: ['E-commerce', 'Product SEO', 'Online Sales'],
+      pages: 220,
+      publishDate: '2/1/2024',
+      status: 'draft',
+      downloads: '0',
+      rating: 0,
+      featured: false,
+      thumbnail: 'https://cdn.builder.io/api/v1/image/assets%2F5da5723087014f18a754f9207f7a5c9c%2F2fec193be2c64e87a751513836490d05?format=webp&width=800'
+    }
+  ]
+
+  // Initialize ebooks state with sample data
+  if (ebooks.length === 0 && isLoggedIn) {
+    setEbooks(sampleEbooks)
+  }
+
   // Sample admin data
   const adminArticles: Article[] = [
     {
