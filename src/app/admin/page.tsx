@@ -27,6 +27,26 @@ interface WebStory {
   dateCreated: string
 }
 
+interface Ebook {
+  id: string
+  title: string
+  subtitle: string
+  author: string
+  authorBio: string
+  category: string
+  description: string
+  tags: string[]
+  pages: number
+  publishDate: string
+  status: 'published' | 'draft'
+  downloads: string
+  rating: number
+  featured: boolean
+  thumbnail: string
+  pdfUrl?: string
+  coverImage?: string
+}
+
 const AdminDashboard = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [username, setUsername] = useState('')
