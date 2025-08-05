@@ -1,103 +1,161 @@
-import Image from "next/image";
+import Layout from '@/components/layout/Layout'
+import ArticleCard from '@/components/ui/ArticleCard'
+import CategoryCard from '@/components/ui/CategoryCard'
+import { BannerAd, MobileBannerAd, SquareAd } from '@/components/ads/GoogleAds'
+import { getFeaturedArticles, getTrendingArticles, getLatestArticles, categories } from '@/lib/data'
+import { TrendingUpIcon, FireIcon, ClockIcon } from 'lucide-react'
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const featuredArticles = getFeaturedArticles()
+  const trendingArticles = getTrendingArticles()
+  const latestArticles = getLatestArticles(6)
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+  return (
+    <Layout>
+      <div className="bg-gray-50">
+        {/* Hero Section with Featured Articles */}
+        <section className="bg-white shadow-sm">
+          <div className="container mx-auto px-4 py-12">
+            <div className="mb-8">
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                Digital Marketing News & Insights
+              </h1>
+              <p className="text-xl text-gray-600 max-w-3xl">
+                Stay ahead of the curve with the latest SEO strategies, content marketing tips, 
+                and digital marketing news from industry experts.
+              </p>
+            </div>
+
+            {/* Featured Articles Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {featuredArticles.map((article) => (
+                <ArticleCard
+                  key={article.id}
+                  title={article.title}
+                  excerpt={article.excerpt}
+                  author={article.author}
+                  publishDate={article.publishDate}
+                  readTime={article.readTime}
+                  imageUrl={article.imageUrl}
+                  slug={article.slug}
+                  category={article.category}
+                  featured={true}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Categories Section */}
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                Explore Categories
+              </h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Dive deep into specific areas of digital marketing with our comprehensive category guides
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {categories.map((category) => (
+                <CategoryCard
+                  key={category.id}
+                  name={category.name}
+                  description={category.description}
+                  articleCount={category.articleCount}
+                  imageUrl={category.imageUrl}
+                  href={category.href}
+                  color={category.color}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Trending Articles Section */}
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center mb-8">
+              <TrendingUpIcon className="h-8 w-8 text-red-500 mr-3" />
+              <h2 className="text-3xl font-bold text-gray-900">Trending Now</h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {trendingArticles.map((article) => (
+                <ArticleCard
+                  key={article.id}
+                  title={article.title}
+                  excerpt={article.excerpt}
+                  author={article.author}
+                  publishDate={article.publishDate}
+                  readTime={article.readTime}
+                  imageUrl={article.imageUrl}
+                  slug={article.slug}
+                  category={article.category}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Latest Articles Section */}
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center">
+                <ClockIcon className="h-8 w-8 text-blue-500 mr-3" />
+                <h2 className="text-3xl font-bold text-gray-900">Latest Articles</h2>
+              </div>
+              <a 
+                href="/articles" 
+                className="text-blue-600 hover:text-blue-700 font-semibold flex items-center"
+              >
+                View All Articles →
+              </a>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {latestArticles.map((article) => (
+                <ArticleCard
+                  key={article.id}
+                  title={article.title}
+                  excerpt={article.excerpt}
+                  author={article.author}
+                  publishDate={article.publishDate}
+                  readTime={article.readTime}
+                  imageUrl={article.imageUrl}
+                  slug={article.slug}
+                  category={article.category}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Ad Placement Areas */}
+        <section className="py-8">
+          <div className="container mx-auto px-4">
+            {/* Desktop Banner Ad */}
+            <div className="hidden lg:flex justify-center mb-4">
+              <BannerAd />
+            </div>
+
+            {/* Mobile Banner Ad */}
+            <div className="lg:hidden mb-4">
+              <MobileBannerAd />
+            </div>
+
+            {/* Additional Square Ads */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+              <SquareAd />
+              <SquareAd />
+              <SquareAd className="hidden lg:block" />
+            </div>
+          </div>
+        </section>
+      </div>
+    </Layout>
+  )
 }
