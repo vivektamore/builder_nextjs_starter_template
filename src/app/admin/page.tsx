@@ -248,6 +248,90 @@ const AdminDashboard = () => {
     }
   }
 
+  const handleEbookFormChange = (field: keyof Ebook, value: any) => {
+    setEbookForm(prev => ({
+      ...prev,
+      [field]: value
+    }))
+  }
+
+  const handleAddTag = () => {
+    if (tagInput.trim() && !ebookForm.tags?.includes(tagInput.trim())) {
+      setEbookForm(prev => ({
+        ...prev,
+        tags: [...(prev.tags || []), tagInput.trim()]
+      }))
+      setTagInput('')
+    }
+  }
+
+  const handleRemoveTag = (tagToRemove: string) => {
+    setEbookForm(prev => ({
+      ...prev,
+      tags: prev.tags?.filter(tag => tag !== tagToRemove) || []
+    }))
+  }
+
+  const handleCreateEbook = () => {
+    if (!ebookForm.title || !ebookForm.author || !ebookForm.category) {
+      alert('Please fill in required fields: Title, Author, and Category')
+      return
+    }
+
+    const newEbook: Ebook = {
+      id: Date.now().toString(),
+      title: ebookForm.title || '',
+      subtitle: ebookForm.subtitle || '',
+      author: ebookForm.author || '',
+      authorBio: ebookForm.authorBio || '',
+      category: ebookForm.category || '',
+      description: ebookForm.description || '',
+      tags: ebookForm.tags || [],
+      pages: ebookForm.pages || 0,
+      publishDate: ebookForm.publishDate || new Date().toLocaleDateString(),
+      status: ebookForm.status || 'draft',
+      downloads: '0',
+      rating: 0,
+      featured: ebookForm.featured || false,
+      thumbnail: 'https://cdn.builder.io/api/v1/image/assets%2F5da5723087014f18a754f9207f7a5c9c%2F2f1c036881704ddfa1b4c84559792c05?format=webp&width=800'
+    }
+
+    setEbooks(prev => [newEbook, ...prev])
+    setShowCreateEbookForm(false)
+    setEbookForm({
+      title: '',
+      subtitle: '',
+      author: '',
+      authorBio: '',
+      category: '',
+      description: '',
+      tags: [],
+      pages: 0,
+      publishDate: '',
+      featured: false,
+      status: 'draft'
+    })
+    setActiveFormTab('basic')
+  }
+
+  const handleDeleteEbook = (id: string) => {
+    if (confirm('Are you sure you want to delete this eBook?')) {
+      setEbooks(prev => prev.filter(ebook => ebook.id !== id))
+    }
+  }
+
+  const categories = [
+    'SEO Fundamentals',
+    'Technical SEO',
+    'Local SEO',
+    'Content Marketing',
+    'E-commerce SEO',
+    'Link Building',
+    'Analytics',
+    'Mobile SEO',
+    'International SEO'
+  ]
+
   if (!isLoggedIn) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
