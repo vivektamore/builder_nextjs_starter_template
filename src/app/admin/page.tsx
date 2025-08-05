@@ -843,8 +843,608 @@ const AdminDashboard = () => {
           </div>
         )}
 
+        {/* eBooks Tab */}
+        {activeTab === 'ebooks' && (
+          <div>
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900">eBook Management</h2>
+                <p className="text-gray-600 mt-1">Create, edit, and manage your downloadable eBooks</p>
+              </div>
+              <button
+                onClick={() => setShowCreateEbookForm(true)}
+                className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center space-x-2 shadow-lg"
+              >
+                <PlusIcon className="h-5 w-5" />
+                <span>Create eBook</span>
+              </button>
+            </div>
+
+            {/* eBooks Table */}
+            <div className="bg-white rounded-lg border border-gray-200 overflow-hidden mb-8">
+              <table className="w-full">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">Title</th>
+                    <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">Author</th>
+                    <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">Category</th>
+                    <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">Status</th>
+                    <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">Downloads</th>
+                    <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">Rating</th>
+                    <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">Pages</th>
+                    <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">Published</th>
+                    <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {ebooks.map((ebook) => (
+                    <tr key={ebook.id} className="hover:bg-gray-50">
+                      <td className="px-6 py-4">
+                        <div className="flex items-center space-x-3">
+                          <img
+                            src={ebook.thumbnail}
+                            alt={ebook.title}
+                            className="w-12 h-16 object-cover rounded border"
+                          />
+                          <div className="flex-1">
+                            <div className="flex items-center space-x-2">
+                              <p className="font-medium text-gray-900">{ebook.title}</p>
+                              {ebook.featured && (
+                                <span className="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded">
+                                  Featured
+                                </span>
+                              )}
+                            </div>
+                            {ebook.subtitle && (
+                              <p className="text-sm text-gray-600">{ebook.subtitle}</p>
+                            )}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 text-gray-900">{ebook.author}</td>
+                      <td className="px-6 py-4">
+                        <span className="bg-gray-100 text-gray-800 text-xs font-medium px-2 py-1 rounded">
+                          {ebook.category}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                          ebook.status === 'published' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                        }`}>
+                          {ebook.status === 'published' ? 'Published' : 'Draft'}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center space-x-1">
+                          <DownloadIcon className="h-4 w-4 text-gray-400" />
+                          <span className="text-gray-900">{ebook.downloads}</span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        {ebook.rating > 0 ? (
+                          <div className="flex items-center space-x-1">
+                            <StarIcon className="h-4 w-4 text-yellow-400 fill-current" />
+                            <span className="text-gray-900">{ebook.rating}</span>
+                          </div>
+                        ) : (
+                          <span className="text-gray-400">-</span>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 text-gray-900">{ebook.pages} pages</td>
+                      <td className="px-6 py-4 text-gray-600">{ebook.publishDate}</td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center space-x-2">
+                          <button className="text-blue-600 hover:text-blue-700">
+                            <EditIcon className="h-4 w-4" />
+                          </button>
+                          <button
+                            onClick={() => handleDeleteEbook(ebook.id)}
+                            className="text-red-600 hover:text-red-700"
+                          >
+                            <TrashIcon className="h-4 w-4" />
+                          </button>
+                          <button className="text-gray-400 hover:text-gray-600">
+                            <MoreHorizontalIcon className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Summary Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-white rounded-lg border border-gray-200 p-6">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="text-sm font-medium text-gray-600">Total eBooks</div>
+                  <BookOpenIcon className="h-5 w-5 text-gray-400" />
+                </div>
+                <div className="text-3xl font-bold text-gray-900 mb-1">{ebooks.length}</div>
+                <div className="text-sm text-gray-500">
+                  {ebooks.filter(e => e.status === 'published').length} published
+                </div>
+              </div>
+
+              <div className="bg-white rounded-lg border border-gray-200 p-6">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="text-sm font-medium text-gray-600">Total Downloads</div>
+                  <DownloadIcon className="h-5 w-5 text-gray-400" />
+                </div>
+                <div className="text-3xl font-bold text-gray-900 mb-1">
+                  {ebooks.reduce((total, ebook) => {
+                    const downloads = ebook.downloads.replace('K', '000').replace('.', '')
+                    return total + (parseInt(downloads) || 0)
+                  }, 0) / 1000}K
+                </div>
+                <div className="text-sm text-gray-500">Across all eBooks</div>
+              </div>
+
+              <div className="bg-white rounded-lg border border-gray-200 p-6">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="text-sm font-medium text-gray-600">Average Rating</div>
+                  <StarIcon className="h-5 w-5 text-gray-400" />
+                </div>
+                <div className="text-3xl font-bold text-gray-900 mb-1">
+                  {(ebooks.reduce((sum, ebook) => sum + ebook.rating, 0) / ebooks.filter(e => e.rating > 0).length || 0).toFixed(1)}
+                </div>
+                <div className="text-sm text-gray-500">
+                  {ebooks.filter(e => e.rating > 0).length} star ratings
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Create eBook Form Modal */}
+        {showCreateEbookForm && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl mx-4 max-h-[90vh] overflow-hidden">
+              {/* Form Header */}
+              <div className="flex items-center justify-between p-6 border-b">
+                <h3 className="text-xl font-semibold text-gray-900">Create New eBook</h3>
+                <button
+                  onClick={() => setShowCreateEbookForm(false)}
+                  className="text-gray-400 hover:text-gray-600"
+                >
+                  <XIcon className="h-6 w-6" />
+                </button>
+              </div>
+
+              {/* Form Tabs */}
+              <div className="border-b">
+                <div className="flex space-x-8 px-6">
+                  <button
+                    onClick={() => setActiveFormTab('basic')}
+                    className={`py-4 px-2 border-b-2 font-medium text-sm ${
+                      activeFormTab === 'basic'
+                        ? 'border-blue-600 text-blue-600'
+                        : 'border-transparent text-gray-500 hover:text-gray-700'
+                    }`}
+                  >
+                    Basic Info
+                  </button>
+                  <button
+                    onClick={() => setActiveFormTab('content')}
+                    className={`py-4 px-2 border-b-2 font-medium text-sm ${
+                      activeFormTab === 'content'
+                        ? 'border-blue-600 text-blue-600'
+                        : 'border-transparent text-gray-500 hover:text-gray-700'
+                    }`}
+                  >
+                    Content
+                  </button>
+                  <button
+                    onClick={() => setActiveFormTab('files')}
+                    className={`py-4 px-2 border-b-2 font-medium text-sm ${
+                      activeFormTab === 'files'
+                        ? 'border-blue-600 text-blue-600'
+                        : 'border-transparent text-gray-500 hover:text-gray-700'
+                    }`}
+                  >
+                    Files
+                  </button>
+                  <button
+                    onClick={() => setActiveFormTab('preview')}
+                    className={`py-4 px-2 border-b-2 font-medium text-sm ${
+                      activeFormTab === 'preview'
+                        ? 'border-blue-600 text-blue-600'
+                        : 'border-transparent text-gray-500 hover:text-gray-700'
+                    }`}
+                  >
+                    Preview
+                  </button>
+                </div>
+              </div>
+
+              {/* Form Content */}
+              <div className="p-6 overflow-y-auto max-h-[60vh]">
+                {/* Basic Info Tab */}
+                {activeFormTab === 'basic' && (
+                  <div className="space-y-6">
+                    <h4 className="text-lg font-medium text-gray-900 mb-4">Basic Information</h4>
+                    <p className="text-sm text-gray-600 mb-6">Enter the basic details for your eBook</p>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          eBook Title <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          value={ebookForm.title || ''}
+                          onChange={(e) => handleEbookFormChange('title', e.target.value)}
+                          placeholder="Enter eBook title"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Number of Pages
+                        </label>
+                        <input
+                          type="number"
+                          value={ebookForm.pages || ''}
+                          onChange={(e) => handleEbookFormChange('pages', parseInt(e.target.value) || 0)}
+                          placeholder="e.g. 250"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Subtitle
+                        </label>
+                        <input
+                          type="text"
+                          value={ebookForm.subtitle || ''}
+                          onChange={(e) => handleEbookFormChange('subtitle', e.target.value)}
+                          placeholder="Enter subtitle"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Publish Date
+                        </label>
+                        <input
+                          type="date"
+                          value={ebookForm.publishDate || ''}
+                          onChange={(e) => handleEbookFormChange('publishDate', e.target.value)}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Author <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          value={ebookForm.author || ''}
+                          onChange={(e) => handleEbookFormChange('author', e.target.value)}
+                          placeholder="Alex Chen"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Category <span className="text-red-500">*</span>
+                        </label>
+                        <select
+                          value={ebookForm.category || ''}
+                          onChange={(e) => handleEbookFormChange('category', e.target.value)}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        >
+                          <option value="">Select category</option>
+                          {categories.map((category) => (
+                            <option key={category} value={category}>{category}</option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Author Bio
+                      </label>
+                      <textarea
+                        rows={3}
+                        value={ebookForm.authorBio || ''}
+                        onChange={(e) => handleEbookFormChange('authorBio', e.target.value)}
+                        placeholder="Brief author biography"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Description
+                      </label>
+                      <textarea
+                        rows={4}
+                        value={ebookForm.description || ''}
+                        onChange={(e) => handleEbookFormChange('description', e.target.value)}
+                        placeholder="Detailed description of the eBook content"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Tags
+                      </label>
+                      <div className="flex items-center space-x-2 mb-3">
+                        <input
+                          type="text"
+                          value={tagInput}
+                          onChange={(e) => setTagInput(e.target.value)}
+                          onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddTag())}
+                          placeholder="Add a tag"
+                          className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                        <button
+                          type="button"
+                          onClick={handleAddTag}
+                          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                        >
+                          <PlusIcon className="h-4 w-4" />
+                        </button>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {ebookForm.tags?.map((tag, index) => (
+                          <span
+                            key={index}
+                            className="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm flex items-center space-x-1"
+                          >
+                            <span>{tag}</span>
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveTag(tag)}
+                              className="text-gray-400 hover:text-gray-600"
+                            >
+                              <XIcon className="h-3 w-3" />
+                            </button>
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="flex items-center">
+                      <input
+                        type="checkbox"
+                        id="featured"
+                        checked={ebookForm.featured || false}
+                        onChange={(e) => handleEbookFormChange('featured', e.target.checked)}
+                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                      />
+                      <label htmlFor="featured" className="ml-2 block text-sm text-gray-900">
+                        Featured eBook
+                      </label>
+                    </div>
+                  </div>
+                )}
+
+                {/* Content Tab */}
+                {activeFormTab === 'content' && (
+                  <div className="space-y-6">
+                    <h4 className="text-lg font-medium text-gray-900 mb-4">eBook Content</h4>
+                    <p className="text-sm text-gray-600 mb-6">
+                      Add your eBook content using Markdown syntax. Use AMP integration to create formatted elements.
+                    </p>
+
+                    <div className="mb-6">
+                      <div className="flex items-center space-x-4 mb-4 p-3 bg-gray-50 rounded-lg">
+                        <select className="px-3 py-1 border border-gray-300 rounded text-sm">
+                          <option>Sans Serif</option>
+                          <option>Serif</option>
+                          <option>Monospace</option>
+                        </select>
+                        <div className="flex items-center space-x-2">
+                          <button className="w-8 h-8 flex items-center justify-center bg-white border border-gray-300 rounded hover:bg-gray-50">
+                            <span className="font-bold text-sm">B</span>
+                          </button>
+                          <button className="w-8 h-8 flex items-center justify-center bg-white border border-gray-300 rounded hover:bg-gray-50">
+                            <span className="italic text-sm">I</span>
+                          </button>
+                          <button className="w-8 h-8 flex items-center justify-center bg-white border border-gray-300 rounded hover:bg-gray-50">
+                            <span className="underline text-sm">U</span>
+                          </button>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <button className="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50">
+                            Preview
+                          </button>
+                          <button className="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50">
+                            Markdown
+                          </button>
+                          <button className="px-3 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-700">
+                            AMP
+                          </button>
+                        </div>
+                      </div>
+
+                      <textarea
+                        rows={8}
+                        placeholder="Start writing your eBook content... Use the format description above to add headings, lists, images, and more!"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm"
+                      />
+
+                      <div className="mt-4 text-sm text-gray-500">
+                        <p className="mb-2"><strong>Quick Tips:</strong></p>
+                        <ul className="space-y-1 text-xs">
+                          <li>• Use # for headings</li>
+                          <li>• Use **text** for bold</li>
+                          <li>• Use *text* for italic</li>
+                          <li>• Use [text](url) for links</li>
+                          <li>• Use ![alt](url) for images</li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <h5 className="font-medium text-gray-900 mb-3">Preview Content</h5>
+                        <p className="text-sm text-gray-600 mb-4">Preview how your eBook content will look to your readers</p>
+
+                        <div className="border border-gray-200 rounded-lg p-4 bg-gray-50 min-h-[200px]">
+                          <p className="text-sm text-gray-500 italic">
+                            A compelling excerpt from your eBook
+                          </p>
+                        </div>
+                      </div>
+
+                      <div>
+                        <h5 className="font-medium text-gray-900 mb-3">Table of Contents</h5>
+                        <div className="space-y-2">
+                          <input
+                            type="text"
+                            placeholder="Add chapter title..."
+                            className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                          <button className="w-full text-left px-3 py-2 text-blue-600 hover:bg-blue-50 rounded text-sm flex items-center">
+                            <PlusIcon className="h-4 w-4 mr-2" />
+                            Add Chapter
+                          </button>
+                        </div>
+
+                        <div className="mt-6">
+                          <h5 className="font-medium text-gray-900 mb-3">Key Takeaways</h5>
+                          <textarea
+                            rows={3}
+                            placeholder="Add key takeaways..."
+                            className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                          <button className="mt-2 text-sm text-blue-600 hover:text-blue-700 flex items-center">
+                            <PlusIcon className="h-4 w-4 mr-1" />
+                            Add takeaway
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+                      <h6 className="font-medium text-blue-900 mb-2">AMP Web Stories Integration</h6>
+                      <p className="text-sm text-blue-800 mb-3">
+                        Convert sections of your eBook into AMP Web Stories for better engagement
+                      </p>
+                      <button className="bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700">
+                        Configure Web Stories
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Files Tab */}
+                {activeFormTab === 'files' && (
+                  <div className="space-y-6">
+                    <h4 className="text-lg font-medium text-gray-900 mb-4">Files</h4>
+                    <p className="text-sm text-gray-600 mb-6">Upload the PDF file and cover image for your eBook</p>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <h5 className="font-medium text-gray-900 mb-3">PDF File</h5>
+                        <p className="text-sm text-gray-600 mb-4">Upload the PDF file for your eBook</p>
+
+                        <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-gray-400 transition-colors">
+                          <UploadIcon className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                          <p className="text-sm text-gray-600 mb-2">Click to upload PDF file</p>
+                          <p className="text-xs text-gray-500">PDF, Max 50MB</p>
+                          <input type="file" accept=".pdf" className="hidden" />
+                        </div>
+                      </div>
+
+                      <div>
+                        <h5 className="font-medium text-gray-900 mb-3">Cover Image</h5>
+                        <p className="text-sm text-gray-600 mb-4">Upload a cover image for your eBook</p>
+
+                        <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-gray-400 transition-colors">
+                          <ImageIcon className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                          <p className="text-sm text-gray-600 mb-2">Click to upload cover image</p>
+                          <p className="text-xs text-gray-500">PNG, JPG or WEBP, Max 10MB</p>
+                          <input type="file" accept="image/*" className="hidden" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Preview Tab */}
+                {activeFormTab === 'preview' && (
+                  <div className="space-y-6">
+                    <h4 className="text-lg font-medium text-gray-900 mb-4">eBook Preview</h4>
+                    <p className="text-sm text-gray-600 mb-6">Preview how your eBook will appear to users</p>
+
+                    <div className="max-w-md mx-auto">
+                      <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-lg">
+                        <div className="flex items-center justify-center mb-4">
+                          <div className="w-32 h-40 bg-gray-200 rounded border flex items-center justify-center">
+                            <BookOpenIcon className="h-12 w-12 text-gray-400" />
+                          </div>
+                        </div>
+
+                        <div className="text-center">
+                          <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                            {ebookForm.title || 'eBook Title'}
+                          </h3>
+                          <p className="text-sm text-gray-600 mb-2">
+                            by {ebookForm.author || 'Alex Chen'}
+                          </p>
+                          {ebookForm.category && (
+                            <span className="inline-block bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded mb-4">
+                              {ebookForm.category}
+                            </span>
+                          )}
+                          <button className="w-full bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors">
+                            Download free eBook
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Form Actions */}
+              <div className="flex items-center justify-between p-6 border-t bg-gray-50">
+                <button
+                  onClick={() => setShowCreateEbookForm(false)}
+                  className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
+                >
+                  Cancel
+                </button>
+                <div className="flex items-center space-x-3">
+                  <button
+                    onClick={() => {
+                      handleEbookFormChange('status', 'draft')
+                      handleCreateEbook()
+                    }}
+                    className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
+                  >
+                    Save as Draft
+                  </button>
+                  <button
+                    onClick={() => {
+                      handleEbookFormChange('status', 'published')
+                      handleCreateEbook()
+                    }}
+                    className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center space-x-2"
+                  >
+                    <SaveIcon className="h-4 w-4" />
+                    <span>Publish eBook</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Other tabs with placeholder content */}
-        {(activeTab !== 'overview' && activeTab !== 'articles' && activeTab !== 'stories') && (
+        {(activeTab !== 'overview' && activeTab !== 'articles' && activeTab !== 'stories' && activeTab !== 'ebooks') && (
           <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} Section
