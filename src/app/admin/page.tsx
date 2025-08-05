@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import { PlusIcon, EditIcon, TrashIcon, EyeIcon, BarChart3Icon, UsersIcon, FileTextIcon, ImageIcon, BookOpenIcon, MessageSquareIcon, DollarSignIcon, SettingsIcon, TrendingUpIcon, TrendingDownIcon, StarIcon, DownloadIcon, MoreHorizontalIcon, CalendarIcon, UploadIcon, XIcon, SaveIcon } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { PlusIcon, EditIcon, TrashIcon, EyeIcon, BarChart3Icon, UsersIcon, FileTextIcon, ImageIcon, BookOpenIcon, MessageSquareIcon, DollarSignIcon, SettingsIcon, TrendingUpIcon, TrendingDownIcon, StarIcon, DownloadIcon, MoreHorizontalIcon, CalendarIcon, UploadIcon, XIcon, SaveIcon, BoldIcon, ItalicIcon, LinkIcon, ListIcon } from 'lucide-react'
 
 interface Article {
   id: string
@@ -69,6 +69,11 @@ const AdminDashboard = () => {
   })
   const [ebooks, setEbooks] = useState<Ebook[]>([])
   const [tagInput, setTagInput] = useState('')
+  const [isContentPreviewMode, setIsContentPreviewMode] = useState(false)
+  const [wordCount, setWordCount] = useState(0)
+  const [charCount, setCharCount] = useState(0)
+  const [selectedFormat, setSelectedFormat] = useState('paragraph')
+  const [ebookContent, setEbookContent] = useState('')
 
   // Sample web stories data
   const webStories: WebStory[] = [
@@ -331,6 +336,148 @@ const AdminDashboard = () => {
     'Mobile SEO',
     'International SEO'
   ]
+
+  // Convert markdown to HTML for preview
+  const convertMarkdownToHtml = (markdown: string) => {
+    let html = markdown
+
+    // Convert headings
+    html = html.replace(/^# (.*$)/gm, '<h1 class="text-3xl font-bold text-gray-900 mb-4 mt-6">$1</h1>')
+    html = html.replace(/^## (.*$)/gm, '<h2 class="text-2xl font-bold text-gray-900 mb-3 mt-5">$1</h2>')
+    html = html.replace(/^### (.*$)/gm, '<h3 class="text-xl font-bold text-gray-900 mb-3 mt-4">$1</h3>')
+    html = html.replace(/^#### (.*$)/gm, '<h4 class="text-lg font-bold text-gray-900 mb-2 mt-3">$1</h4>')
+
+    // Convert bold text
+    html = html.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold">$1</strong>')
+
+    // Convert italic text
+    html = html.replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
+
+    // Convert links
+    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-600 hover:underline">$1</a>')
+
+    // Convert blockquotes
+    html = html.replace(/^> (.*$)/gm, '<blockquote class="border-l-4 border-blue-500 pl-4 py-2 my-4 bg-gray-50 italic">$1</blockquote>')
+
+    // Convert code
+    html = html.replace(/`([^`]+)`/g, '<code class="bg-gray-100 px-2 py-1 rounded text-sm font-mono">$1</code>')
+
+    // Convert bullet lists
+    html = html.replace(/^- (.*$)/gm, '<li class="ml-4 mb-1">• $1</li>')
+
+    // Convert numbered lists
+    html = html.replace(/^\d+\. (.*$)/gm, '<li class="ml-4 mb-1 list-decimal">$1</li>')
+
+    // Convert line breaks
+    html = html.replace(/\n/g, '<br>')
+
+    // Wrap list items in ul/ol tags (simplified)
+    html = html.replace(/(<li class="ml-4 mb-1">• .*?<\/li>)/g, '<ul class="mb-4">$1</ul>')
+    html = html.replace(/(<li class="ml-4 mb-1 list-decimal">.*?<\/li>)/g, '<ol class="mb-4 list-decimal ml-6">$1</ol>')
+
+    return html
+  }
+
+  // Calculate word and character count for eBook content
+  useEffect(() => {
+    const words = ebookContent.trim().split(/\s+/).filter(word => word.length > 0).length
+    const chars = ebookContent.length
+    setWordCount(words)
+    setCharCount(chars)
+  }, [ebookContent])
+
+  const insertFormatting = (format: string) => {
+    const textarea = document.querySelector('textarea[name="ebook-content"]') as HTMLTextAreaElement
+    if (textarea) {
+      const start = textarea.selectionStart
+      const end = textarea.selectionEnd
+      const selectedText = textarea.value.substring(start, end)
+
+      let formatText = ''
+      let needsNewLine = false
+
+      switch (format) {
+        case 'bold':
+          formatText = `**${selectedText || 'bold text'}**`
+          break
+        case 'italic':
+          formatText = `*${selectedText || 'italic text'}*`
+          break
+        case 'link':
+          formatText = `[${selectedText || 'link text'}](url)`
+          break
+        case 'heading1':
+          formatText = `# ${selectedText || 'Heading 1'}`
+          needsNewLine = true
+          break
+        case 'heading2':
+          formatText = `## ${selectedText || 'Heading 2'}`
+          needsNewLine = true
+          break
+        case 'heading3':
+          formatText = `### ${selectedText || 'Heading 3'}`
+          needsNewLine = true
+          break
+        case 'heading4':
+          formatText = `#### ${selectedText || 'Heading 4'}`
+          needsNewLine = true
+          break
+        case 'paragraph':
+          formatText = selectedText || 'Paragraph text'
+          break
+        case 'blockquote':
+          formatText = `> ${selectedText || 'Quote text'}`
+          needsNewLine = true
+          break
+        case 'code':
+          formatText = `\`${selectedText || 'code'}\``
+          break
+        case 'list':
+          formatText = `- ${selectedText || 'List item'}`
+          needsNewLine = true
+          break
+        case 'numberedlist':
+          formatText = `1. ${selectedText || 'Numbered item'}`
+          needsNewLine = true
+          break
+        case 'image':
+          formatText = `![${selectedText || 'alt text'}](image-url)`
+          needsNewLine = true
+          break
+        default:
+          formatText = selectedText
+      }
+
+      // Add new lines for block elements if needed
+      if (needsNewLine) {
+        const beforeText = textarea.value.substring(0, start)
+        const afterText = textarea.value.substring(end)
+
+        // Add newline before if not at start of line
+        if (beforeText && !beforeText.endsWith('\n')) {
+          formatText = '\n' + formatText
+        }
+
+        // Add newline after if there's more content
+        if (afterText && !afterText.startsWith('\n')) {
+          formatText = formatText + '\n'
+        }
+      }
+
+      const newContent = textarea.value.substring(0, start) + formatText + textarea.value.substring(end)
+      setEbookContent(newContent)
+
+      // Set cursor position after the inserted text
+      setTimeout(() => {
+        const newPosition = start + formatText.length
+        textarea.setSelectionRange(newPosition, newPosition)
+        textarea.focus()
+      }, 0)
+
+      // Reset dropdown to default
+      setSelectedFormat('paragraph')
+    }
+  }
 
   if (!isLoggedIn) {
     return (
@@ -999,8 +1146,8 @@ const AdminDashboard = () => {
 
         {/* Create eBook Form Modal */}
         {showCreateEbookForm && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl mx-4 max-h-[90vh] overflow-hidden">
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg shadow-xl w-full max-w-5xl max-h-[95vh] overflow-hidden flex flex-col">
               {/* Form Header */}
               <div className="flex items-center justify-between p-6 border-b">
                 <h3 className="text-xl font-semibold text-gray-900">Create New eBook</h3>
@@ -1059,7 +1206,7 @@ const AdminDashboard = () => {
               </div>
 
               {/* Form Content */}
-              <div className="p-6 overflow-y-auto max-h-[60vh]">
+              <div className="p-6 overflow-y-auto" style={{ maxHeight: 'calc(90vh - 200px)' }}>
                 {/* Basic Info Tab */}
                 {activeFormTab === 'basic' && (
                   <div className="space-y-6">
@@ -1232,72 +1379,168 @@ const AdminDashboard = () => {
                 {/* Content Tab */}
                 {activeFormTab === 'content' && (
                   <div className="space-y-6">
-                    <h4 className="text-lg font-medium text-gray-900 mb-4">eBook Content</h4>
-                    <p className="text-sm text-gray-600 mb-6">
-                      Add your eBook content using Markdown syntax. Use AMP integration to create formatted elements.
-                    </p>
+                    <div className="flex items-center mb-4">
+                      <FileTextIcon className="h-5 w-5 text-gray-400 mr-2" />
+                      <h4 className="text-lg font-medium text-gray-900">eBook Content</h4>
+                      <span className="text-sm text-gray-500 ml-2">Create your eBook with markdown support</span>
+                    </div>
 
-                    <div className="mb-6">
-                      <div className="flex items-center space-x-4 mb-4 p-3 bg-gray-50 rounded-lg">
-                        <select className="px-3 py-1 border border-gray-300 rounded text-sm">
-                          <option>Sans Serif</option>
-                          <option>Serif</option>
-                          <option>Monospace</option>
-                        </select>
-                        <div className="flex items-center space-x-2">
-                          <button className="w-8 h-8 flex items-center justify-center bg-white border border-gray-300 rounded hover:bg-gray-50">
-                            <span className="font-bold text-sm">B</span>
-                          </button>
-                          <button className="w-8 h-8 flex items-center justify-center bg-white border border-gray-300 rounded hover:bg-gray-50">
-                            <span className="italic text-sm">I</span>
-                          </button>
-                          <button className="w-8 h-8 flex items-center justify-center bg-white border border-gray-300 rounded hover:bg-gray-50">
-                            <span className="underline text-sm">U</span>
-                          </button>
+                    <div className="space-y-4">
+                      {/* Content Editor */}
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <label className="block text-sm font-medium text-gray-700">
+                            eBook Content
+                          </label>
+                          <div className="flex items-center space-x-2">
+                            <button
+                              onClick={() => setIsContentPreviewMode(!isContentPreviewMode)}
+                              className="text-sm text-blue-600 hover:text-blue-700"
+                            >
+                              {isContentPreviewMode ? 'Edit' : 'Preview'}
+                            </button>
+                          </div>
                         </div>
-                        <div className="flex items-center space-x-2">
-                          <button className="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50">
-                            Preview
-                          </button>
-                          <button className="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50">
-                            Markdown
-                          </button>
-                          <button className="px-3 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-700">
-                            AMP
-                          </button>
+
+                        {/* Rich Text Editor Toolbar */}
+                        {!isContentPreviewMode && (
+                          <div className="border border-gray-300 rounded-t-md bg-gray-50 px-3 py-2">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center space-x-2">
+                                {/* Insert Format Dropdown */}
+                                <div className="relative">
+                                  <select
+                                    value={selectedFormat}
+                                    onChange={(e) => {
+                                      setSelectedFormat(e.target.value)
+                                      insertFormatting(e.target.value)
+                                    }}
+                                    className="px-3 py-1.5 text-sm border border-gray-300 rounded bg-white hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                  >
+                                    <option value="paragraph">Insert Format</option>
+                                    <option value="heading1">Heading 1</option>
+                                    <option value="heading2">Heading 2</option>
+                                    <option value="heading3">Heading 3</option>
+                                    <option value="heading4">Heading 4</option>
+                                    <option value="paragraph">Paragraph</option>
+                                    <option value="blockquote">Quote</option>
+                                    <option value="code">Code</option>
+                                    <option value="list">Bullet List</option>
+                                    <option value="numberedlist">Numbered List</option>
+                                  </select>
+                                </div>
+
+                                <div className="border-l border-gray-300 mx-2 h-6"></div>
+
+                                {/* Formatting Buttons */}
+                                <button
+                                  onClick={() => insertFormatting('bold')}
+                                  className="p-1.5 rounded hover:bg-gray-200 font-bold"
+                                  title="Bold"
+                                >
+                                  <BoldIcon className="h-4 w-4" />
+                                </button>
+                                <button
+                                  onClick={() => insertFormatting('italic')}
+                                  className="p-1.5 rounded hover:bg-gray-200"
+                                  title="Italic"
+                                >
+                                  <ItalicIcon className="h-4 w-4" />
+                                </button>
+                                <button
+                                  onClick={() => insertFormatting('link')}
+                                  className="p-1.5 rounded hover:bg-gray-200"
+                                  title="Link"
+                                >
+                                  <LinkIcon className="h-4 w-4" />
+                                </button>
+                                <button
+                                  className="p-1.5 rounded hover:bg-gray-200"
+                                  title="Image"
+                                  onClick={() => insertFormatting('image')}
+                                >
+                                  <ImageIcon className="h-4 w-4" />
+                                </button>
+                              </div>
+
+                              <div className="flex items-center space-x-2">
+                                <button
+                                  onClick={() => setIsContentPreviewMode(true)}
+                                  className="flex items-center space-x-1 px-3 py-1.5 text-sm text-gray-600 hover:text-gray-800"
+                                >
+                                  <EyeIcon className="h-4 w-4" />
+                                  <span>Preview</span>
+                                </button>
+                              </div>
+                            </div>
+
+                            {/* Format Tabs */}
+                            <div className="flex items-center space-x-4 mt-2 pt-2 border-t border-gray-200">
+                              <button className="flex items-center space-x-1 px-2 py-1 text-sm text-gray-700 bg-gray-100 rounded">
+                                <FileTextIcon className="h-3 w-3" />
+                                <span>Markdown</span>
+                              </button>
+                              <button className="flex items-center space-x-1 px-2 py-1 text-sm text-blue-600 hover:text-blue-700">
+                                <span className="text-xs font-bold">AMP</span>
+                                <span>Web Stories</span>
+                              </button>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Quick Tips */}
+                        {!isContentPreviewMode && (
+                          <div className="bg-blue-50 border border-blue-200 rounded-md p-3 text-sm">
+                            <div className="text-blue-800">
+                              <strong>Quick tips:</strong> Select text and use format dropdown • Use **bold**, *italic*, [link text](url) • Type markdown syntax directly
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Content Editor */}
+                        {isContentPreviewMode ? (
+                          <div className="border border-gray-300 rounded-md p-6 min-h-96 bg-white">
+                            <div
+                              className="prose prose-lg max-w-none"
+                              dangerouslySetInnerHTML={{
+                                __html: convertMarkdownToHtml(ebookContent || 'Start writing your eBook content to see the preview...')
+                              }}
+                            />
+                          </div>
+                        ) : (
+                          <div className="relative">
+                            <textarea
+                              name="ebook-content"
+                              placeholder="Start writing your eBook content... Use the format dropdown to add headings, lists, images, and more!"
+                              value={ebookContent}
+                              onChange={(e) => setEbookContent(e.target.value)}
+                              className="w-full min-h-96 px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none text-gray-900 placeholder-gray-500 text-base leading-relaxed"
+                              style={{
+                                fontSize: '16px',
+                                lineHeight: '1.6',
+                                color: '#1f2937'
+                              }}
+                            />
+                            <div className="absolute bottom-4 right-4 text-xs text-gray-400">
+                              Markdown supported
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Word Count */}
+                        <div className="flex items-center justify-between text-sm text-gray-500 mt-2">
+                          <div>
+                            {wordCount} words • {charCount} characters
+                          </div>
+                          <div>
+                            Estimated reading time: {Math.max(1, Math.ceil(wordCount / 200))} minutes
+                          </div>
                         </div>
-                      </div>
-
-                      <textarea
-                        rows={8}
-                        placeholder="Start writing your eBook content... Use the format description above to add headings, lists, images, and more!"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm"
-                      />
-
-                      <div className="mt-4 text-sm text-gray-500">
-                        <p className="mb-2"><strong>Quick Tips:</strong></p>
-                        <ul className="space-y-1 text-xs">
-                          <li>• Use # for headings</li>
-                          <li>• Use **text** for bold</li>
-                          <li>• Use *text* for italic</li>
-                          <li>• Use [text](url) for links</li>
-                          <li>• Use ![alt](url) for images</li>
-                        </ul>
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <h5 className="font-medium text-gray-900 mb-3">Preview Content</h5>
-                        <p className="text-sm text-gray-600 mb-4">Preview how your eBook content will look to your readers</p>
-
-                        <div className="border border-gray-200 rounded-lg p-4 bg-gray-50 min-h-[200px]">
-                          <p className="text-sm text-gray-500 italic">
-                            A compelling excerpt from your eBook
-                          </p>
-                        </div>
-                      </div>
-
+                    {/* Additional Content Tools */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
                       <div>
                         <h5 className="font-medium text-gray-900 mb-3">Table of Contents</h5>
                         <div className="space-y-2">
@@ -1311,28 +1554,29 @@ const AdminDashboard = () => {
                             Add Chapter
                           </button>
                         </div>
+                      </div>
 
-                        <div className="mt-6">
-                          <h5 className="font-medium text-gray-900 mb-3">Key Takeaways</h5>
-                          <textarea
-                            rows={3}
-                            placeholder="Add key takeaways..."
-                            className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                          />
-                          <button className="mt-2 text-sm text-blue-600 hover:text-blue-700 flex items-center">
-                            <PlusIcon className="h-4 w-4 mr-1" />
-                            Add takeaway
-                          </button>
-                        </div>
+                      <div>
+                        <h5 className="font-medium text-gray-900 mb-3">Key Takeaways</h5>
+                        <textarea
+                          rows={3}
+                          placeholder="Add key takeaways..."
+                          className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                        <button className="mt-2 text-sm text-blue-600 hover:text-blue-700 flex items-center">
+                          <PlusIcon className="h-4 w-4 mr-1" />
+                          Add takeaway
+                        </button>
                       </div>
                     </div>
 
+                    {/* AMP Web Stories Integration */}
                     <div className="mt-6 p-4 bg-blue-50 rounded-lg">
                       <h6 className="font-medium text-blue-900 mb-2">AMP Web Stories Integration</h6>
                       <p className="text-sm text-blue-800 mb-3">
                         Convert sections of your eBook into AMP Web Stories for better engagement
                       </p>
-                      <button className="bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700">
+                      <button className="bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700 transition-colors">
                         Configure Web Stories
                       </button>
                     </div>
