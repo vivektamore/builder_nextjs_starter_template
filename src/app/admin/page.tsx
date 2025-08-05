@@ -52,6 +52,23 @@ const AdminDashboard = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [activeTab, setActiveTab] = useState('overview')
+  const [showCreateEbookForm, setShowCreateEbookForm] = useState(false)
+  const [activeFormTab, setActiveFormTab] = useState('basic')
+  const [ebookForm, setEbookForm] = useState<Partial<Ebook>>({
+    title: '',
+    subtitle: '',
+    author: '',
+    authorBio: '',
+    category: '',
+    description: '',
+    tags: [],
+    pages: 0,
+    publishDate: '',
+    featured: false,
+    status: 'draft'
+  })
+  const [ebooks, setEbooks] = useState<Ebook[]>([])
+  const [tagInput, setTagInput] = useState('')
 
   // Sample web stories data
   const webStories: WebStory[] = [
