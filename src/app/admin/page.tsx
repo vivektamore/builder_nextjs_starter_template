@@ -633,56 +633,36 @@ const AdminDashboard = () => {
               <span>eBooks</span>
             </button>
             <button
-              onClick={() => setActiveTab('testimonials')}
-              className={`flex items-center space-x-2 py-4 px-2 border-b-2 font-medium text-sm ${
-                activeTab === 'testimonials' 
-                  ? 'border-blue-600 text-blue-600' 
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-              }`}
+              onClick={() => handleTabNavigation('testimonials')}
+              className="flex items-center space-x-2 py-4 px-2 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
             >
               <MessageSquareIcon className="h-4 w-4" />
               <span>Testimonials</span>
             </button>
             <button
-              onClick={() => setActiveTab('sponsored')}
-              className={`flex items-center space-x-2 py-4 px-2 border-b-2 font-medium text-sm ${
-                activeTab === 'sponsored' 
-                  ? 'border-blue-600 text-blue-600' 
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-              }`}
+              onClick={() => handleTabNavigation('sponsored')}
+              className="flex items-center space-x-2 py-4 px-2 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
             >
               <DollarSignIcon className="h-4 w-4" />
               <span>Sponsored</span>
             </button>
             <button
-              onClick={() => setActiveTab('users')}
-              className={`flex items-center space-x-2 py-4 px-2 border-b-2 font-medium text-sm ${
-                activeTab === 'users' 
-                  ? 'border-blue-600 text-blue-600' 
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-              }`}
+              onClick={() => handleTabNavigation('users')}
+              className="flex items-center space-x-2 py-4 px-2 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
             >
               <UsersIcon className="h-4 w-4" />
               <span>Users</span>
             </button>
             <button
-              onClick={() => setActiveTab('analytics')}
-              className={`flex items-center space-x-2 py-4 px-2 border-b-2 font-medium text-sm ${
-                activeTab === 'analytics' 
-                  ? 'border-blue-600 text-blue-600' 
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-              }`}
+              onClick={() => handleTabNavigation('analytics')}
+              className="flex items-center space-x-2 py-4 px-2 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
             >
               <BarChart3Icon className="h-4 w-4" />
               <span>Analytics</span>
             </button>
             <button
-              onClick={() => setActiveTab('settings')}
-              className={`flex items-center space-x-2 py-4 px-2 border-b-2 font-medium text-sm ${
-                activeTab === 'settings' 
-                  ? 'border-blue-600 text-blue-600' 
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-              }`}
+              onClick={() => handleTabNavigation('settings')}
+              className="flex items-center space-x-2 py-4 px-2 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
             >
               <SettingsIcon className="h-4 w-4" />
               <span>Settings</span>
