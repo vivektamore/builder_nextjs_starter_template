@@ -48,15 +48,16 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
   }
 }
 
-export default function ArticlePage({ params }: ArticlePageProps) {
-  const article = getArticleBySlug(params.slug)
+export default async function ArticlePage({ params }: ArticlePageProps) {
+  const { slug } = await params
+  const article = getArticleBySlug(slug)
   const relatedArticles = getLatestArticles(3)
 
   if (!article) {
     notFound()
   }
 
-  const shareUrl = typeof window !== 'undefined' ? window.location.href : `https://searchenginejournal.com/article/${params.slug}`
+  const shareUrl = typeof window !== 'undefined' ? window.location.href : `https://searchenginejournal.com/article/${slug}`
   const shareText = encodeURIComponent(article.title)
 
   return (
