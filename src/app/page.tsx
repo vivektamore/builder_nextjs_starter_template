@@ -143,9 +143,9 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Ad Space */}
+                {/* Sponsored Ad Space */}
                 <div className="bg-gray-100 rounded-lg p-6 text-center min-h-[250px] flex items-center justify-center">
-                  <SquareAd />
+                  <SponsoredAd position="homepage-sidebar" />
                 </div>
 
                 {/* Popular Resources */}
