@@ -158,27 +158,33 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         </header>
 
         {/* Article Content */}
-        <div className="container mx-auto px-4 py-12">
-          <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
+        <div className="container mx-auto px-4 py-8 lg:py-12">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-12">
               {/* Main Content */}
               <div className="lg:col-span-3">
                 {/* Featured Image */}
-                <div className="mb-8">
-                  <Image
-                    src={article.imageUrl}
-                    alt={article.title}
-                    width={800}
-                    height={400}
-                    className="w-full h-96 object-cover rounded-lg"
-                  />
+                <div className="mb-8 lg:mb-10">
+                  <div className="relative overflow-hidden rounded-xl shadow-lg">
+                    <Image
+                      src={article.imageUrl}
+                      alt={article.title}
+                      width={800}
+                      height={400}
+                      className="w-full h-64 sm:h-80 lg:h-96 object-cover"
+                      priority
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                  </div>
                 </div>
 
                 {/* Article Body */}
-                <div className="article-content prose prose-lg max-w-none">
-                  <p className="text-xl text-gray-600 mb-8 font-medium leading-relaxed">
-                    {article.excerpt}
-                  </p>
+                <div className="article-content prose prose-lg prose-blue max-w-none">
+                  <div className="bg-blue-50 border-l-4 border-blue-400 p-6 mb-8 rounded-r-lg">
+                    <p className="text-lg text-blue-900 font-medium leading-relaxed italic">
+                      {article.excerpt}
+                    </p>
+                  </div>
 
                   {/* Sample content - in a real app, this would come from a CMS */}
                   <h2>Understanding the Impact</h2>
