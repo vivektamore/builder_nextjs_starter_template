@@ -336,6 +336,9 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Testimonials Section */}
+        <TestimonialsSection enabled={true} />
+
         {/* Newsletter CTA Section */}
         <section className="py-16 bg-gradient-to-r from-blue-600 to-purple-600">
           <div className="container mx-auto px-4">
