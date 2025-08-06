@@ -64,66 +64,72 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     <Layout>
       <article className="bg-white">
         {/* Article Header */}
-        <header className="bg-gray-50 py-12">
+        <header className="bg-gradient-to-b from-gray-50 to-white py-12 lg:py-16">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               {/* Breadcrumb */}
               <nav className="mb-6">
                 <ol className="flex items-center space-x-2 text-sm text-gray-600">
                   <li>
-                    <Link href="/" className="hover:text-blue-600">Home</Link>
+                    <Link href="/" className="hover:text-blue-600 transition-colors">Home</Link>
                   </li>
                   <li className="before:content-['/'] before:mx-2">
-                    <Link 
+                    <Link
                       href={`/category/${article.category.toLowerCase().replace(/\s+/g, '-')}`}
-                      className="hover:text-blue-600"
+                      className="hover:text-blue-600 transition-colors"
                     >
                       {article.category}
                     </Link>
                   </li>
-                  <li className="before:content-['/'] before:mx-2 text-gray-400">
-                    {article.title}
+                  <li className="before:content-['/'] before:mx-2 text-gray-400 truncate">
+                    <span className="line-clamp-1">{article.title}</span>
                   </li>
                 </ol>
               </nav>
 
               {/* Category Badge */}
-              <div className="mb-4">
-                <span className="bg-blue-100 text-blue-800 text-sm font-semibold px-3 py-1 rounded">
+              <div className="mb-6">
+                <span className="inline-flex items-center bg-blue-100 text-blue-800 text-sm font-semibold px-3 py-1.5 rounded-full">
                   {article.category}
                 </span>
               </div>
 
               {/* Title */}
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
                 {article.title}
               </h1>
 
+              {/* Excerpt */}
+              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                {article.excerpt}
+              </p>
+
               {/* Meta Info */}
-              <div className="flex flex-wrap items-center gap-6 text-sm text-gray-600 mb-8">
+              <div className="flex flex-wrap items-center gap-4 lg:gap-6 text-sm text-gray-600 mb-8 p-4 bg-white rounded-lg shadow-sm border">
                 <div className="flex items-center">
-                  <UserIcon className="h-4 w-4 mr-2" />
+                  <UserIcon className="h-4 w-4 mr-2 text-blue-600" />
                   <span className="font-medium">{article.author}</span>
                 </div>
                 <div className="flex items-center">
-                  <CalendarIcon className="h-4 w-4 mr-2" />
+                  <CalendarIcon className="h-4 w-4 mr-2 text-blue-600" />
                   <span>{article.publishDate}</span>
                 </div>
                 <div className="flex items-center">
-                  <ClockIcon className="h-4 w-4 mr-2" />
+                  <ClockIcon className="h-4 w-4 mr-2 text-blue-600" />
                   <span>{article.readTime}</span>
                 </div>
               </div>
 
               {/* Share Buttons */}
-              <div className="flex items-center space-x-4 mb-8">
-                <span className="text-sm font-medium text-gray-700">Share:</span>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-8 p-4 bg-white rounded-lg shadow-sm border">
+                <span className="text-sm font-medium text-gray-700">Share this article:</span>
                 <div className="flex space-x-3">
                   <a
                     href={`https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition-colors"
+                    className="flex items-center justify-center w-10 h-10 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors shadow-md"
+                    title="Share on Twitter"
                   >
                     <TwitterIcon className="h-4 w-4" />
                   </a>
@@ -131,7 +137,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                     href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-blue-700 text-white p-2 rounded hover:bg-blue-800 transition-colors"
+                    className="flex items-center justify-center w-10 h-10 bg-blue-700 text-white rounded-full hover:bg-blue-800 transition-colors shadow-md"
+                    title="Share on Facebook"
                   >
                     <FacebookIcon className="h-4 w-4" />
                   </a>
@@ -139,7 +146,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                     href={`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-blue-800 text-white p-2 rounded hover:bg-blue-900 transition-colors"
+                    className="flex items-center justify-center w-10 h-10 bg-blue-800 text-white rounded-full hover:bg-blue-900 transition-colors shadow-md"
+                    title="Share on LinkedIn"
                   >
                     <LinkedinIcon className="h-4 w-4" />
                   </a>
