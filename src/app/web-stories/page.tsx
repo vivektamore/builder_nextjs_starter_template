@@ -1,317 +1,399 @@
 import Layout from '@/components/layout/Layout'
-import Image from 'next/image'
-import { PlayIcon, ClockIcon, EyeIcon } from 'lucide-react'
+import { PlayIcon, EyeIcon, ClockIcon, TrendingUpIcon, SearchIcon, FilterIcon } from 'lucide-react'
+import Link from 'next/link'
 
-interface WebStory {
-  id: string
-  title: string
-  description: string
-  thumbnailUrl: string
-  duration: string
-  views: string
-  publishDate: string
-  category: string
-  ampUrl: string
-}
-
-const webStories: WebStory[] = [
+// Mock data for Web Stories
+const webStories = [
   {
     id: '1',
-    title: 'SEO Trends 2024: What Every Marketer Should Know',
-    description: 'Discover the top SEO trends that will shape digital marketing in 2024',
-    thumbnailUrl: '/api/placeholder/300/400',
-    duration: '2 min',
-    views: '15.2K',
-    publishDate: 'Dec 15, 2024',
+    title: 'SEO Trends 2024',
+    description: 'Discover the top SEO trends that will dominate search in 2024. From AI integration to Core Web Vitals updates.',
+    thumbnail: 'https://cdn.builder.io/api/v1/image/assets%2F5da5723087014f18a754f9207f7a5c9c%2F58d2287985394e16867f6a8285bf9e4b?format=webp&width=800',
     category: 'SEO',
-    ampUrl: '/web-stories/amp/seo-trends-2024'
+    duration: '2:30',
+    views: '45.2K',
+    publishDate: '2024-01-15',
+    featured: true,
+    slug: 'seo-trends-2024'
   },
   {
     id: '2',
-    title: 'Content Marketing Mistakes to Avoid',
-    description: 'Common pitfalls that can hurt your content marketing strategy',
-    thumbnailUrl: '/api/placeholder/300/400',
-    duration: '90 sec',
-    views: '8.7K',
-    publishDate: 'Dec 14, 2024',
-    category: 'Content Marketing',
-    ampUrl: '/web-stories/amp/content-marketing-mistakes'
+    title: 'Google Ads Best Practices',
+    description: 'Master Google Ads with these essential best practices for campaign optimization and ROI improvement.',
+    thumbnail: 'https://cdn.builder.io/api/v1/image/assets%2F5da5723087014f18a754f9207f7a5c9c%2F8ee6ddb6607042d1a7267219bd2be73c?format=webp&width=800',
+    category: 'Paid Media',
+    duration: '3:15',
+    views: '38.7K',
+    publishDate: '2024-01-12',
+    featured: true,
+    slug: 'google-ads-best-practices'
   },
   {
     id: '3',
-    title: 'Google Ads Best Practices Quick Guide',
-    description: 'Essential tips for maximizing your Google Ads performance',
-    thumbnailUrl: '/api/placeholder/300/400',
-    duration: '2.5 min',
-    views: '12.1K',
-    publishDate: 'Dec 13, 2024',
-    category: 'Paid Media',
-    ampUrl: '/web-stories/amp/google-ads-best-practices'
+    title: 'Content Marketing Secrets',
+    description: 'Unlock the secrets of successful content marketing with these proven strategies and techniques.',
+    thumbnail: 'https://cdn.builder.io/api/v1/image/assets%2F5da5723087014f18a754f9207f7a5c9c%2Fed8ddc195d9d48969e0292b9e62d317b?format=webp&width=800',
+    category: 'Content Marketing',
+    duration: '2:45',
+    views: '52.1K',
+    publishDate: '2024-01-10',
+    featured: true,
+    slug: 'content-marketing-secrets'
   },
   {
     id: '4',
-    title: 'Social Media Algorithm Updates',
-    description: 'How recent platform changes affect your social strategy',
-    thumbnailUrl: '/api/placeholder/300/400',
-    duration: '2 min',
-    views: '9.8K',
-    publishDate: 'Dec 12, 2024',
+    title: 'Social Media Analytics Guide',
+    description: 'Learn how to track and measure your social media performance with the right metrics and tools.',
+    thumbnail: 'https://cdn.builder.io/api/v1/image/assets%2F5da5723087014f18a754f9207f7a5c9c%2F52115549de9143c591653b13b2c69927?format=webp&width=800',
     category: 'Social Media',
-    ampUrl: '/web-stories/amp/social-media-algorithms'
+    duration: '3:00',
+    views: '29.8K',
+    publishDate: '2024-01-08',
+    featured: false,
+    slug: 'social-media-analytics-guide'
   },
   {
     id: '5',
-    title: 'Email Marketing Automation Workflow',
-    description: 'Step-by-step guide to setting up automated email campaigns',
-    thumbnailUrl: '/api/placeholder/300/400',
-    duration: '3 min',
-    views: '6.4K',
-    publishDate: 'Dec 11, 2024',
-    category: 'Content Marketing',
-    ampUrl: '/web-stories/amp/email-automation'
+    title: 'Technical SEO Checklist',
+    description: 'Complete technical SEO checklist to ensure your website is optimized for search engines.',
+    thumbnail: 'https://cdn.builder.io/api/v1/image/assets%2F5da5723087014f18a754f9207f7a5c9c%2F58d2287985394e16867f6a8285bf9e4b?format=webp&width=800',
+    category: 'SEO',
+    duration: '4:20',
+    views: '41.3K',
+    publishDate: '2024-01-05',
+    featured: false,
+    slug: 'technical-seo-checklist'
   },
   {
     id: '6',
-    title: 'Local SEO Checklist for Small Business',
-    description: 'Essential local SEO tactics for improving local search visibility',
-    thumbnailUrl: '/api/placeholder/300/400',
-    duration: '2.5 min',
-    views: '11.3K',
-    publishDate: 'Dec 10, 2024',
+    title: 'Email Marketing Automation',
+    description: 'Set up powerful email marketing automation sequences that convert subscribers into customers.',
+    thumbnail: 'https://cdn.builder.io/api/v1/image/assets%2F5da5723087014f18a754f9207f7a5c9c%2F8ee6ddb6607042d1a7267219bd2be73c?format=webp&width=800',
+    category: 'Email Marketing',
+    duration: '3:45',
+    views: '33.6K',
+    publishDate: '2024-01-03',
+    featured: false,
+    slug: 'email-marketing-automation'
+  },
+  {
+    id: '7',
+    title: 'Local SEO Optimization',
+    description: 'Dominate local search results with these proven local SEO strategies and tactics.',
+    thumbnail: 'https://cdn.builder.io/api/v1/image/assets%2F5da5723087014f18a754f9207f7a5c9c%2Fed8ddc195d9d48969e0292b9e62d317b?format=webp&width=800',
     category: 'SEO',
-    ampUrl: '/web-stories/amp/local-seo-checklist'
+    duration: '2:55',
+    views: '27.4K',
+    publishDate: '2024-01-01',
+    featured: false,
+    slug: 'local-seo-optimization'
+  },
+  {
+    id: '8',
+    title: 'Conversion Rate Optimization',
+    description: 'Increase your website conversions with these CRO techniques and testing strategies.',
+    thumbnail: 'https://cdn.builder.io/api/v1/image/assets%2F5da5723087014f18a754f9207f7a5c9c%2F52115549de9143c591653b13b2c69927?format=webp&width=800',
+    category: 'Digital Marketing',
+    duration: '3:30',
+    views: '35.9K',
+    publishDate: '2023-12-28',
+    featured: false,
+    slug: 'conversion-rate-optimization'
+  },
+  {
+    id: '9',
+    title: 'Influencer Marketing ROI',
+    description: 'Measure and maximize your influencer marketing ROI with these advanced tracking methods.',
+    thumbnail: 'https://cdn.builder.io/api/v1/image/assets%2F5da5723087014f18a754f9207f7a5c9c%2F58d2287985394e16867f6a8285bf9e4b?format=webp&width=800',
+    category: 'Social Media',
+    duration: '2:20',
+    views: '22.7K',
+    publishDate: '2023-12-25',
+    featured: false,
+    slug: 'influencer-marketing-roi'
   }
 ]
+
+const categories = [
+  'All Categories',
+  'SEO',
+  'Content Marketing', 
+  'Paid Media',
+  'Social Media',
+  'Email Marketing',
+  'Digital Marketing',
+  'Analytics'
+]
+
+const featuredStories = webStories.filter(story => story.featured)
+const trendingStories = webStories.sort((a, b) => parseFloat(b.views.replace('K', '')) - parseFloat(a.views.replace('K', ''))).slice(0, 6)
 
 export default function WebStoriesPage() {
   return (
     <Layout>
       <div className="bg-gray-50 min-h-screen">
-        {/* Header */}
-        <section className="bg-white shadow-sm">
+        {/* Hero Section */}
+        <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white">
           <div className="container mx-auto px-4 py-16">
             <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                Web Stories
+              <div className="flex justify-center mb-6">
+                <div className="bg-white bg-opacity-20 p-4 rounded-full">
+                  <PlayIcon className="h-12 w-12 text-white" />
+                </div>
+              </div>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6">
+                Web Stories Library
               </h1>
-              <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-                Quick, visual stories covering the latest digital marketing insights, tips, and trends. 
-                Perfect for on-the-go learning.
+              <p className="text-xl text-purple-100 leading-relaxed mb-8">
+                Engage with bite-sized, visual content that delivers digital marketing insights in 
+                quick, digestible stories. Perfect for mobile consumption and social sharing.
               </p>
               
-              <div className="flex items-center justify-center space-x-8 text-sm text-gray-500">
-                <div className="flex items-center">
-                  <PlayIcon className="h-5 w-5 mr-2 text-blue-600" />
-                  <span>Interactive Stories</span>
-                </div>
-                <div className="flex items-center">
-                  <ClockIcon className="h-5 w-5 mr-2 text-green-600" />
-                  <span>Quick 2-3 min reads</span>
-                </div>
-                <div className="flex items-center">
-                  <EyeIcon className="h-5 w-5 mr-2 text-purple-600" />
-                  <span>Mobile Optimized</span>
-                </div>
+              <div className="flex items-center justify-center space-x-8 text-sm text-purple-200">
+                <span className="flex items-center">
+                  <PlayIcon className="h-4 w-4 mr-1" />
+                  {webStories.length} Stories
+                </span>
+                <span className="flex items-center">
+                  <EyeIcon className="h-4 w-4 mr-1" />
+                  500K+ Views
+                </span>
+                <span>Mobile Optimized</span>
               </div>
             </div>
           </div>
-        </section>
+        </div>
 
-        {/* Web Stories Grid */}
-        <section className="py-16">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {webStories.map((story) => (
-                <a
-                  key={story.id}
-                  href={story.ampUrl}
-                  className="group block bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden"
-                >
-                  {/* Story Thumbnail */}
-                  <div className="relative aspect-[3/4] overflow-hidden">
-                    <Image
-                      src={story.thumbnailUrl}
-                      alt={story.title}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    
-                    {/* Play Button Overlay */}
-                    <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="bg-white bg-opacity-90 rounded-full p-3">
-                        <PlayIcon className="h-8 w-8 text-gray-900" />
+        {/* Search and Filter Section */}
+        <div className="bg-white border-b border-gray-200">
+          <div className="container mx-auto px-4 py-6">
+            <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
+              <div className="flex-1 max-w-md">
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="Search Web Stories..."
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  />
+                  <SearchIcon className="absolute left-3 top-3.5 h-5 w-5 text-gray-400" />
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-4">
+                <select className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                  {categories.map((category) => (
+                    <option key={category} value={category}>{category}</option>
+                  ))}
+                </select>
+
+                <select className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                  <option>Most Popular</option>
+                  <option>Most Recent</option>
+                  <option>Most Viewed</option>
+                  <option>Longest</option>
+                  <option>Shortest</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="container mx-auto px-4 py-12">
+          {/* Featured Stories */}
+          <section className="mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-8">Featured Web Stories</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {featuredStories.map((story) => (
+                <div key={story.id} className="relative group cursor-pointer">
+                  <Link href={`/web-stories/${story.slug}`}>
+                    <div className="relative bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                      {/* Story Thumbnail */}
+                      <div className="relative h-96 overflow-hidden">
+                        <img
+                          src={story.thumbnail}
+                          alt={story.title}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
+                        
+                        {/* Gradient Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
+                        
+                        {/* Featured Badge */}
+                        <div className="absolute top-4 left-4">
+                          <span className="bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1 rounded-full">
+                            FEATURED
+                          </span>
+                        </div>
+
+                        {/* Play Button */}
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="bg-white bg-opacity-90 rounded-full p-4 group-hover:bg-opacity-100 transition-all transform group-hover:scale-110">
+                            <PlayIcon className="h-8 w-8 text-purple-600" />
+                          </div>
+                        </div>
+
+                        {/* Story Info Overlay */}
+                        <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="bg-purple-600 text-white text-xs font-medium px-2 py-1 rounded">
+                              {story.category}
+                            </span>
+                            <div className="flex items-center text-xs">
+                              <ClockIcon className="h-3 w-3 mr-1" />
+                              {story.duration}
+                            </div>
+                          </div>
+                          
+                          <h3 className="text-lg font-bold mb-2">{story.title}</h3>
+                          <p className="text-sm text-gray-200 line-clamp-2">{story.description}</p>
+                          
+                          <div className="flex items-center justify-between mt-3 text-xs">
+                            <div className="flex items-center">
+                              <EyeIcon className="h-3 w-3 mr-1" />
+                              {story.views} views
+                            </div>
+                            <span>{story.publishDate}</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
-
-                    {/* Category Badge */}
-                    <div className="absolute top-3 left-3">
-                      <span className="bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded">
-                        {story.category}
-                      </span>
-                    </div>
-
-                    {/* Duration Badge */}
-                    <div className="absolute bottom-3 right-3 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded">
-                      {story.duration}
-                    </div>
-                  </div>
-
-                  {/* Story Info */}
-                  <div className="p-4">
-                    <h3 className="font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
-                      {story.title}
-                    </h3>
-                    <p className="text-gray-600 text-sm mb-3 line-clamp-2">
-                      {story.description}
-                    </p>
-                    
-                    <div className="flex items-center justify-between text-xs text-gray-500">
-                      <span>{story.publishDate}</span>
-                      <span>{story.views} views</span>
-                    </div>
-                  </div>
-                </a>
+                  </Link>
+                </div>
               ))}
             </div>
+          </section>
 
-            {/* Load More Button */}
-            <div className="text-center mt-12">
-              <button className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
-                Load More Stories
-              </button>
+          {/* Trending Stories */}
+          <section className="mb-16">
+            <div className="flex items-center mb-8">
+              <TrendingUpIcon className="h-8 w-8 text-red-500 mr-3" />
+              <h2 className="text-3xl font-bold text-gray-900">Trending Stories</h2>
             </div>
-          </div>
-        </section>
+            
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+              {trendingStories.map((story) => (
+                <div key={story.id} className="relative group cursor-pointer">
+                  <Link href={`/web-stories/${story.slug}`}>
+                    <div className="relative bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                      <div className="relative h-64 overflow-hidden">
+                        <img
+                          src={story.thumbnail}
+                          alt={story.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                        
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-50"></div>
+                        
+                        {/* Play Button */}
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="bg-white bg-opacity-80 rounded-full p-2 group-hover:bg-opacity-100 transition-all">
+                            <PlayIcon className="h-4 w-4 text-purple-600" />
+                          </div>
+                        </div>
 
-        {/* Featured Story Spotlight */}
-        <section className="bg-white py-16">
-          <div className="container mx-auto px-4">
-            <div className="max-w-6xl mx-auto">
-              <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
-                Featured Story
-              </h2>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div className="order-2 lg:order-1">
-                  <div className="mb-4">
-                    <span className="bg-red-100 text-red-800 text-sm font-semibold px-3 py-1 rounded">
-                      Featured
-                    </span>
-                  </div>
-                  
-                  <h3 className="text-3xl font-bold text-gray-900 mb-4">
-                    The Complete Guide to Google Core Web Vitals
-                  </h3>
-                  
-                  <p className="text-lg text-gray-600 mb-6">
-                    Everything you need to know about Core Web Vitals, from understanding the metrics 
-                    to implementing optimizations that will improve your search rankings.
-                  </p>
-                  
-                  <div className="flex items-center space-x-6 mb-6">
-                    <div className="flex items-center text-sm text-gray-500">
-                      <ClockIcon className="h-4 w-4 mr-1" />
-                      <span>3 min read</span>
-                    </div>
-                    <div className="flex items-center text-sm text-gray-500">
-                      <EyeIcon className="h-4 w-4 mr-1" />
-                      <span>23.5K views</span>
-                    </div>
-                  </div>
-                  
-                  <a
-                    href="/web-stories/amp/core-web-vitals-guide"
-                    className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors inline-flex items-center"
-                  >
-                    <PlayIcon className="h-5 w-5 mr-2" />
-                    Watch Story
-                  </a>
-                </div>
-                
-                <div className="order-1 lg:order-2">
-                  <div className="relative aspect-[3/4] max-w-sm mx-auto">
-                    <Image
-                      src="/api/placeholder/400/533"
-                      alt="Core Web Vitals Guide"
-                      fill
-                      className="object-cover rounded-lg shadow-lg"
-                    />
-                    <div className="absolute inset-0 bg-black bg-opacity-20 rounded-lg flex items-center justify-center">
-                      <div className="bg-white bg-opacity-90 rounded-full p-4">
-                        <PlayIcon className="h-12 w-12 text-gray-900" />
+                        {/* Story Info */}
+                        <div className="absolute bottom-0 left-0 right-0 p-3 text-white">
+                          <div className="flex items-center justify-between mb-1 text-xs">
+                            <span className="bg-purple-600 px-1 py-0.5 rounded text-xs">
+                              {story.category}
+                            </span>
+                            <span>{story.duration}</span>
+                          </div>
+                          
+                          <h3 className="text-sm font-semibold line-clamp-2">{story.title}</h3>
+                          
+                          <div className="flex items-center justify-between mt-1 text-xs">
+                            <div className="flex items-center">
+                              <EyeIcon className="h-3 w-3 mr-1" />
+                              {story.views}
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 </div>
-              </div>
+              ))}
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* Newsletter Signup */}
-        <section className="bg-gradient-to-r from-blue-600 to-purple-600 py-16">
-          <div className="container mx-auto px-4 text-center">
-            <h3 className="text-3xl font-bold text-white mb-4">
-              Never Miss a Story
-            </h3>
-            <p className="text-blue-100 mb-8 max-w-2xl mx-auto">
-              Get notified when we publish new Web Stories covering the latest digital marketing trends and insights.
+          {/* All Stories Grid */}
+          <section>
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-3xl font-bold text-gray-900">All Web Stories</h2>
+              <span className="text-gray-500">Showing {webStories.length} stories</span>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+              {webStories.map((story) => (
+                <div key={story.id} className="relative group cursor-pointer">
+                  <Link href={`/web-stories/${story.slug}`}>
+                    <div className="relative bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                      <div className="relative h-48 overflow-hidden">
+                        <img
+                          src={story.thumbnail}
+                          alt={story.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                        
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-40"></div>
+                        
+                        {/* Play Button */}
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="bg-white bg-opacity-75 rounded-full p-2 group-hover:bg-opacity-100 transition-all">
+                            <PlayIcon className="h-3 w-3 text-purple-600" />
+                          </div>
+                        </div>
+
+                        {/* Duration Badge */}
+                        <div className="absolute top-2 right-2">
+                          <span className="bg-black bg-opacity-75 text-white text-xs px-2 py-1 rounded">
+                            {story.duration}
+                          </span>
+                        </div>
+
+                        {/* Story Info */}
+                        <div className="absolute bottom-0 left-0 right-0 p-2 text-white">
+                          <span className="bg-purple-600 text-xs px-1 py-0.5 rounded mb-1 inline-block">
+                            {story.category}
+                          </span>
+                          
+                          <h3 className="text-xs font-semibold line-clamp-2 mb-1">{story.title}</h3>
+                          
+                          <div className="flex items-center text-xs">
+                            <EyeIcon className="h-2 w-2 mr-1" />
+                            {story.views}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Load More */}
+          <div className="text-center mt-12">
+            <button className="bg-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-700 transition-colors">
+              Load More Stories
+            </button>
+          </div>
+
+          {/* CTA Section */}
+          <section className="mt-16 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl p-8 text-white text-center">
+            <PlayIcon className="h-16 w-16 mx-auto mb-4 text-purple-200" />
+            <h2 className="text-3xl font-bold mb-4">Create Your Own Web Stories</h2>
+            <p className="text-purple-100 mb-6 max-w-2xl mx-auto">
+              Transform your content into engaging web stories that captivate your audience. 
+              Our tools make it easy to create mobile-first, visual content.
             </p>
-            <div className="flex flex-col sm:flex-row max-w-md mx-auto gap-4">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-lg text-gray-900 focus:ring-2 focus:ring-white focus:outline-none"
-              />
-              <button className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-                Subscribe
-              </button>
-            </div>
-          </div>
-        </section>
+            <button className="bg-white text-purple-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+              Get Started
+            </button>
+          </section>
+        </div>
       </div>
-
-      {/* Structured Data for Web Stories */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "CollectionPage",
-            "name": "Digital Marketing Web Stories",
-            "description": "Interactive web stories covering digital marketing insights, SEO tips, and industry trends.",
-            "url": "https://searchenginejournal.com/web-stories",
-            "mainEntity": {
-              "@type": "ItemList",
-              "numberOfItems": webStories.length,
-              "itemListElement": webStories.map((story, index) => ({
-                "@type": "ListItem",
-                "position": index + 1,
-                "item": {
-                  "@type": "WebPageElement",
-                  "name": story.title,
-                  "description": story.description,
-                  "url": `https://searchenginejournal.com${story.ampUrl}`,
-                  "image": story.thumbnailUrl,
-                  "datePublished": story.publishDate
-                }
-              }))
-            }
-          }),
-        }}
-      />
     </Layout>
   )
-}
-
-export const metadata = {
-  title: 'Web Stories - Digital Marketing Insights | Search Engine Journal',
-  description: 'Interactive web stories covering the latest digital marketing insights, SEO tips, and industry trends. Quick, visual content optimized for mobile.',
-  keywords: 'web stories, digital marketing, SEO, content marketing, visual content, mobile marketing',
-  openGraph: {
-    title: 'Web Stories - Digital Marketing Insights',
-    description: 'Interactive web stories covering digital marketing insights and trends',
-    images: ['/api/placeholder/1200/630'],
-    type: 'website',
-  }
 }
