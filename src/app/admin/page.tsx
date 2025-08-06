@@ -5,11 +5,11 @@ import { useRouter } from 'next/navigation'
 import { PlusIcon, EditIcon, TrashIcon, EyeIcon, BarChart3Icon, UsersIcon, FileTextIcon, ImageIcon, BookOpenIcon, MessageSquareIcon, DollarSignIcon, SettingsIcon, TrendingUpIcon, TrendingDownIcon, StarIcon, DownloadIcon, MoreHorizontalIcon, CalendarIcon, UploadIcon, XIcon, SaveIcon, BoldIcon, ItalicIcon, LinkIcon, ListIcon } from 'lucide-react'
 
 // Import the individual admin components
-import TestimonialsAdmin from '../admin/testimonials/page'
-import SponsoredAdsAdmin from '../admin/sponsored-ads/page'
-import UsersAdmin from '../admin/users/page'
-import AnalyticsDashboard from '../admin/analytics/page'
-import SettingsPage from '../admin/settings/page'
+import TestimonialsAdmin from './testimonials/page'
+import SponsoredAdsAdmin from './sponsored-ads/page'
+import UsersAdmin from './users/page'
+import AnalyticsDashboard from './analytics/page'
+import SettingsPage from './settings/page'
 
 interface Article {
   id: string
