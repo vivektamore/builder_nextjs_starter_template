@@ -49,6 +49,7 @@ interface Ebook {
 }
 
 const AdminDashboard = () => {
+  const router = useRouter()
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
