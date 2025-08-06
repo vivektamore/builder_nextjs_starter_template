@@ -4,6 +4,13 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { PlusIcon, EditIcon, TrashIcon, EyeIcon, BarChart3Icon, UsersIcon, FileTextIcon, ImageIcon, BookOpenIcon, MessageSquareIcon, DollarSignIcon, SettingsIcon, TrendingUpIcon, TrendingDownIcon, StarIcon, DownloadIcon, MoreHorizontalIcon, CalendarIcon, UploadIcon, XIcon, SaveIcon, BoldIcon, ItalicIcon, LinkIcon, ListIcon } from 'lucide-react'
 
+// Import the individual admin components
+import TestimonialsAdmin from '../admin/testimonials/page'
+import SponsoredAdsAdmin from '../admin/sponsored-ads/page'
+import UsersAdmin from '../admin/users/page'
+import AnalyticsDashboard from '../admin/analytics/page'
+import SettingsPage from '../admin/settings/page'
+
 interface Article {
   id: string
   title: string
@@ -54,6 +61,7 @@ const AdminDashboard = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [activeTab, setActiveTab] = useState('overview')
+  const [activeSecondaryTab, setActiveSecondaryTab] = useState('testimonials') // New state for secondary tabs
   const [showCreateEbookForm, setShowCreateEbookForm] = useState(false)
   const [activeFormTab, setActiveFormTab] = useState('basic')
   const [ebookForm, setEbookForm] = useState<Partial<Ebook>>({
@@ -217,19 +225,33 @@ const AdminDashboard = () => {
   // Handle navigation to different admin pages
   const handleTabNavigation = (tab: string) => {
     if (tab === 'testimonials') {
-      window.location.href = '/admin/testimonials'
+      setActiveTab('management')
+      setActiveSecondaryTab('testimonials')
     } else if (tab === 'sponsored') {
-      window.location.href = '/admin/sponsored-ads'
+      setActiveTab('management')
+      setActiveSecondaryTab('sponsored')
     } else if (tab === 'users') {
-      window.location.href = '/admin/users'
+      setActiveTab('management')
+      setActiveSecondaryTab('users')
     } else if (tab === 'analytics') {
-      window.location.href = '/admin/analytics'
+      setActiveTab('management')
+      setActiveSecondaryTab('analytics')
     } else if (tab === 'settings') {
-      window.location.href = '/admin/settings'
+      setActiveTab('management')
+      setActiveSecondaryTab('settings')
     } else {
       setActiveTab(tab)
     }
   }
+
+  // Secondary tabs configuration
+  const secondaryTabs = [
+    { key: 'testimonials', label: 'Testimonials', icon: MessageSquareIcon },
+    { key: 'sponsored', label: 'Sponsored', icon: DollarSignIcon },
+    { key: 'users', label: 'Users', icon: UsersIcon },
+    { key: 'analytics', label: 'Analytics', icon: BarChart3Icon },
+    { key: 'settings', label: 'Settings', icon: SettingsIcon },
+  ]
 
   // Sample admin data
   const adminArticles: Article[] = [
@@ -498,6 +520,24 @@ const AdminDashboard = () => {
     }
   }
 
+  // Render secondary tab content
+  const renderSecondaryTabContent = () => {
+    switch (activeSecondaryTab) {
+      case 'testimonials':
+        return <TestimonialsAdmin />
+      case 'sponsored':
+        return <SponsoredAdsAdmin />
+      case 'users':
+        return <UsersAdmin />
+      case 'analytics':
+        return <AnalyticsDashboard />
+      case 'settings':
+        return <SettingsPage />
+      default:
+        return <TestimonialsAdmin />
+    }
+  }
+
   if (!isLoggedIn) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -584,7 +624,7 @@ const AdminDashboard = () => {
         </div>
       </header>
 
-      {/* Navigation Tabs */}
+      {/* Primary Navigation Tabs */}
       <div className="bg-white border-b">
         <div className="px-8">
           <nav className="flex space-x-8">
@@ -633,46 +673,59 @@ const AdminDashboard = () => {
               <span>eBooks</span>
             </button>
             <button
-              onClick={() => handleTabNavigation('testimonials')}
-              className="flex items-center space-x-2 py-4 px-2 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-            >
-              <MessageSquareIcon className="h-4 w-4" />
-              <span>Testimonials</span>
-            </button>
-            <button
-              onClick={() => handleTabNavigation('sponsored')}
-              className="flex items-center space-x-2 py-4 px-2 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-            >
-              <DollarSignIcon className="h-4 w-4" />
-              <span>Sponsored</span>
-            </button>
-            <button
-              onClick={() => handleTabNavigation('users')}
-              className="flex items-center space-x-2 py-4 px-2 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-            >
-              <UsersIcon className="h-4 w-4" />
-              <span>Users</span>
-            </button>
-            <button
-              onClick={() => handleTabNavigation('analytics')}
-              className="flex items-center space-x-2 py-4 px-2 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-            >
-              <BarChart3Icon className="h-4 w-4" />
-              <span>Analytics</span>
-            </button>
-            <button
-              onClick={() => handleTabNavigation('settings')}
-              className="flex items-center space-x-2 py-4 px-2 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+              onClick={() => {
+                setActiveTab('management')
+                setActiveSecondaryTab('testimonials')
+              }}
+              className={`flex items-center space-x-2 py-4 px-2 border-b-2 font-medium text-sm ${
+                activeTab === 'management' 
+                  ? 'border-blue-600 text-blue-600' 
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
             >
               <SettingsIcon className="h-4 w-4" />
-              <span>Settings</span>
+              <span>Management</span>
             </button>
           </nav>
         </div>
       </div>
 
+      {/* Secondary Navigation for Management Tab */}
+      {activeTab === 'management' && (
+        <div className="bg-gray-50 border-b">
+          <div className="px-8">
+            <nav className="flex space-x-1 py-3">
+              {secondaryTabs.map((tab) => {
+                const IconComponent = tab.icon
+                return (
+                  <button
+                    key={tab.key}
+                    onClick={() => setActiveSecondaryTab(tab.key)}
+                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
+                      activeSecondaryTab === tab.key
+                        ? 'bg-blue-600 text-white shadow-sm'
+                        : 'text-gray-600 hover:text-gray-900 hover:bg-white'
+                    }`}
+                  >
+                    <IconComponent className="h-4 w-4" />
+                    <span className="hidden sm:inline">{tab.label}</span>
+                  </button>
+                )
+              })}
+            </nav>
+          </div>
+        </div>
+      )}
+
       {/* Main Content */}
       <main className="p-8">
+        {/* Management Tab Content */}
+        {activeTab === 'management' && (
+          <div>
+            {renderSecondaryTabContent()}
+          </div>
+        )}
+
         {/* Overview Tab */}
         {activeTab === 'overview' && (
           <div>
@@ -1685,7 +1738,6 @@ const AdminDashboard = () => {
             </div>
           </div>
         )}
-
       </main>
     </div>
   )
