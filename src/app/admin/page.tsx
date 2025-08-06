@@ -1686,17 +1686,6 @@ const AdminDashboard = () => {
           </div>
         )}
 
-        {/* Other tabs with placeholder content */}
-        {(activeTab !== 'overview' && activeTab !== 'articles' && activeTab !== 'stories' && activeTab !== 'ebooks') && (
-          <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
-              {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} Section
-            </h2>
-            <p className="text-gray-600">
-              This section is under development. Content will be available soon.
-            </p>
-          </div>
-        )}
       </main>
     </div>
   )
