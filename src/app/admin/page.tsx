@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { PlusIcon, EditIcon, TrashIcon, EyeIcon, BarChart3Icon, UsersIcon, FileTextIcon, ImageIcon, BookOpenIcon, MessageSquareIcon, DollarSignIcon, SettingsIcon, TrendingUpIcon, TrendingDownIcon, StarIcon, DownloadIcon, MoreHorizontalIcon, CalendarIcon, UploadIcon, XIcon, SaveIcon, BoldIcon, ItalicIcon, LinkIcon, ListIcon } from 'lucide-react'
 
 interface Article {
