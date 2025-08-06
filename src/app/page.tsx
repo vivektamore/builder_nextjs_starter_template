@@ -232,7 +232,7 @@ export default function Home() {
         </section>
 
         {/* Categories Section */}
-        <section className="py-16">
+        <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">
@@ -243,7 +243,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {categories.map((category) => (
                 <CategoryCard
                   key={category.id}
@@ -260,14 +260,19 @@ export default function Home() {
         </section>
 
         {/* Trending Articles Section */}
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
-            <div className="flex items-center mb-8">
-              <TrendingUpIcon className="h-8 w-8 text-red-500 mr-3" />
-              <h2 className="text-3xl font-bold text-gray-900">Trending Now</h2>
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center">
+                <TrendingUpIcon className="h-8 w-8 text-red-500 mr-3" />
+                <h2 className="text-3xl font-bold text-gray-900">Trending Now</h2>
+              </div>
+              <Link href="/trending" className="text-blue-600 hover:text-blue-700 font-semibold hidden md:flex items-center">
+                View All Trending →
+              </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {trendingArticles.slice(0, 6).map((article) => (
                 <ArticleCard
                   key={article.id}
