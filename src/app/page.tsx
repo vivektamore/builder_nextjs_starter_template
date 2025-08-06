@@ -180,52 +180,52 @@ export default function Home() {
         </section>
 
         {/* Web Stories Preview */}
-        <section className="py-12 bg-gradient-to-r from-purple-600 to-pink-600">
+        <section className="py-16 bg-gradient-to-r from-purple-600 to-pink-600">
           <div className="container mx-auto px-4">
-            <div className="flex items-center justify-between mb-8">
-              <div className="flex items-center text-white">
+            <div className="flex flex-col lg:flex-row items-center justify-between mb-8">
+              <div className="flex items-center text-white mb-4 lg:mb-0">
                 <PlayIcon className="h-8 w-8 mr-3" />
                 <div>
-                  <h2 className="text-3xl font-bold">Web Stories</h2>
+                  <h2 className="text-2xl lg:text-3xl font-bold">Web Stories</h2>
                   <p className="text-purple-200">Quick, visual marketing insights</p>
                 </div>
               </div>
-              <Link href="/web-stories" className="bg-white text-purple-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+              <Link href="/web-stories" className="bg-white text-purple-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
                 View All Stories
               </Link>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
               {webStoriesPreview.map((story, index) => (
-                <div key={index} className="relative group cursor-pointer">
+                <Link key={index} href={`/web-stories/${story.title.toLowerCase().replace(/\s+/g, '-')}`} className="relative group cursor-pointer">
                   <div className="relative bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                    <div className="relative h-40 overflow-hidden">
+                    <div className="relative h-48 overflow-hidden">
                       <img
                         src={story.thumbnail}
                         alt={story.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-50"></div>
-                      
+
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="bg-white bg-opacity-80 rounded-full p-2 group-hover:bg-opacity-100 transition-all">
-                          <PlayIcon className="h-4 w-4 text-purple-600" />
+                        <div className="bg-white bg-opacity-80 rounded-full p-3 group-hover:bg-opacity-100 transition-all transform group-hover:scale-110">
+                          <PlayIcon className="h-5 w-5 text-purple-600" />
                         </div>
                       </div>
 
-                      <div className="absolute bottom-0 left-0 right-0 p-2 text-white">
-                        <h3 className="text-xs font-semibold line-clamp-2 mb-1">{story.title}</h3>
+                      <div className="absolute bottom-0 left-0 right-0 p-3 text-white">
+                        <h3 className="text-sm font-semibold line-clamp-2 mb-2">{story.title}</h3>
                         <div className="flex items-center justify-between text-xs">
                           <span>{story.duration}</span>
                           <div className="flex items-center">
-                            <EyeIcon className="h-2 w-2 mr-1" />
+                            <EyeIcon className="h-3 w-3 mr-1" />
                             {story.views}
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
