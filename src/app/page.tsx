@@ -3,7 +3,7 @@ import ArticleCard from '@/components/ui/ArticleCard'
 import CategoryCard from '@/components/ui/CategoryCard'
 import { BannerAd, MobileBannerAd, SquareAd } from '@/components/ads/GoogleAds'
 import { getFeaturedArticles, getTrendingArticles, getLatestArticles, categories } from '@/lib/data'
-import { TrendingUpIcon, FireIcon, ClockIcon, BookOpenIcon, PlayIcon, NewsletterIcon, MailIcon, UserIcon, EyeIcon } from 'lucide-react'
+import { TrendingUpIcon, FireIcon, ClockIcon, BookOpenIcon, PlayIcon, MailIcon, UserIcon, EyeIcon } from 'lucide-react'
 import Link from 'next/link'
 
 export default function Home() {
