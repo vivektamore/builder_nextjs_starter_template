@@ -70,6 +70,7 @@ const Header = () => {
     },
     'Webinars': {
       href: '/webinars',
+      prefetch: false,
       subcategories: [
         { name: 'Upcoming Events', href: '/webinars/upcoming', description: 'Live sessions' },
         { name: 'Past Recordings', href: '/webinars/recordings', description: 'Watch replays' },
@@ -78,6 +79,7 @@ const Header = () => {
     },
     'Library': {
       href: '/library',
+      prefetch: false,
       subcategories: [
         { name: 'All Resources', href: '/library', description: 'Complete library' },
         { name: 'Guides & Whitepapers', href: '/library/guides', description: 'In-depth guides' },
@@ -114,8 +116,8 @@ const Header = () => {
           </div>
           <div className="hidden md:flex items-center space-x-4">
             <Link href="/newsletter" className="hover:text-blue-200 transition-colors">Newsletter</Link>
-            <Link href="/contact" className="hover:text-blue-200 transition-colors">Contact</Link>
-            <Link href="/advertise" className="hover:text-blue-200 transition-colors">Advertise</Link>
+            <Link href="/contact" prefetch={false} className="hover:text-blue-200 transition-colors">Contact</Link>
+            <Link href="/advertise" prefetch={false} className="hover:text-blue-200 transition-colors">Advertise</Link>
           </div>
         </div>
       </div>
@@ -210,7 +212,7 @@ const Header = () => {
               </Link>
 
               {/* Contact/User */}
-              <Link href="/contact" className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors hidden md:block">
+              <Link href="/contact" prefetch={false} className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors hidden md:block">
                 <UserIcon className="h-5 w-5" />
               </Link>
 
@@ -293,6 +295,7 @@ const Header = () => {
                   </Link>
                   <Link
                     href="/contact"
+                    prefetch={false}
                     className="flex items-center space-x-3 text-gray-700 hover:text-blue-600 py-2"
                     onClick={() => setIsMenuOpen(false)}
                   >
