@@ -9,13 +9,14 @@ import { CalendarIcon, UserIcon, ClockIcon, ShareIcon, TwitterIcon, FacebookIcon
 import type { Metadata } from 'next'
 
 interface ArticlePageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
-  const article = getArticleBySlug(params.slug)
+  const { slug } = await params
+  const article = getArticleBySlug(slug)
   
   if (!article) {
     return {
