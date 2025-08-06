@@ -214,6 +214,23 @@ const AdminDashboard = () => {
     setEbooks(sampleEbooks)
   }
 
+  // Handle navigation to different admin pages
+  const handleTabNavigation = (tab: string) => {
+    if (tab === 'testimonials') {
+      router.push('/admin/testimonials')
+    } else if (tab === 'sponsored') {
+      router.push('/admin/sponsored-ads')
+    } else if (tab === 'users') {
+      router.push('/admin/users')
+    } else if (tab === 'analytics') {
+      router.push('/admin/analytics')
+    } else if (tab === 'settings') {
+      router.push('/admin/settings')
+    } else {
+      setActiveTab(tab)
+    }
+  }
+
   // Sample admin data
   const adminArticles: Article[] = [
     {
