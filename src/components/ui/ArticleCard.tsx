@@ -40,6 +40,8 @@ const ArticleCard = ({
           width={400}
           height={featured ? 256 : 192}
           className={`w-full ${imageHeight} object-cover group-hover:scale-105 transition-transform duration-300`}
+          priority={featured}
+          unoptimized={imageUrl.includes('cdn.builder.io')}
         />
       </div>
       
