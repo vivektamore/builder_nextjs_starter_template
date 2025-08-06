@@ -166,6 +166,7 @@ const Header = () => {
                         <div className="mb-4">
                           <Link
                             href={data.href}
+                            prefetch={data.prefetch !== false ? true : false}
                             className="text-lg font-semibold text-gray-900 hover:text-blue-600 transition-colors"
                             onClick={closeDropdowns}
                           >
@@ -178,6 +179,7 @@ const Header = () => {
                             <Link
                               key={sub.name}
                               href={sub.href}
+                              prefetch={false}
                               className="block p-3 rounded-lg hover:bg-blue-50 transition-colors group"
                               onClick={closeDropdowns}
                             >
