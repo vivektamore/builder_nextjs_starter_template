@@ -314,7 +314,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             "dateModified": article.publishDate,
             "mainEntityOfPage": {
               "@type": "WebPage",
-              "@id": `https://searchenginejournal.com/article/${params.slug}`
+              "@id": `https://searchenginejournal.com/article/${slug}`
             },
             "keywords": article.tags.join(", ")
           }),
