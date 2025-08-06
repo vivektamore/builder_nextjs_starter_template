@@ -52,7 +52,7 @@ export default function Home() {
 
   return (
     <Layout>
-      <div className="bg-gray-50">
+      <div className="bg-gray-50 min-h-screen">
         {/* Hero Section */}
         <section className="bg-white shadow-sm">
           <div className="container mx-auto px-4 py-8">
@@ -60,46 +60,46 @@ export default function Home() {
               {/* Main Hero Article */}
               <div className="lg:col-span-2">
                 {heroArticle && (
-                  <div className="relative bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-xl transition-shadow">
-                    <div className="relative h-80 lg:h-96 overflow-hidden">
-                      <img
-                        src={heroArticle.imageUrl}
-                        alt={heroArticle.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
-                      
-                      {/* Hero Content */}
-                      <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-                        <div className="flex items-center mb-4">
-                          <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium mr-3">
-                            {heroArticle.category}
-                          </span>
-                          <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">
-                            FEATURED
-                          </span>
-                        </div>
-                        
-                        <h1 className="text-2xl lg:text-4xl font-bold mb-4 leading-tight">
-                          <Link href={`/article/${heroArticle.slug}`} className="hover:text-blue-200 transition-colors">
+                  <Link href={`/article/${heroArticle.slug}`} className="block">
+                    <div className="relative bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-xl transition-shadow">
+                      <div className="relative h-80 lg:h-96 overflow-hidden">
+                        <img
+                          src={heroArticle.imageUrl}
+                          alt={heroArticle.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+
+                        {/* Hero Content */}
+                        <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-8 text-white">
+                          <div className="flex items-center mb-4">
+                            <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium mr-3">
+                              {heroArticle.category}
+                            </span>
+                            <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">
+                              FEATURED
+                            </span>
+                          </div>
+
+                          <h1 className="text-xl lg:text-3xl xl:text-4xl font-bold mb-4 leading-tight">
                             {heroArticle.title}
-                          </Link>
-                        </h1>
-                        
-                        <p className="text-lg text-gray-200 mb-6 line-clamp-2">
-                          {heroArticle.excerpt}
-                        </p>
-                        
-                        <div className="flex items-center text-sm text-gray-300">
-                          <UserIcon className="h-4 w-4 mr-1" />
-                          <span className="mr-4">By {heroArticle.author}</span>
-                          <ClockIcon className="h-4 w-4 mr-1" />
-                          <span className="mr-4">{heroArticle.readTime}</span>
-                          <span>{heroArticle.publishDate}</span>
+                          </h1>
+
+                          <p className="text-base lg:text-lg text-gray-200 mb-4 line-clamp-2">
+                            {heroArticle.excerpt}
+                          </p>
+
+                          <div className="flex items-center text-sm text-gray-300">
+                            <UserIcon className="h-4 w-4 mr-1" />
+                            <span className="mr-4">By {heroArticle.author}</span>
+                            <ClockIcon className="h-4 w-4 mr-1" />
+                            <span className="mr-4">{heroArticle.readTime}</span>
+                            <span>{heroArticle.publishDate}</span>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 )}
               </div>
 
@@ -142,7 +142,7 @@ export default function Home() {
                 </div>
 
                 {/* Ad Space */}
-                <div className="bg-gray-100 rounded-lg p-6 text-center">
+                <div className="bg-gray-100 rounded-lg p-6 text-center min-h-[250px] flex items-center justify-center">
                   <SquareAd />
                 </div>
 
