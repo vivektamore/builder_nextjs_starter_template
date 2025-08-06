@@ -291,22 +291,22 @@ export default function Home() {
         </section>
 
         {/* Latest Articles Section */}
-        <section className="py-16">
+        <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center">
                 <ClockIcon className="h-8 w-8 text-blue-500 mr-3" />
                 <h2 className="text-3xl font-bold text-gray-900">Latest Articles</h2>
               </div>
-              <Link 
-                href="/articles" 
+              <Link
+                href="/articles"
                 className="text-blue-600 hover:text-blue-700 font-semibold flex items-center"
               >
                 View All Articles →
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {latestArticles.slice(0, 9).map((article) => (
                 <ArticleCard
                   key={article.id}
@@ -320,6 +320,16 @@ export default function Home() {
                   category={article.category}
                 />
               ))}
+            </div>
+
+            {/* Load More Button */}
+            <div className="text-center mt-12">
+              <Link
+                href="/articles"
+                className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors inline-block"
+              >
+                Load More Articles
+              </Link>
             </div>
           </div>
         </section>
@@ -335,21 +345,21 @@ export default function Home() {
                 Stay Ahead of Digital Marketing Trends
               </h2>
               <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-                Get the latest SEO insights, content marketing strategies, and digital marketing news 
+                Get the latest SEO insights, content marketing strategies, and digital marketing news
                 delivered to your inbox every week.
               </p>
-              
-              <div className="flex flex-col sm:flex-row max-w-md mx-auto gap-4 mb-6">
+
+              <div className="flex flex-col sm:flex-row max-w-lg mx-auto gap-4 mb-6">
                 <input
                   type="email"
                   placeholder="Enter your email address"
                   className="flex-1 px-6 py-4 rounded-lg text-gray-900 focus:ring-2 focus:ring-white focus:outline-none text-lg"
                 />
-                <button className="bg-white text-blue-600 px-8 py-4 rounded-lg font-bold hover:bg-gray-100 transition-colors text-lg">
+                <button className="bg-white text-blue-600 px-8 py-4 rounded-lg font-bold hover:bg-gray-100 transition-colors text-lg whitespace-nowrap">
                   Subscribe Free
                 </button>
               </div>
-              
+
               <p className="text-sm text-blue-200">
                 Join 50,000+ marketers. Unsubscribe anytime.
               </p>
