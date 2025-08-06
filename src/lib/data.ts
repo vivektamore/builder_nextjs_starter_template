@@ -31,7 +31,7 @@ export const categories: Category[] = [
     name: 'SEO',
     description: 'Search engine optimization strategies, tips, and industry updates',
     articleCount: 156,
-    imageUrl: '/api/placeholder/300/200',
+    imageUrl: 'https://cdn.builder.io/api/v1/image/assets%2F5da5723087014f18a754f9207f7a5c9c%2F58d2287985394e16867f6a8285bf9e4b?format=webp&width=400',
     href: '/category/seo',
     color: 'from-blue-500 to-blue-700',
     slug: 'seo'
@@ -41,7 +41,7 @@ export const categories: Category[] = [
     name: 'Content Marketing',
     description: 'Content strategy, creation, and distribution best practices',
     articleCount: 124,
-    imageUrl: '/api/placeholder/300/200',
+    imageUrl: 'https://cdn.builder.io/api/v1/image/assets%2F5da5723087014f18a754f9207f7a5c9c%2F8ee6ddb6607042d1a7267219bd2be73c?format=webp&width=400',
     href: '/category/content-marketing',
     color: 'from-green-500 to-green-700',
     slug: 'content-marketing'
@@ -51,7 +51,7 @@ export const categories: Category[] = [
     name: 'Paid Media',
     description: 'PPC, social ads, and paid advertising strategies',
     articleCount: 89,
-    imageUrl: '/api/placeholder/300/200',
+    imageUrl: 'https://cdn.builder.io/api/v1/image/assets%2F5da5723087014f18a754f9207f7a5c9c%2Fed8ddc195d9d48969e0292b9e62d317b?format=webp&width=400',
     href: '/category/paid-media',
     color: 'from-purple-500 to-purple-700',
     slug: 'paid-media'
@@ -61,7 +61,7 @@ export const categories: Category[] = [
     name: 'Social Media',
     description: 'Social media marketing trends and platform updates',
     articleCount: 112,
-    imageUrl: '/api/placeholder/300/200',
+    imageUrl: 'https://cdn.builder.io/api/v1/image/assets%2F5da5723087014f18a754f9207f7a5c9c%2F52115549de9143c591653b13b2c69927?format=webp&width=400',
     href: '/category/social-media',
     color: 'from-pink-500 to-pink-700',
     slug: 'social-media'
@@ -71,7 +71,7 @@ export const categories: Category[] = [
     name: 'News',
     description: 'Latest digital marketing industry news and updates',
     articleCount: 234,
-    imageUrl: '/api/placeholder/300/200',
+    imageUrl: 'https://cdn.builder.io/api/v1/image/assets%2F5da5723087014f18a754f9207f7a5c9c%2F58d2287985394e16867f6a8285bf9e4b?format=webp&width=400',
     href: '/category/news',
     color: 'from-red-500 to-red-700',
     slug: 'news'
@@ -81,7 +81,7 @@ export const categories: Category[] = [
     name: 'Tools',
     description: 'Marketing tools, software reviews, and recommendations',
     articleCount: 67,
-    imageUrl: '/api/placeholder/300/200',
+    imageUrl: 'https://cdn.builder.io/api/v1/image/assets%2F5da5723087014f18a754f9207f7a5c9c%2F8ee6ddb6607042d1a7267219bd2be73c?format=webp&width=400',
     href: '/category/tools',
     color: 'from-yellow-500 to-yellow-700',
     slug: 'tools'
