@@ -217,15 +217,15 @@ const AdminDashboard = () => {
   // Handle navigation to different admin pages
   const handleTabNavigation = (tab: string) => {
     if (tab === 'testimonials') {
-      router.push('/admin/testimonials')
+      window.location.href = '/admin/testimonials'
     } else if (tab === 'sponsored') {
-      router.push('/admin/sponsored-ads')
+      window.location.href = '/admin/sponsored-ads'
     } else if (tab === 'users') {
-      router.push('/admin/users')
+      window.location.href = '/admin/users'
     } else if (tab === 'analytics') {
-      router.push('/admin/analytics')
+      window.location.href = '/admin/analytics'
     } else if (tab === 'settings') {
-      router.push('/admin/settings')
+      window.location.href = '/admin/settings'
     } else {
       setActiveTab(tab)
     }
